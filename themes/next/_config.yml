@@ -263,7 +263,7 @@ mathjax:
 #swiftype_key:
 
 # Baidu Analytics ID
-#baidu_analytics:
+baidu_analytics: 0019617ab74dfbcdc260734bb2d66a5d
 
 # Duoshuo ShortName
 duoshuo_shortname: yany8060
@@ -301,7 +301,7 @@ duoshuo_shortname: yany8060
 #google_analytics:
 
 # CNZZ count
-#cnzz_siteid:
+cnzz_siteid: 1261131814
 
 # Application Insights
 # See https://azure.microsoft.com/en-us/services/application-insights/
