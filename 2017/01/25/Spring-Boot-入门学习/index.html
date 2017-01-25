@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Spring," />
 
 
 
@@ -84,12 +84,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="YanY">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can “just run”. We take an opinionated view of the Spring platform and third-party libraries so yo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring-Boot 入门学习">
+<meta property="og:url" content="http://yoursite.com/2017/01/25/Spring-Boot-入门学习/index.html">
 <meta property="og:site_name" content="YanY">
+<meta property="og:description" content="Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can “just run”. We take an opinionated view of the Spring platform and third-party libraries so yo">
+<meta property="og:image" content="http://yoursite.com/img/work/14853239880359.jpg">
+<meta property="og:updated_time" content="2017-01-25T06:30:01.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="YanY">
+<meta name="twitter:title" content="Spring-Boot 入门学习">
+<meta name="twitter:description" content="Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can “just run”. We take an opinionated view of the Spring platform and third-party libraries so yo">
+<meta name="twitter:image" content="http://yoursite.com/img/work/14853239880359.jpg">
 
 
 
@@ -117,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/01/25/Spring-Boot-入门学习/"/>
 
 
 
 
 
-  <title> YanY </title>
+  <title> Spring-Boot 入门学习 | YanY </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="en">
@@ -162,9 +168,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -265,9 +269,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -300,10 +304,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2017/01/25/Spring-Boot-入门学习/" itemprop="url">
-                  Spring-Boot 入门学习
-                </a>
+                Spring-Boot 入门学习
               
             
           </h1>
@@ -364,9 +365,7 @@
       
 
       
-        
-          
-            <blockquote>
+        <blockquote>
 <p>Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can “just run”. We take an opinionated view of the Spring platform and third-party libraries so you can get started with minimum fuss. Most Spring Boot applications need very little Spring configuration.<br>简言之：方便创建一个最小规模的Spring工程，且它只需要很少的Spring配置</p>
 </blockquote>
 <h3 id="特征"><a href="#特征" class="headerlink" title="特征"></a>特征</h3><ul>
@@ -393,37 +392,46 @@
 <p>在浏览器中输入：<a href="http://localhost:8080/SpringBoot/hello" target="_blank" rel="external">http://localhost:8080/SpringBoot/hello</a><br>得到返回：Hello world<br><img src="/img/work/14853239880359.jpg" alt=""></p>
 <p>具体输入日志如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">  .   ____          _            __ _ _</div><div class="line"> /\\ / ___&apos;_ __ _ _(_)_ __  __ _ \ \ \ \</div><div class="line">( ( )\___ | &apos;_ | &apos;_| | &apos;_ \/ _` | \ \ \ \</div><div class="line"> \\/  ___)| |_)| | | | | || (_| |  ) ) ) )</div><div class="line">  &apos;  |____| .__|_| |_|_| |_\__, | / / / /</div><div class="line"> =========|_|==============|___/=/_/_/_/</div><div class="line"> :: Spring Boot ::        (v1.4.3.RELEASE)</div><div class="line"></div><div class="line">2017-01-25 13:55:36.298  INFO 30221 --- [           main] com.yany.Application                     : Starting Application on yanyongdeMacBook-Pro.local with PID 30221 (/Users/yanyong/GitHub/YanY/SpringDemo/SpringBoot/target/classes started by yanyong in /Users/yanyong/GitHub/YanY/SpringDemo)</div><div class="line">2017-01-25 13:55:36.301  INFO 30221 --- [           main] com.yany.Application                     : No active profile set, falling back to default profiles: default</div><div class="line">2017-01-25 13:55:36.373  INFO 30221 --- [           main] ationConfigEmbeddedWebApplicationContext : Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@2d8b20a0: startup date [Wed Jan 25 13:55:36 CST 2017]; root of context hierarchy</div><div class="line">2017-01-25 13:55:37.264  WARN 30221 --- [           main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in &apos;[com.yany]&apos; package. Please check your configuration.</div><div class="line">2017-01-25 13:55:37.570  INFO 30221 --- [           main] trationDelegate$BeanPostProcessorChecker : Bean &apos;org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration&apos; of type [class org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$baf0e866] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)</div><div class="line">2017-01-25 13:55:37.997  INFO 30221 --- [           main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat initialized with port(s): 8080 (http)</div><div class="line">2017-01-25 13:55:38.009  INFO 30221 --- [           main] o.apache.catalina.core.StandardService   : Starting service Tomcat</div><div class="line">2017-01-25 13:55:38.010  INFO 30221 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.6</div><div class="line">2017-01-25 13:55:38.136  INFO 30221 --- [ost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext</div><div class="line">2017-01-25 13:55:38.136  INFO 30221 --- [ost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1767 ms</div><div class="line">2017-01-25 13:55:38.298  INFO 30221 --- [ost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Mapping servlet: &apos;dispatcherServlet&apos; to [/]</div><div class="line">2017-01-25 13:55:38.302  INFO 30221 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: &apos;characterEncodingFilter&apos; to: [/*]</div><div class="line">2017-01-25 13:55:38.302  INFO 30221 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: &apos;hiddenHttpMethodFilter&apos; to: [/*]</div><div class="line">2017-01-25 13:55:38.303  INFO 30221 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: &apos;httpPutFormContentFilter&apos; to: [/*]</div><div class="line">2017-01-25 13:55:38.303  INFO 30221 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: &apos;requestContextFilter&apos; to: [/*]</div><div class="line">2017-01-25 13:55:38.613  INFO 30221 --- [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@2d8b20a0: startup date [Wed Jan 25 13:55:36 CST 2017]; root of context hierarchy</div><div class="line">2017-01-25 13:55:38.674  INFO 30221 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped &quot;&#123;[/hello],methods=[GET]&#125;&quot; onto public java.lang.String com.yany.controller.Example.test()</div><div class="line">2017-01-25 13:55:38.678  INFO 30221 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped &quot;&#123;[/error]&#125;&quot; onto public org.springframework.http.ResponseEntity&lt;java.util.Map&lt;java.lang.String, java.lang.Object&gt;&gt; org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)</div><div class="line">2017-01-25 13:55:38.678  INFO 30221 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped &quot;&#123;[/error],produces=[text/html]&#125;&quot; onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)</div><div class="line">2017-01-25 13:55:38.712  INFO 30221 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]</div><div class="line">2017-01-25 13:55:38.712  INFO 30221 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]</div><div class="line">2017-01-25 13:55:38.752  INFO 30221 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]</div><div class="line">2017-01-25 13:55:39.333  INFO 30221 --- [           main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup</div><div class="line">2017-01-25 13:55:39.385  INFO 30221 --- [           main] s.b.c.e.t.TomcatEmbeddedServletContainer : Tomcat started on port(s): 8080 (http)</div><div class="line">2017-01-25 13:55:39.388  INFO 30221 --- [           main] com.yany.Application                     : Started Application in 3.752 seconds (JVM running for 4.078)</div></pre></td></tr></table></figure></p>
 
-          
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
 
     <footer class="post-footer">
       
-
+        <div class="post-tags">
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
+          
+        </div>
       
 
       
+
       
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -431,6 +439,14 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/01/25/Spring-Boot-入门学习/"
+           data-title="Spring-Boot 入门学习" data-url="http://yoursite.com/2017/01/25/Spring-Boot-入门学习/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -450,8 +466,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -511,6 +536,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#特征"><span class="nav-number">1.</span> <span class="nav-text">特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Spring-Boot工程简单搭建"><span class="nav-number">2.</span> <span class="nav-text">Spring-Boot工程简单搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pom-xml详情（本工程以maven方式搭建）："><span class="nav-number">2.1.</span> <span class="nav-text">pom.xml详情（本工程以maven方式搭建）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建一个启动入口（应用类）"><span class="nav-number">2.2.</span> <span class="nav-text">创建一个启动入口（应用类）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动"><span class="nav-number">2.3.</span> <span class="nav-text">启动</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
@@ -621,6 +662,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
