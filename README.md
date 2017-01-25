@@ -38,3 +38,10 @@ $ hexo clean
 ```
 $ hexo deploy
 ```
+
+### Push 
+```
+$ git add .
+$ git commit -m "xxxxx"
+$ git push origin hexo
+```
