@@ -1,5 +1,5 @@
 ---
-title: Spring-boot MyBatis配置 (1)
+title: Spring-boot MyBatis配置-1
 date: 2017-02-04 11:08:22
 tags: [spring-boot,spring]
 categories: [java]
