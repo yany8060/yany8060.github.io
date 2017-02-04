@@ -1,7 +1,8 @@
 ---
 title: Spring-Boot 入门学习
 date: 2017-01-25 14:03:40
-tags: Spring
+tags: [spring-boot,spring]
+categories: [java]
 ---
 > Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can "just run". We take an opinionated view of the Spring platform and third-party libraries so you can get started with minimum fuss. Most Spring Boot applications need very little Spring configuration.
 > 简言之：方便创建一个最小规模的Spring工程，且它只需要很少的Spring配置
