@@ -154,5 +154,9 @@ val joinWords = wordsOne.join(wordsTwo)
 #### transform(func)
 #### updateStateByKey(func)
 
+
+参考：
+http://blog.csdn.net/dabokele/article/details/52602412?utm_source=tuicool&utm_medium=referral
+
 博客：http://yany8060.xyz/
 githup: https://github.com/yany8060/SparkDemo
