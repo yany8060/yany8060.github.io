@@ -446,7 +446,8 @@
 </blockquote>
 <p>由一个DStream对象调用该方法，元素内容为(k, V)，传入另一个DStream对象，元素内容为(k, W)，返回的DStream中包含的内容是 (k, (Seq[V], Seq[W])) 。这个方法也可以传入一个并行计算的参数，该参数与reduceByKey中是相同的。</p>
 <p>结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(hello,(CompactBuffer(hello_one, hello_one),CompactBuffer(hello_two, hello_two)))</div><div class="line">(world,(CompactBuffer(world_one),CompactBuffer(world_two)))</div><div class="line">(cogroup,(CompactBuffer(cogroup_one),CompactBuffer(cogroup_two)))</div></pre></td></tr></table></figure></p>
-<h4 id="transform-func"><a href="#transform-func" class="headerlink" title="transform(func)"></a>transform(func)</h4><h4 id="updateStateByKey-func"><a href="#updateStateByKey-func" class="headerlink" title="updateStateByKey(func)"></a>updateStateByKey(func)</h4><p>博客：<a href="http://yany8060.xyz/" target="_blank" rel="external">http://yany8060.xyz/</a><br>githup: <a href="https://github.com/yany8060/SparkDemo" target="_blank" rel="external">https://github.com/yany8060/SparkDemo</a></p>
+<h4 id="transform-func"><a href="#transform-func" class="headerlink" title="transform(func)"></a>transform(func)</h4><h4 id="updateStateByKey-func"><a href="#updateStateByKey-func" class="headerlink" title="updateStateByKey(func)"></a>updateStateByKey(func)</h4><p>参考：<br><a href="http://blog.csdn.net/dabokele/article/details/52602412?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="external">http://blog.csdn.net/dabokele/article/details/52602412?utm_source=tuicool&amp;utm_medium=referral</a></p>
+<p>博客：<a href="http://yany8060.xyz/" target="_blank" rel="external">http://yany8060.xyz/</a><br>githup: <a href="https://github.com/yany8060/SparkDemo" target="_blank" rel="external">https://github.com/yany8060/SparkDemo</a></p>
 
           
         
