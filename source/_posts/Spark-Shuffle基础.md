@@ -9,7 +9,7 @@ categories: [spark]
 * Shuffle描述着数据从map task输出到reduce task 输入的这段过程。在分布式情况下，reduce task需要跨节点拉取其它节点上的map task结果。
 * 当Map的输出结果要被Reduce使用时，输出结果需要按key哈希，并且分发到每一个Reducer上去，这个过程就是shuffle。
 * 由于shuffle涉及到了磁盘的读写和网络的传输，因此shuffle性能的高低直接影响到了整个程序的运行效率。
-
+<!--more-->
 #### Spark 的Shuffle 分为 Write，Read 两阶段
 * Write 对应的是ShuffleMapTask，具体的写操作ExternalSorter来负责
 * Read 阶段由ShuffleRDD里的HashShuffleReader来完成。如果拉来的数据如果过大，需要落地，则也由ExternalSorter来完成的
@@ -40,6 +40,30 @@ Shuffle将数据进行收集分配到指定Reduce分区，Reduce阶段根据函�
 
 
 本文只是对Shuffle作了初步的描述，了解基本概念
+
+
+### 问题
+今天遇到如下问题，特来了解一下。
+```
+17/02/06 11:50:21 ERROR Executor: Exception in task 0.0 in stage 857456.0 (TID 437542)
+java.io.FileNotFoundException: /tmp/spark-be115c66-a319-4931-a2ca-81ae9e7a6198/executor-54de96d2-5256-4637-b474-4342b00e755a/blockmgr-0c1c3d9f-c5d7-4b1c-bc12-7773083fa181/18/shuffle_426055_0_0.data.5874ce88-94f5-4c34-b56a-f729d4d4e393 (No such file or directory)
+     at java.io.FileOutputStream.open(Native Method)
+     at java.io.FileOutputStream.<init>(FileOutputStream.java:212)
+     at org.apache.spark.shuffle.sort.BypassMergeSortShuffleWriter.writePartitionedFile(BypassMergeSortShuffleWriter.java:182)
+     at org.apache.spark.shuffle.sort.BypassMergeSortShuffleWriter.write(BypassMergeSortShuffleWriter.java:159)
+     at org.apache.spark.scheduler.ShuffleMapTask.runTask(ShuffleMapTask.scala:79)
+     at org.apache.spark.scheduler.ShuffleMapTask.runTask(ShuffleMapTask.scala:47)
+     at org.apache.spark.scheduler.Task.run(Task.scala:85)
+     at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:274)
+     at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+     at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+     at java.lang.Thread.run(Thread.java:722)
+```
+一般造成此问题的是系统资源不够用
+参考网上的解决方案,修改启动参数：
+* 添加：--conf spark.shuffle.manager=SORT
+ Spark默认的shuffle采用Hash模式，会产生相当规模的文件，与此同时带来了大量的内存开销
+* 是因为一个excutor给分配的内存不够，此时，减少excutor-core的数量，加大excutor-memory的值应该就没有问题。
      
 
 
