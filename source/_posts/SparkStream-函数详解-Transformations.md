@@ -56,6 +56,16 @@ val wordsOne = words.map(_ + "_one" )
 val wordsTwo = words.map(_ + "_two" )
 val unionWords = wordsOne.union(wordsTwo)
 ```
+输入 hello yany tian，结果是将wordsOne和wordsTwo合成一个unionWords的DStream
+
+```
+hello_one
+yany_one
+tian_one
+hello_two
+yany_two
+tian_two
+```
 
 #### repartition(numPartitions)
 > Changes the level of parallelism in this DStream by creating more or fewer partitions.
@@ -144,8 +154,16 @@ val joinWords = wordsOne.join(wordsTwo)
 
 由一个DStream对象调用该方法，元素内容为(k, V)，传入另一个DStream对象，元素内容为(k, W)，返回的DStream中包含的内容是 (k, (Seq[V], Seq[W])) 。这个方法也可以传入一个并行计算的参数，该参数与reduceByKey中是相同的。
 
+```
+val wordsOne = words.map(word => (word , word + "_one" ))
+val wordsTwo = words.map(word => (word , word + "_two" ))
+val joinWords = wordsOne.cogroup(wordsTwo)
+```
+
 结果：
 ```
+// 输入 hello world hello cogroup
+
 (hello,(CompactBuffer(hello_one, hello_one),CompactBuffer(hello_two, hello_two)))
 (world,(CompactBuffer(world_one),CompactBuffer(world_two)))
 (cogroup,(CompactBuffer(cogroup_one),CompactBuffer(cogroup_two)))
