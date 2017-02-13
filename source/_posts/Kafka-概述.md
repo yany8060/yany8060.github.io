@@ -6,7 +6,7 @@ categories: [kafka]
 ---
 ### Kafka架构
 * Broker：Kafka集群包含一个或多个服务器，这种服务器被称为broker
-* Topic：每条发布到Kafka集群的消息都有一个类别，这个类别被称为Topic。（物理上不同Topic的消息分开存储，逻辑上一个Topic的消息虽然保存于一个或多个broker上但用户只需指定消息的Topic即可生产或消费数据而不必关心数据存于何处）/Users/yanyong/WebStudy/Blog/YanY/source/_posts/Kafka-概述.md
+* Topic：每条发布到Kafka集群的消息都有一个类别，这个类别被称为Topic。（物理上不同Topic的消息分开存储，逻辑上一个Topic的消息虽然保存于一个或多个broker上但用户只需指定消息的Topic即可生产或消费数据而不必关心数据存于何处）
 
 * Partition：Partition（分片）是物理上的概念，每个Topic包含一个或多个Partition，创建topic时可指定parition数量。每个partition对应于一个文件夹，该文件夹下存储该partition的数据和索引文件。
 * Producer：负责发布消息到Kafka broker
