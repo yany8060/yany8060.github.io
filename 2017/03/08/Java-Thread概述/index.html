@@ -84,41 +84,19 @@
 
 
 
-<meta name="description" content="线程生命周期线程状态：
-
-新建状态：使用new关键字和Thread类或其子类建立一个线程对象后
-就绪状态：当线程对象调用了start()方法之后，该线程进入就绪状态
-运行状态：如果就绪状态的线程获取CPU资源，就可以执行run()
-阻塞状态：
-等待阻塞：运行状态中的线程执行wait()方法
-同步阻塞：线程在获取 synchronized 同步锁失败
-其他阻塞：通过调用线程的sleep()或join">
+<meta name="description" content="线程生命周期线程状态：  新建状态：使用new关键字和Thread类或其子类建立一个线程对象后 就绪状态：当线程对象调用了start()方法之后，该线程进入就绪状态 运行状态：如果就绪状态的线程获取CPU资源，就可以执行run() 阻塞状态： 等待阻塞：运行状态中的线程执行wait()方法 同步阻塞：线程在获取 synchronized 同步锁失败 其他阻塞：通过调用线程的sleep()或join">
+<meta name="keywords" content="java,thread">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java Thread概述">
 <meta property="og:url" content="http://yoursite.com/2017/03/08/Java-Thread概述/index.html">
 <meta property="og:site_name" content="YanY">
-<meta property="og:description" content="线程生命周期线程状态：
-
-新建状态：使用new关键字和Thread类或其子类建立一个线程对象后
-就绪状态：当线程对象调用了start()方法之后，该线程进入就绪状态
-运行状态：如果就绪状态的线程获取CPU资源，就可以执行run()
-阻塞状态：
-等待阻塞：运行状态中的线程执行wait()方法
-同步阻塞：线程在获取 synchronized 同步锁失败
-其他阻塞：通过调用线程的sleep()或join">
+<meta property="og:description" content="线程生命周期线程状态：  新建状态：使用new关键字和Thread类或其子类建立一个线程对象后 就绪状态：当线程对象调用了start()方法之后，该线程进入就绪状态 运行状态：如果就绪状态的线程获取CPU资源，就可以执行run() 阻塞状态： 等待阻塞：运行状态中的线程执行wait()方法 同步阻塞：线程在获取 synchronized 同步锁失败 其他阻塞：通过调用线程的sleep()或join">
+<meta property="og:locale" content="en">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1419542-7b0fe1fa20076f52.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/620">
 <meta property="og:updated_time" content="2017-03-08T11:38:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java Thread概述">
-<meta name="twitter:description" content="线程生命周期线程状态：
-
-新建状态：使用new关键字和Thread类或其子类建立一个线程对象后
-就绪状态：当线程对象调用了start()方法之后，该线程进入就绪状态
-运行状态：如果就绪状态的线程获取CPU资源，就可以执行run()
-阻塞状态：
-等待阻塞：运行状态中的线程执行wait()方法
-同步阻塞：线程在获取 synchronized 同步锁失败
-其他阻塞：通过调用线程的sleep()或join">
+<meta name="twitter:description" content="线程生命周期线程状态：  新建状态：使用new关键字和Thread类或其子类建立一个线程对象后 就绪状态：当线程对象调用了start()方法之后，该线程进入就绪状态 运行状态：如果就绪状态的线程获取CPU资源，就可以执行run() 阻塞状态： 等待阻塞：运行状态中的线程执行wait()方法 同步阻塞：线程在获取 synchronized 同步锁失败 其他阻塞：通过调用线程的sleep()或join">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1419542-7b0fe1fa20076f52.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/620">
 
 
@@ -425,7 +403,7 @@
 <li>死亡状态：一个运行状态的线程完成人文或者其他终止条件发送</li>
 </ul>
 <h3 id="创建线程"><a href="#创建线程" class="headerlink" title="创建线程"></a>创建线程</h3><p>1、继承Thread类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ThreadDemo</span> <span class="keyword">extends</span> <span class="title">Thread</span></span></div></pre></td></tr></table></figure></p>
-<p>2、实现Runable接口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RunTest</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span></div><div class="line">   </div><div class="line"><span class="title">Thread</span> <span class="title">thread1</span> = <span class="keyword">new</span> Thread(<span class="keyword">new</span> RunTest());</div></pre></td></tr></table></figure></p>
+<p>2、实现Runable接口<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RunTest</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span></div><div class="line"><span class="class">   </span></div><div class="line"><span class="class"><span class="title">Thread</span> <span class="title">thread1</span> </span>= <span class="keyword">new</span> Thread(<span class="keyword">new</span> RunTest());</div></pre></td></tr></table></figure></p>
 <p>3、通过Callable、Future、FutureTask创建线程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// 继承实现Callable接口，声明返回类型</div><div class="line">class CallTest implements Callable&lt;Long&gt; </div><div class="line">    </div><div class="line">FutureTask&lt;Long&gt; futureTask = new FutureTask&lt;Long&gt;(new CallTest(searchVo));</div></pre></td></tr></table></figure></p>
 <h3 id="线程内置方法"><a href="#线程内置方法" class="headerlink" title="线程内置方法"></a>线程内置方法</h3><p>1、sleep：使当前线程（即调用该方法的线程）暂停执行一段时间，让其它线程有机会继续执行，但它不会释放对象锁。<br>2、yield：<strong>暂停</strong>当前正在执行的线程对象，并执行其他线程。yield的目的是让相同优先级的线程之间能适当的<strong>轮转执行</strong><br>3、join：把指定的线程加入到当前线程，可以将两个交替执行的线程合并为顺序执行的线程。比如线程B中调用了线程A的JOIN()方法，直到线程A执行完毕后，才会继续执行线程B。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//主线程等待子线程thread执行结束才会输出结果</div><div class="line">public static void main(String[] args) throws InterruptedException &#123;</div><div class="line">    Thread thread = new Thread(new JoinTest());</div><div class="line">    thread.start();</div><div class="line">    thread.join(); //加入join()</div><div class="line">    System.out.println(&quot;主线程结束&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>4、setDaemon：<br>Java中线程分为两种类型：用户线程和守护线程。通过Thread.setDaemon(false)设置为用户线程；通过Thread.setDaemon(true)设置为守护线程。如果不设置次属性，默认为用户线程。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DaemonTest</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;            <span class="comment">//永真循环线程</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; ; i++) &#123;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                Thread.sleep(<span class="number">1000</span>);</div><div class="line">            &#125; <span class="keyword">catch</span> (InterruptedException ex) &#123;</div><div class="line">            &#125;</div><div class="line">            System.out.println(i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        Thread daemonTest = <span class="keyword">new</span> DaemonTest();</div><div class="line">        daemonTest.setDaemon(<span class="keyword">true</span>);    <span class="comment">//调试时可以设置为false，那么这个程序是个死循环，没有退出条件。设置为true，即可主线程结束，test线程也结束。</span></div><div class="line">        daemonTest.start();</div><div class="line">        System.out.println(<span class="string">"isDaemon = "</span> + daemonTest.isDaemon());</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            System.in.read();   <span class="comment">// 接受输入，使程序在此停顿，一旦接收到用户输入，main线程结束，守护线程自动结束</span></div><div class="line">        &#125; <span class="keyword">catch</span> (IOException ex) &#123;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -492,6 +470,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/05/go-ethereum-简单搭建私有链/" rel="prev" title="go-ethereum-简单搭建私有链">
+                go-ethereum-简单搭建私有链 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -565,7 +547,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">posts</span>
               </a>
             </div>
@@ -574,7 +556,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">categories</span>
               </a>
             </div>
@@ -583,7 +565,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">tags</span>
               </a>
             </div>
