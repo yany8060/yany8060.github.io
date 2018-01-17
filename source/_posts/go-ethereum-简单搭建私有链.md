@@ -53,6 +53,20 @@ genesis.json内容如下
 各参数代表的含义如下：
 * init 表示初始化区块，后面跟着创世块的配置文件genesis.json
 * datadir 数据存放的位置
+```
+privatechain
+├── data
+│   ├── geth
+│   │   └── chaindata
+│   │       ├── 000002.log
+│   │       ├── CURRENT
+│   │       ├── LOCK
+│   │       ├── LOG
+│   │       └── MANIFEST-000003
+│   └── keystore
+└── genesis.json
+```
+
 
 #### 启动节点：
 `geth --datadir ./data/00 --networkid 15 console`
