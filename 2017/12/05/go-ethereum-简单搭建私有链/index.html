@@ -96,7 +96,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1419542-d6d5d014aeb2a3bb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/400">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1419542-6403c3c435533892.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1419542-c1ac395ce5bdd206.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-12-05T12:39:29.002Z">
+<meta property="og:updated_time" content="2018-01-17T11:34:06.256Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="go-ethereum-简单搭建私有链">
 <meta name="twitter:description" content="Geth https://ethereum.github.io/go-ethereum/install/  安装 geth：访问https://geth.ethereum.org/downloads/，下载Geth for macOS。给geth做一个软连接到/usr/local/bin目录下，然后在命令行输入：geth version  显示如下边上安装成功使用homebrew安装：12brew">
@@ -405,7 +405,8 @@
 <h4 id="初始化："><a href="#初始化：" class="headerlink" title="初始化："></a>初始化：</h4><p>在命令行下进入刚才创建的文件夹，输入如下命令：<br><code>geth --datadir ./data/00 init genesis.json</code><br>各参数代表的含义如下：</p>
 <ul>
 <li>init 表示初始化区块，后面跟着创世块的配置文件genesis.json</li>
-<li>datadir 数据存放的位置</li>
+<li>datadir 数据存放的位置<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">privatechain</div><div class="line">├── data</div><div class="line">│   ├── geth</div><div class="line">│   │   └── chaindata</div><div class="line">│   │       ├── 000002.log</div><div class="line">│   │       ├── CURRENT</div><div class="line">│   │       ├── LOCK</div><div class="line">│   │       ├── LOG</div><div class="line">│   │       └── MANIFEST-000003</div><div class="line">│   └── keystore</div><div class="line">└── genesis.json</div></pre></td></tr></table></figure>
+</li>
 </ul>
 <h4 id="启动节点："><a href="#启动节点：" class="headerlink" title="启动节点："></a>启动节点：</h4><p><code>geth --datadir ./data/00 --networkid 15 console</code><br>各参数代表的含义如下：</p>
 <ul>
@@ -623,8 +624,8 @@
       <div class="footer-inner">
         <div class="copyright" >
   
-  &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
