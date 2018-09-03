@@ -1,0 +1,825 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="yarn,hadoop," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="编程模型 TensorFlow的数据流图是由节点（Node）和边（edge）组成的有向无环图（directed acycline graph，DAG）。TensorFlow 由 Tensor 和 Flow 两部 分组成，Tensor(张量)代表了数据流图中的边，而 Flow(流动)这个动作就代表了数据流图中节点所做的操作。  计算过程：首先从输入层开始，经过塑形层后，一层一层进行前向传播运算。Re">
+<meta name="keywords" content="yarn,hadoop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TensorFlow 基本概念与函数-1">
+<meta property="og:url" content="http://yoursite.com/2018/09/03/Tensorflow 入门-1/index.html">
+<meta property="og:site_name" content="YanY">
+<meta property="og:description" content="编程模型 TensorFlow的数据流图是由节点（Node）和边（edge）组成的有向无环图（directed acycline graph，DAG）。TensorFlow 由 Tensor 和 Flow 两部 分组成，Tensor(张量)代表了数据流图中的边，而 Flow(流动)这个动作就代表了数据流图中节点所做的操作。  计算过程：首先从输入层开始，经过塑形层后，一层一层进行前向传播运算。Re">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://wx3.sinaimg.cn/large/007h1WTYly1fup5sc9m7ag30700cgwol.gif">
+<meta property="og:updated_time" content="2018-09-03T12:32:57.038Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TensorFlow 基本概念与函数-1">
+<meta name="twitter:description" content="编程模型 TensorFlow的数据流图是由节点（Node）和边（edge）组成的有向无环图（directed acycline graph，DAG）。TensorFlow 由 Tensor 和 Flow 两部 分组成，Tensor(张量)代表了数据流图中的边，而 Flow(流动)这个动作就代表了数据流图中节点所做的操作。  计算过程：首先从输入层开始，经过塑形层后，一层一层进行前向传播运算。Re">
+<meta name="twitter:image" content="https://wx3.sinaimg.cn/large/007h1WTYly1fup5sc9m7ag30700cgwol.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/03/Tensorflow 入门-1/"/>
+
+
+
+
+
+  <title> TensorFlow 基本概念与函数-1 | YanY </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0019617ab74dfbcdc260734bb2d66a5d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+<!-- 添加到了footer -->
+<!--
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261131814&web_id=1261131814" language="JavaScript"></script>
+  </div>
+-->
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">YanY</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/03/Tensorflow 入门-1/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Yan Yong">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.gif">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="YanY">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="YanY" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                TensorFlow 基本概念与函数-1
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-03T20:18:38+08:00">
+                2018-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Big-data/" itemprop="url" rel="index">
+                    <span itemprop="name">Big data</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/09/03/Tensorflow 入门-1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/09/03/Tensorflow 入门-1/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="编程模型"><a href="#编程模型" class="headerlink" title="编程模型"></a>编程模型</h3><blockquote>
+<p>TensorFlow的数据流图是由<code>节点（Node）</code>和<code>边（edge）</code>组成的<code>有向无环图（directed acycline graph，DAG）</code>。TensorFlow 由 Tensor 和 Flow 两部 分组成，Tensor(张量)代表了数据流图中的边，而 Flow(流动)这个动作就代表了数据流图中节点所做的操作。</p>
+</blockquote>
+<p>计算过程：首先从输入层开始，经过塑形层后，一层一层进行前向传播运算。Relu层（隐藏层）里两个参数，即Wh1和bh1，在输出前使用Rule（Rectified Linear Units）激活函数做非线性处理。然后进入Logit层（输出层），学习两个参数Wsm 和 bsm。用Softmax来计算输出结果中各个类别的概率分布。用交叉熵来度量两个概率分布（源样本的概率分布和输出结果 的概率分布）直接的相似性。然后开始计算梯度，这是需要参数Wh1、bh1、Wsm 和 bsm，以及 交叉熵后的结果。随后进入 SGD 训练，也就是反向传播的过程，从上往下计算每一层的参数， 依次进行更新。也就是说，计算和更新的顺序为 bsm、Wsm、bh1 和 Wh1。</p>
+<p><img src="https://wx3.sinaimg.cn/large/007h1WTYly1fup5sc9m7ag30700cgwol.gif" alt="avatar"></p>
+<h3 id="张量"><a href="#张量" class="headerlink" title="张量"></a>张量</h3><p>TensorFlow用张量这种数据结构来表示所有的数据。一个张量有一个静态类型和动态类型的维数。张量可以在图中的节点之间流通。<br>张量的维数来被描述为<code>阶</code></p>
+<blockquote>
+<p>秩：Tensor维度的数量</p>
+</blockquote>
+<h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><ul>
+<li>数据类型（例如 float32、int32 或 string）</li>
+<li>形状：即张量的维数和每个维度的大小</li>
+</ul>
+<h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><ul>
+<li>tf.rank：返回张量的秩</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># shape of tensor 't' is [2, 2, 3]</span></div><div class="line">t = tf.constant([[[<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>], [<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>]], [[<span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>]]])</div><div class="line">tf.rank(t)  <span class="comment"># 3</span></div></pre></td></tr></table></figure>
+<ul>
+<li>tf.shape：返回某个张量的形状</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">t = tf.constant([[[<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>], [<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>]], [[<span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>]]])</div><div class="line">tf.shape(t)  <span class="comment"># [2, 2, 3]</span></div></pre></td></tr></table></figure>
+<ul>
+<li>tf.reshape：重构张量</li>
+<li>tf.cast：将 tf.Tensor 从一种数据类型转型为另一种</li>
+</ul>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><h4 id="变量集合"><a href="#变量集合" class="headerlink" title="变量集合"></a>变量集合</h4><p>默认情况下，每个 tf.Variable 都放置在以下两个集合中</p>
+<ul>
+<li><code>tf.GraphKeys.GLOBAL_VARIABLES</code> - 可以在多台设备间共享的变量，</li>
+<li><code>tf.GraphKeys.TRAINABLE_VARIABLES</code> - TensorFlow 将计算其梯度的变量</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># 如果不希望变量可训练，可以将其添加到 tf.GraphKeys.LOCAL_VARIABLES 集合中</div><div class="line">my_local = tf.get_variable(&quot;my_local&quot;, shape=(),collections=[tf.GraphKeys.LOCAL_VARIABLES])</div><div class="line"># 或</div><div class="line">my_non_trainable = tf.get_variable(&quot;my_non_trainable&quot;,</div><div class="line">                                   shape=(),</div><div class="line">                                   trainable=False)</div></pre></td></tr></table></figure>
+<p>可以定义自己的集合</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 将名为 my_local 的现有变量添加到名为 my_collection_name 的集合中</div><div class="line">tf.add_to_collection(&quot;my_collection_name&quot;, my_local)</div><div class="line"># 获取某个集合中的所有变量（或其他对象）的列表</div><div class="line">tf.get_collection(&quot;my_collection_name&quot;)</div></pre></td></tr></table></figure>
+<h4 id="初始化变量"><a href="#初始化变量" class="headerlink" title="初始化变量"></a>初始化变量</h4><blockquote>
+<p>初始化器: tf.initializers（constant、zeros）</p>
+</blockquote>
+<p>要在训练开始前一次性初始化所有可训练变量，请调用<code>tf.global_variables_initializer()</code>。默认情况下，<code>tf.global_variables_initializer</code>不会指定变量的初始化顺序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">v = tf.get_variable(&quot;v&quot;, shape=(), initializer=tf.zeros_initializer())</div><div class="line">w = tf.get_variable(&quot;w&quot;, initializer=v.initialized_value() + 1)</div></pre></td></tr></table></figure>
+<h4 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h4><p>要为变量赋值，请使用 assign、assign_add 方法以及 tf.Variable 类中的友元。</p>
+<p>共享变量两种方式：</p>
+<ul>
+<li>显式传递 <code>tf.Variable</code> 对象</li>
+<li>在 <code>tf.variable_scope</code> 对象内隐式封装 tf.Variable 对象。</li>
+</ul>
+<p>变量作用域允许您在调用隐式创建和使用变量的函数时控制变量重用。作用域还允许您以分层和可理解的方式命名变量。</p>
+<h3 id="图和会话"><a href="#图和会话" class="headerlink" title="图和会话"></a>图和会话</h3><h4 id="tf-Graph"><a href="#tf-Graph" class="headerlink" title="tf.Graph"></a>tf.Graph</h4><ul>
+<li>图结构：图的节点和边缘，表示各个操作组合在一起的方式，但不规定它们的使用方式。</li>
+<li>图集合：TensorFlow 提供了一种在<code>tf.Graph</code>中存储元数据集合的通用机制。<code>tf.add_to_collection</code> 函数允许您将对象列表与一个键关联（其中 tf.GraphKeys 定义了部分标准键），<code>tf.get_collection</code> 允许您查询与某个键关联的所有对象。</li>
+</ul>
+<p>大多数 TensorFlow 程序都以数据流图构建阶段开始。在此阶段，您会调用 TensorFlow API 函数，这些函数可构建新的 <code>tf.Operation（节点）</code>和 <code>tf.Tensor（边缘</code> 对象并将它们添加到 tf.Graph 实例中。</p>
+<p>类张量类型:</p>
+<ul>
+<li>tf.Tensor</li>
+<li>tf.Variable</li>
+<li>numpy.ndarray</li>
+<li>list（以及类似于张量的对象的列表）</li>
+<li>标量 Python 类型：bool、float、int、str</li>
+</ul>
+<blockquote>
+<p>注意：在 TensorFlow API 中调用大多数函数时，只是将操作和张量添加到默认图中，并不会执行实际的计算。您应编写这些函数，直到拥有表示整个计算（例如执行梯度下降法的一步）的 tf.Tensor 或 tf.Operation，然后将该对象传递给 tf.Session 以执行计算。</p>
+</blockquote>
+<h4 id="tf-Sessoin"><a href="#tf-Sessoin" class="headerlink" title="tf.Sessoin"></a>tf.Sessoin</h4><p><code>tf.Session</code> 拥有物理资源（例如 GPU 和网络连接），因此通常（在 with 代码块中）用作上下文管理器，并在您退出代码块时自动关闭会话</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Create a default in-process session.</span></div><div class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line">  <span class="comment"># ...</span></div><div class="line"></div><div class="line"><span class="comment"># Create a remote session.</span></div><div class="line"><span class="keyword">with</span> tf.Session(<span class="string">"grpc://example.org:2222"</span>):</div><div class="line">  <span class="comment"># ...</span></div></pre></td></tr></table></figure>
+<ul>
+<li>tf.Session.init <ul>
+<li>target： 如果将此参数留空（默认设置），会话将仅使用本地机器中的设备。也可以指定 grpc:// 网址，以便指定 TensorFlow 服务器的地址，这使得会话可以访问该服务器控制的机器上的所有设备。</li>
+<li>graph：默认情况下，新的 tf.Session 将绑定到当前的默认图，并且仅能够在当前的默认图中运行操作。如果您在程序中使用了多个图，则可以在构建会话时指定明确的 <code>tf.Graph</code>。</li>
+<li>config：此参数允许您指定一个控制会话行为的<code>tf.ConfigProto</code></li>
+</ul>
+</li>
+<li><code>tf.Session.run</code>：运行 <code>tf.Operation</code> 或评估 <code>tf.Tensor</code> 的主要机制<ul>
+<li><code>tf.Session.run</code> 要求您指定一组 fetch，这些 fetch 可确定返回值，并且可能是 <code>tf.Operation</code>、<code>tf.Tensor</code> 或<code>类张量类型</code></li>
+<li><code>tf.Session.run</code> 也可以选择接受 Feed 字典，该字典是从 <code>tf.Tensor</code> 对象（通常是 tf.placeholder 张量）到在执行时会被替换为这些张量的值（通常是 Python 标量、列表或 NumPy 数组）的映射</li>
+<li><code>tf.Session.run</code> 也接受可选的 options 参数（允许您指定与调用有关的选项）和可选的 run_metadata 参数（允许您收集与执行有关的元数据）</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/yarn/" rel="tag"># yarn</a>
+          
+            <a href="/tags/hadoop/" rel="tag"># hadoop</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/05/go-ethereum-简单搭建私有链/" rel="next" title="go-ethereum-简单搭建私有链">
+                <i class="fa fa-chevron-left"></i> go-ethereum-简单搭建私有链
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2018/09/03/Tensorflow 入门-1/"
+           data-title="TensorFlow 基本概念与函数-1" data-url="http://yoursite.com/2018/09/03/Tensorflow 入门-1/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Yan Yong" />
+          <p class="site-author-name" itemprop="name">Yan Yong</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">categories</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">tags</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yany8060" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#编程模型"><span class="nav-number">1.</span> <span class="nav-text">编程模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#张量"><span class="nav-number">2.</span> <span class="nav-text">张量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#属性"><span class="nav-number">2.1.</span> <span class="nav-text">属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法"><span class="nav-number">2.2.</span> <span class="nav-text">方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变量"><span class="nav-number">3.</span> <span class="nav-text">变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#变量集合"><span class="nav-number">3.1.</span> <span class="nav-text">变量集合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化变量"><span class="nav-number">3.2.</span> <span class="nav-text">初始化变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基本操作"><span class="nav-number">3.3.</span> <span class="nav-text">基本操作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图和会话"><span class="nav-number">4.</span> <span class="nav-text">图和会话</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#tf-Graph"><span class="nav-number">4.1.</span> <span class="nav-text">tf.Graph</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tf-Sessoin"><span class="nav-number">4.2.</span> <span class="nav-text">tf.Sessoin</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yan Yong</span>
+
+  
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261131814'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1261131814%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
+  
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"yany8060"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
