@@ -1,20 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
   
 
 
-<html class="theme-next pisces use-motion" lang="en">
+<html class="theme-next mist use-motion" lang="en">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
 
 
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
 
 
 
@@ -34,38 +45,27 @@
 
 
 
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
 
 
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.4" color="#222">
+
+
+
 
 
   <meta name="keywords" content="spring-boot,spring," />
@@ -77,26 +77,22 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
 
 
-
-
-
-
-<meta name="description" content="本例使用mysql作为数据库，使用druid作为数据库连接池主要有单数据源和多数据源实例多数据源中又分为：1. 分包形式 2. aop形式 3. 注解形式  项目目录结构 MyBatis配置实现 springBoot相比于原来的Spring的模式就是减少xml配置，将它们用java代码实现。   DataSource的bean，主要配置数据来源 SqlSessionFactoryBean的bea">
+<meta name="description" content="本例使用mysql作为数据库，使用druid作为数据库连接池主要有单数据源和多数据源实例多数据源中又分为：1. 分包形式 2. aop形式 3. 注解形式  项目目录结构 [comment]: &amp;lt;&amp;gt; (  ) MyBatis配置实现 springBoot相比于原来的Spring的模式就是减少xml配置，将它们用java代码实现。   DataSource的bean，主要配置数据来源">
 <meta name="keywords" content="spring-boot,spring">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring-boot MyBatis配置-1">
 <meta property="og:url" content="http://yoursite.com/2017/02/04/Spring-boot-MyBatis配置-1/index.html">
 <meta property="og:site_name" content="YanY">
-<meta property="og:description" content="本例使用mysql作为数据库，使用druid作为数据库连接池主要有单数据源和多数据源实例多数据源中又分为：1. 分包形式 2. aop形式 3. 注解形式  项目目录结构 MyBatis配置实现 springBoot相比于原来的Spring的模式就是减少xml配置，将它们用java代码实现。   DataSource的bean，主要配置数据来源 SqlSessionFactoryBean的bea">
+<meta property="og:description" content="本例使用mysql作为数据库，使用druid作为数据库连接池主要有单数据源和多数据源实例多数据源中又分为：1. 分包形式 2. aop形式 3. 注解形式  项目目录结构 [comment]: &amp;lt;&amp;gt; (  ) MyBatis配置实现 springBoot相比于原来的Spring的模式就是减少xml配置，将它们用java代码实现。   DataSource的bean，主要配置数据来源">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1419542-fa4ab411fc0cd9a0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/324">
+<meta property="og:image" content="http://yoursite.com/img/work/catalog.png">
 <meta property="og:updated_time" content="2018-09-03T12:29:46.719Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring-boot MyBatis配置-1">
-<meta name="twitter:description" content="本例使用mysql作为数据库，使用druid作为数据库连接池主要有单数据源和多数据源实例多数据源中又分为：1. 分包形式 2. aop形式 3. 注解形式  项目目录结构 MyBatis配置实现 springBoot相比于原来的Spring的模式就是减少xml配置，将它们用java代码实现。   DataSource的bean，主要配置数据来源 SqlSessionFactoryBean的bea">
+<meta name="twitter:description" content="本例使用mysql作为数据库，使用druid作为数据库连接池主要有单数据源和多数据源实例多数据源中又分为：1. 分包形式 2. aop形式 3. 注解形式  项目目录结构 [comment]: &amp;lt;&amp;gt; (  ) MyBatis配置实现 springBoot相比于原来的Spring的模式就是减少xml配置，将它们用java代码实现。   DataSource的bean，主要配置数据来源">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1419542-fa4ab411fc0cd9a0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/324">
 
 
@@ -105,10 +101,12 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Pisces',
-    sidebar: {"position":"left","display":"post"},
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
-    motion: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: '0',
       author: 'Author'
@@ -131,12 +129,10 @@
 
 
 
-  <title> Spring-boot MyBatis配置-1 | YanY </title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="en">
-
+  <title>Spring-boot MyBatis配置-1 | YanY</title>
   
+
+
 
 
 
@@ -153,48 +149,42 @@
 
 
 
+</head>
 
-
-<!-- 添加到了footer -->
-<!--
-  <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1261131814&web_id=1261131814" language="JavaScript"></script>
-  </div>
--->
-
-
-
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
 
   
   
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
 
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">YanY</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YanY</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
   </div>
-    
-      <p class="site-subtitle"></p>
-    
-</div>
 
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
 
 <nav class="site-nav">
@@ -214,8 +204,28 @@
         </li>
       
         
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
+          <a href="/categories/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -225,31 +235,11 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             Archives
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            Tags
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            About
           </a>
         </li>
       
@@ -281,35 +271,29 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/04/Spring-boot-MyBatis配置-1/">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/04/Spring-boot-MyBatis配置-1/">
 
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Yan Yong">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="YanY">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="YanY" src="">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yan Yong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/favicon.ico">
     </span>
-  </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanY">
+    </span>
 
     
       <header class="post-header">
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                Spring-boot MyBatis配置-1
-              
-            
-          </h1>
+          <h1 class="post-title" itemprop="name headline">Spring-boot MyBatis配置-1</h1>
         
 
         <div class="post-meta">
@@ -357,21 +341,11 @@
 
           
             
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/02/04/Spring-boot-MyBatis配置-1/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/04/Spring-boot-MyBatis配置-1/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
           
 
           
-
           
+
           
 
           
@@ -382,7 +356,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -393,6 +369,7 @@
 <p>本例使用mysql作为数据库，使用druid作为数据库连接池<br>主要有单数据源和多数据源实例<br>多数据源中又分为：1. 分包形式 2. aop形式 3. 注解形式</p>
 </blockquote>
 <h3 id="项目目录结构"><a href="#项目目录结构" class="headerlink" title="项目目录结构"></a>项目目录结构</h3><p><img src="http://upload-images.jianshu.io/upload_images/1419542-fa4ab411fc0cd9a0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/324" alt="catalog.png"></p>
+<p>[comment]: &lt;&gt; ( <img src="/img/work/catalog.png" alt=""> )</p>
 <h3 id="MyBatis配置实现"><a href="#MyBatis配置实现" class="headerlink" title="MyBatis配置实现"></a>MyBatis配置实现</h3><blockquote>
 <p>springBoot相比于原来的Spring的模式就是减少xml配置，将它们用java代码实现。</p>
 </blockquote>
@@ -402,36 +379,30 @@
 <li>MapperScannerConfigurer的bean的，主要设置基本扫描包，引用SqlSessionFactoryBean</li>
 <li>DataSourceTransactionManager的bean，主要用设置事务</li>
 </ol>
-<h3 id="添加maven依赖"><a href="#添加maven依赖" class="headerlink" title="添加maven依赖"></a>添加maven依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">&lt;!-- aop --&gt;        </div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.aspectj&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;aspectjweaver&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;1.8.4&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;!-- dataSource start --&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;1.2.0&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;mysql&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;5.1.38&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;druid&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;1.0.20&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;com.github.pagehelper&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;pagehelper&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;5.0.0&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;!-- dataSource end --&gt;</div></pre></td></tr></table></figure>
-<h3 id="单数据源"><a href="#单数据源" class="headerlink" title="单数据源"></a>单数据源</h3><h4 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h4><p>在application.yml中添加datasource配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">spring:</div><div class="line">  application:</div><div class="line">    name: SpringBoot</div><div class="line">  datasource:</div><div class="line">    url: jdbc:mysql://localhost:3306/YanYPro?useUnicode=true&amp;characterEncoding=UTF-8&amp;&amp;useSSL=false</div><div class="line">    username: root</div><div class="line">    password: *****</div><div class="line">    driver-class-name: com.mysql.jdbc.Driver</div><div class="line">    # 使用druid数据源</div><div class="line">    type: com.alibaba.druid.pool.DruidDataSource</div><div class="line">    # 初始化大小，最小，最大</div><div class="line">    initialSize: 5</div><div class="line">    minIdle: 5</div><div class="line">    maxActive: 20</div><div class="line">    # 配置获取连接等待超时的时间</div><div class="line">    maxWait: 60000</div><div class="line">    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒</div><div class="line">    timeBetweenEvictionRunsMillis: 60000</div><div class="line">    # 配置一个连接在池中最小生存的时间，单位是毫秒</div><div class="line">    minEvictableIdleTimeMillis: 300000</div><div class="line">    validationQuery: SELECT 1 FROM DUAL</div><div class="line">    testWhileIdle: true</div><div class="line">    testOnBorrow: false</div><div class="line">    testOnReturn: false</div><div class="line">    # 打开PSCache，并且指定每个连接上PSCache的大小</div><div class="line">    poolPreparedStatements: true</div><div class="line">    maxPoolPreparedStatementPerConnectionSize: 20</div><div class="line">    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，&apos;wall&apos;用于防火墙</div><div class="line">    filters: stat,wall,log4j</div><div class="line">    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录</div><div class="line">    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000</div><div class="line">    # 合并多个DruidDataSource的监控数据</div><div class="line">    useGlobalDataSourceStat: true</div></pre></td></tr></table></figure></p>
-<p>配置mybatis-config:<br>以下只是实例，可自定义添加一些别的配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;!DOCTYPE configuration PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;</div><div class="line">        &quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;</div><div class="line">&lt;configuration&gt;</div><div class="line">    &lt;!-- 全局参数 --&gt;</div><div class="line">    &lt;settings&gt;</div><div class="line">        &lt;!-- 使全局的映射器启用或禁用缓存。 --&gt;</div><div class="line">        &lt;setting name=&quot;cacheEnabled&quot; value=&quot;true&quot;/&gt;</div><div class="line">        &lt;!-- 全局启用或禁用延迟加载。当禁用时，所有关联对象都会即时加载。 --&gt;</div><div class="line">        &lt;setting name=&quot;lazyLoadingEnabled&quot; value=&quot;true&quot;/&gt;</div><div class="line">        &lt;!-- 当启用时，有延迟加载属性的对象在被调用时将会完全加载任意属性。否则，每种属性将会按需要加载。 --&gt;</div><div class="line">        &lt;setting name=&quot;aggressiveLazyLoading&quot; value=&quot;true&quot;/&gt;</div><div class="line">        &lt;!-- 是否允许单条sql 返回多个数据集  (取决于驱动的兼容性) default:true --&gt;</div><div class="line">        &lt;setting name=&quot;multipleResultSetsEnabled&quot; value=&quot;true&quot;/&gt;</div><div class="line">        &lt;!-- 是否可以使用列的别名 (取决于驱动的兼容性) default:true --&gt;</div><div class="line">        &lt;setting name=&quot;useColumnLabel&quot; value=&quot;true&quot;/&gt;</div><div class="line">        &lt;!-- 允许JDBC 生成主键。需要驱动器支持。如果设为了true，这个设置将强制使用被生成的主键，有一些驱动器不兼容不过仍然可以执行。  default:false  --&gt;</div><div class="line">        &lt;setting name=&quot;useGeneratedKeys&quot; value=&quot;true&quot;/&gt;</div><div class="line">        &lt;!-- 指定 MyBatis 如何自动映射 数据基表的列 NONE：不隐射　PARTIAL:部分  FULL:全部  --&gt;</div><div class="line">        &lt;setting name=&quot;autoMappingBehavior&quot; value=&quot;PARTIAL&quot;/&gt;</div><div class="line">        &lt;!-- 这是默认的执行类型  （SIMPLE: 简单； REUSE: 执行器可能重复使用prepared statements语句；BATCH: 执行器可以重复执行语句和批量更新）  --&gt;</div><div class="line">        &lt;setting name=&quot;defaultExecutorType&quot; value=&quot;SIMPLE&quot;/&gt;</div><div class="line">        &lt;!-- 使用驼峰命名法转换字段。 --&gt;</div><div class="line">        &lt;setting name=&quot;mapUnderscoreToCamelCase&quot; value=&quot;true&quot;/&gt;</div><div class="line">        &lt;!-- 设置本地缓存范围 session:就会有数据的共享  statement:语句范围 (这样就不会有数据的共享 ) defalut:session --&gt;</div><div class="line">        &lt;setting name=&quot;localCacheScope&quot; value=&quot;SESSION&quot;/&gt;</div><div class="line">        &lt;!-- 设置但JDBC类型为空时,某些驱动程序 要指定值,default:OTHER，插入空值时不需要指定类型 --&gt;</div><div class="line">        &lt;setting name=&quot;jdbcTypeForNull&quot; value=&quot;NULL&quot;/&gt;</div><div class="line">    &lt;/settings&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure></p>
-<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><h5 id="SingleMyBatisConfig的类实现"><a href="#SingleMyBatisConfig的类实现" class="headerlink" title="SingleMyBatisConfig的类实现"></a>SingleMyBatisConfig的类实现</h5><p>继承EnvironmentAware并实现setEnvironment，为了获取默认配置文件application.yml的元素。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SingleMyBatisConfig</span> <span class="keyword">implements</span> <span class="title">EnvironmentAware</span></span>&#123;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> Logger logger = LoggerFactory.getLogger(SingleMyBatisConfig.class);</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String MYBATIS_CONFIG = <span class="string">"mybatis-config.xml"</span>;</div><div class="line">    <span class="comment">//mybatis mapper resource 路径</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String MAPPER_PATH = <span class="string">"classpath:/com/yany/mapper/single/**.xml"</span>;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> RelaxedPropertyResolver propertyResolver;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setEnvironment</span><span class="params">(Environment environment)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.propertyResolver = <span class="keyword">new</span> RelaxedPropertyResolver(environment, <span class="string">"spring.datasource."</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">  .......</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>添加@Bean(name = “singleDataSource”)，设置实现DataSource的bean<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * <span class="doctag">@return</span></span></div><div class="line"><span class="comment"> * <span class="doctag">@Primary</span> 优先方案，被注解的实现，优先被注入</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="meta">@Primary</span></div><div class="line"><span class="meta">@Bean</span>(name = <span class="string">"singleDataSource"</span>)</div><div class="line"><span class="function"><span class="keyword">public</span> DataSource <span class="title">singleDataSource</span><span class="params">()</span> </span>&#123;</div><div class="line">    logger.info(<span class="string">"datasource url:&#123;&#125;"</span>, propertyResolver.getProperty(<span class="string">"url"</span>));</div><div class="line"></div><div class="line">    DruidDataSource datasource = <span class="keyword">new</span> DruidDataSource();</div><div class="line">    datasource.setUrl(propertyResolver.getProperty(<span class="string">"url"</span>));</div><div class="line">    datasource.setDriverClassName(propertyResolver.getProperty(<span class="string">"driver-class-name"</span>));</div><div class="line">    datasource.setUsername(propertyResolver.getProperty(<span class="string">"username"</span>));</div><div class="line">    datasource.setPassword(propertyResolver.getProperty(<span class="string">"password"</span>));</div><div class="line"></div><div class="line"></div><div class="line">    datasource.setInitialSize(Integer.valueOf(propertyResolver.getProperty(<span class="string">"initialSize"</span>)));</div><div class="line">    datasource.setMinIdle(Integer.valueOf(propertyResolver.getProperty(<span class="string">"minIdle"</span>)));</div><div class="line">    datasource.setMaxWait(Long.valueOf(propertyResolver.getProperty(<span class="string">"maxWait"</span>)));</div><div class="line">    datasource.setMaxActive(Integer.valueOf(propertyResolver.getProperty(<span class="string">"maxActive"</span>)));</div><div class="line">    datasource.setTimeBetweenEvictionRunsMillis(Long.valueOf(propertyResolver.getProperty(<span class="string">"timeBetweenEvictionRunsMillis"</span>)));</div><div class="line">    datasource.setMinEvictableIdleTimeMillis(Long.valueOf(propertyResolver.getProperty(<span class="string">"minEvictableIdleTimeMillis"</span>)));</div><div class="line">    datasource.setValidationQuery(propertyResolver.getProperty(<span class="string">"validationQuery"</span>));</div><div class="line">    datasource.setTestWhileIdle(Boolean.parseBoolean(propertyResolver.getProperty(<span class="string">"testWhileIdle"</span>)));</div><div class="line">    datasource.setTestOnBorrow(Boolean.parseBoolean(propertyResolver.getProperty(<span class="string">"testOnBorrow"</span>)));</div><div class="line">    datasource.setTestOnReturn(Boolean.parseBoolean(propertyResolver.getProperty(<span class="string">"testOnReturn"</span>)));</div><div class="line">    datasource.setPoolPreparedStatements(Boolean.parseBoolean(propertyResolver.getProperty(<span class="string">"poolPreparedStatements"</span>)));</div><div class="line">    datasource.setMaxPoolPreparedStatementPerConnectionSize(Integer.valueOf(propertyResolver.getProperty(<span class="string">"maxPoolPreparedStatementPerConnectionSize"</span>)));</div><div class="line"></div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        datasource.setFilters(propertyResolver.getProperty(<span class="string">"filters"</span>));</div><div class="line">    &#125; <span class="keyword">catch</span> (SQLException e) &#123;</div><div class="line">        e.printStackTrace();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> datasource;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>添加@Bean(name = “singleSqlSessionFactory”)，设置实现SqlSessionFactoryBean<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">     * 创建sqlSessionFactory实例</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span></span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@Bean</span>(name = <span class="string">"singleSqlSessionFactory"</span>)</div><div class="line">    <span class="meta">@Primary</span></div><div class="line">    <span class="function"><span class="keyword">public</span> SqlSessionFactoryBean <span class="title">createSqlSessionFactoryBean</span><span class="params">(@Qualifier(<span class="string">"singleDataSource"</span>)</span> DataSource singleDataSource) <span class="keyword">throws</span> IOException </span>&#123;</div><div class="line">        SqlSessionFactoryBean sqlSessionFactoryBean = <span class="keyword">new</span> SqlSessionFactoryBean();</div><div class="line">        <span class="comment">//设置mybatis configuration 扫描路径</span></div><div class="line">        sqlSessionFactoryBean.setConfigLocation(<span class="keyword">new</span> ClassPathResource(MYBATIS_CONFIG));</div><div class="line">        sqlSessionFactoryBean.setDataSource(singleDataSource);</div><div class="line"></div><div class="line">        PathMatchingResourcePatternResolver pathMatchingResourcePatternResolver = <span class="keyword">new</span> PathMatchingResourcePatternResolver();</div><div class="line">        sqlSessionFactoryBean.setMapperLocations(pathMatchingResourcePatternResolver.getResources(MAPPER_PATH));</div><div class="line">        <span class="keyword">return</span> sqlSessionFactoryBean;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
-<p>添加@Bean(name = “singleTransactionManager”)，设置实现事务DataSourceTransactionManager<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * 配置事务管理器</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="meta">@Bean</span>(name = <span class="string">"singleTransactionManager"</span>)</div><div class="line"><span class="meta">@Primary</span></div><div class="line"><span class="function"><span class="keyword">public</span> DataSourceTransactionManager <span class="title">transactionManager</span><span class="params">(@Qualifier(<span class="string">"singleDataSource"</span>)</span> DataSource singleDataSource) <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> DataSourceTransactionManager(singleDataSource);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="添加maven依赖"><a href="#添加maven依赖" class="headerlink" title="添加maven依赖"></a>添加maven依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- aop --&gt;        </span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.aspectj&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;aspectjweaver&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.8.4&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;!-- dataSource start --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.2.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;mysql&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;5.1.38&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;druid&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.0.20&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.github.pagehelper&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;pagehelper&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;5.0.0&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;!-- dataSource end --&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="单数据源"><a href="#单数据源" class="headerlink" title="单数据源"></a>单数据源</h3><h4 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h4><p>在application.yml中添加datasource配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: SpringBoot</span><br><span class="line">  datasource:</span><br><span class="line">    url: jdbc:mysql://localhost:3306/YanYPro?useUnicode=true&amp;characterEncoding=UTF-8&amp;&amp;useSSL=false</span><br><span class="line">    username: root</span><br><span class="line">    password: *****</span><br><span class="line">    driver-class-name: com.mysql.jdbc.Driver</span><br><span class="line">    # 使用druid数据源</span><br><span class="line">    type: com.alibaba.druid.pool.DruidDataSource</span><br><span class="line">    # 初始化大小，最小，最大</span><br><span class="line">    initialSize: 5</span><br><span class="line">    minIdle: 5</span><br><span class="line">    maxActive: 20</span><br><span class="line">    # 配置获取连接等待超时的时间</span><br><span class="line">    maxWait: 60000</span><br><span class="line">    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒</span><br><span class="line">    timeBetweenEvictionRunsMillis: 60000</span><br><span class="line">    # 配置一个连接在池中最小生存的时间，单位是毫秒</span><br><span class="line">    minEvictableIdleTimeMillis: 300000</span><br><span class="line">    validationQuery: SELECT 1 FROM DUAL</span><br><span class="line">    testWhileIdle: true</span><br><span class="line">    testOnBorrow: false</span><br><span class="line">    testOnReturn: false</span><br><span class="line">    # 打开PSCache，并且指定每个连接上PSCache的大小</span><br><span class="line">    poolPreparedStatements: true</span><br><span class="line">    maxPoolPreparedStatementPerConnectionSize: 20</span><br><span class="line">    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，&apos;wall&apos;用于防火墙</span><br><span class="line">    filters: stat,wall,log4j</span><br><span class="line">    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录</span><br><span class="line">    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000</span><br><span class="line">    # 合并多个DruidDataSource的监控数据</span><br><span class="line">    useGlobalDataSourceStat: true</span><br></pre></td></tr></table></figure></p>
+<p>配置mybatis-config:<br>以下只是实例，可自定义添加一些别的配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;!DOCTYPE configuration PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;</span><br><span class="line">        &quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;!-- 全局参数 --&gt;</span><br><span class="line">    &lt;settings&gt;</span><br><span class="line">        &lt;!-- 使全局的映射器启用或禁用缓存。 --&gt;</span><br><span class="line">        &lt;setting name=&quot;cacheEnabled&quot; value=&quot;true&quot;/&gt;</span><br><span class="line">        &lt;!-- 全局启用或禁用延迟加载。当禁用时，所有关联对象都会即时加载。 --&gt;</span><br><span class="line">        &lt;setting name=&quot;lazyLoadingEnabled&quot; value=&quot;true&quot;/&gt;</span><br><span class="line">        &lt;!-- 当启用时，有延迟加载属性的对象在被调用时将会完全加载任意属性。否则，每种属性将会按需要加载。 --&gt;</span><br><span class="line">        &lt;setting name=&quot;aggressiveLazyLoading&quot; value=&quot;true&quot;/&gt;</span><br><span class="line">        &lt;!-- 是否允许单条sql 返回多个数据集  (取决于驱动的兼容性) default:true --&gt;</span><br><span class="line">        &lt;setting name=&quot;multipleResultSetsEnabled&quot; value=&quot;true&quot;/&gt;</span><br><span class="line">        &lt;!-- 是否可以使用列的别名 (取决于驱动的兼容性) default:true --&gt;</span><br><span class="line">        &lt;setting name=&quot;useColumnLabel&quot; value=&quot;true&quot;/&gt;</span><br><span class="line">        &lt;!-- 允许JDBC 生成主键。需要驱动器支持。如果设为了true，这个设置将强制使用被生成的主键，有一些驱动器不兼容不过仍然可以执行。  default:false  --&gt;</span><br><span class="line">        &lt;setting name=&quot;useGeneratedKeys&quot; value=&quot;true&quot;/&gt;</span><br><span class="line">        &lt;!-- 指定 MyBatis 如何自动映射 数据基表的列 NONE：不隐射　PARTIAL:部分  FULL:全部  --&gt;</span><br><span class="line">        &lt;setting name=&quot;autoMappingBehavior&quot; value=&quot;PARTIAL&quot;/&gt;</span><br><span class="line">        &lt;!-- 这是默认的执行类型  （SIMPLE: 简单； REUSE: 执行器可能重复使用prepared statements语句；BATCH: 执行器可以重复执行语句和批量更新）  --&gt;</span><br><span class="line">        &lt;setting name=&quot;defaultExecutorType&quot; value=&quot;SIMPLE&quot;/&gt;</span><br><span class="line">        &lt;!-- 使用驼峰命名法转换字段。 --&gt;</span><br><span class="line">        &lt;setting name=&quot;mapUnderscoreToCamelCase&quot; value=&quot;true&quot;/&gt;</span><br><span class="line">        &lt;!-- 设置本地缓存范围 session:就会有数据的共享  statement:语句范围 (这样就不会有数据的共享 ) defalut:session --&gt;</span><br><span class="line">        &lt;setting name=&quot;localCacheScope&quot; value=&quot;SESSION&quot;/&gt;</span><br><span class="line">        &lt;!-- 设置但JDBC类型为空时,某些驱动程序 要指定值,default:OTHER，插入空值时不需要指定类型 --&gt;</span><br><span class="line">        &lt;setting name=&quot;jdbcTypeForNull&quot; value=&quot;NULL&quot;/&gt;</span><br><span class="line">    &lt;/settings&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure></p>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><h5 id="SingleMyBatisConfig的类实现"><a href="#SingleMyBatisConfig的类实现" class="headerlink" title="SingleMyBatisConfig的类实现"></a>SingleMyBatisConfig的类实现</h5><p>继承EnvironmentAware并实现setEnvironment，为了获取默认配置文件application.yml的元素。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SingleMyBatisConfig</span> <span class="keyword">implements</span> <span class="title">EnvironmentAware</span></span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> Logger logger = LoggerFactory.getLogger(SingleMyBatisConfig.class);</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String MYBATIS_CONFIG = <span class="string">"mybatis-config.xml"</span>;</span><br><span class="line">    <span class="comment">//mybatis mapper resource 路径</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String MAPPER_PATH = <span class="string">"classpath:/com/yany/mapper/single/**.xml"</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> RelaxedPropertyResolver propertyResolver;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setEnvironment</span><span class="params">(Environment environment)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.propertyResolver = <span class="keyword">new</span> RelaxedPropertyResolver(environment, <span class="string">"spring.datasource."</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  .......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>添加@Bean(name = “singleDataSource”)，设置实现DataSource的bean<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Primary</span> 优先方案，被注解的实现，优先被注入</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Primary</span></span><br><span class="line"><span class="meta">@Bean</span>(name = <span class="string">"singleDataSource"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> DataSource <span class="title">singleDataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    logger.info(<span class="string">"datasource url:&#123;&#125;"</span>, propertyResolver.getProperty(<span class="string">"url"</span>));</span><br><span class="line"></span><br><span class="line">    DruidDataSource datasource = <span class="keyword">new</span> DruidDataSource();</span><br><span class="line">    datasource.setUrl(propertyResolver.getProperty(<span class="string">"url"</span>));</span><br><span class="line">    datasource.setDriverClassName(propertyResolver.getProperty(<span class="string">"driver-class-name"</span>));</span><br><span class="line">    datasource.setUsername(propertyResolver.getProperty(<span class="string">"username"</span>));</span><br><span class="line">    datasource.setPassword(propertyResolver.getProperty(<span class="string">"password"</span>));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    datasource.setInitialSize(Integer.valueOf(propertyResolver.getProperty(<span class="string">"initialSize"</span>)));</span><br><span class="line">    datasource.setMinIdle(Integer.valueOf(propertyResolver.getProperty(<span class="string">"minIdle"</span>)));</span><br><span class="line">    datasource.setMaxWait(Long.valueOf(propertyResolver.getProperty(<span class="string">"maxWait"</span>)));</span><br><span class="line">    datasource.setMaxActive(Integer.valueOf(propertyResolver.getProperty(<span class="string">"maxActive"</span>)));</span><br><span class="line">    datasource.setTimeBetweenEvictionRunsMillis(Long.valueOf(propertyResolver.getProperty(<span class="string">"timeBetweenEvictionRunsMillis"</span>)));</span><br><span class="line">    datasource.setMinEvictableIdleTimeMillis(Long.valueOf(propertyResolver.getProperty(<span class="string">"minEvictableIdleTimeMillis"</span>)));</span><br><span class="line">    datasource.setValidationQuery(propertyResolver.getProperty(<span class="string">"validationQuery"</span>));</span><br><span class="line">    datasource.setTestWhileIdle(Boolean.parseBoolean(propertyResolver.getProperty(<span class="string">"testWhileIdle"</span>)));</span><br><span class="line">    datasource.setTestOnBorrow(Boolean.parseBoolean(propertyResolver.getProperty(<span class="string">"testOnBorrow"</span>)));</span><br><span class="line">    datasource.setTestOnReturn(Boolean.parseBoolean(propertyResolver.getProperty(<span class="string">"testOnReturn"</span>)));</span><br><span class="line">    datasource.setPoolPreparedStatements(Boolean.parseBoolean(propertyResolver.getProperty(<span class="string">"poolPreparedStatements"</span>)));</span><br><span class="line">    datasource.setMaxPoolPreparedStatementPerConnectionSize(Integer.valueOf(propertyResolver.getProperty(<span class="string">"maxPoolPreparedStatementPerConnectionSize"</span>)));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        datasource.setFilters(propertyResolver.getProperty(<span class="string">"filters"</span>));</span><br><span class="line">    &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> datasource;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>添加@Bean(name = “singleSqlSessionFactory”)，设置实现SqlSessionFactoryBean<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建sqlSessionFactory实例</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Bean</span>(name = <span class="string">"singleSqlSessionFactory"</span>)</span><br><span class="line">    <span class="meta">@Primary</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> SqlSessionFactoryBean <span class="title">createSqlSessionFactoryBean</span><span class="params">(@Qualifier(<span class="string">"singleDataSource"</span>)</span> DataSource singleDataSource) <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        SqlSessionFactoryBean sqlSessionFactoryBean = <span class="keyword">new</span> SqlSessionFactoryBean();</span><br><span class="line">        <span class="comment">//设置mybatis configuration 扫描路径</span></span><br><span class="line">        sqlSessionFactoryBean.setConfigLocation(<span class="keyword">new</span> ClassPathResource(MYBATIS_CONFIG));</span><br><span class="line">        sqlSessionFactoryBean.setDataSource(singleDataSource);</span><br><span class="line"></span><br><span class="line">        PathMatchingResourcePatternResolver pathMatchingResourcePatternResolver = <span class="keyword">new</span> PathMatchingResourcePatternResolver();</span><br><span class="line">        sqlSessionFactoryBean.setMapperLocations(pathMatchingResourcePatternResolver.getResources(MAPPER_PATH));</span><br><span class="line">        <span class="keyword">return</span> sqlSessionFactoryBean;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>添加@Bean(name = “singleTransactionManager”)，设置实现事务DataSourceTransactionManager<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 配置事务管理器</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Bean</span>(name = <span class="string">"singleTransactionManager"</span>)</span><br><span class="line"><span class="meta">@Primary</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> DataSourceTransactionManager <span class="title">transactionManager</span><span class="params">(@Qualifier(<span class="string">"singleDataSource"</span>)</span> DataSource singleDataSource) <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> DataSourceTransactionManager(singleDataSource);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>以上SingleMyBatisConfig的配置完成，上面主要配置了数据源、SqlSessionFactoryBean、事务（DataSourceTransactionManager）。还差一个MapperScannerConfigurer的配置。</p>
-<h4 id="MapperScannerConfig"><a href="#MapperScannerConfig" class="headerlink" title="MapperScannerConfig"></a>MapperScannerConfig</h4><p>本来主要集中实现各个数据源的MapperScannerConfigurer<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Configuration</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MapperScannerConfig</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 单数据源配置</span></div><div class="line"><span class="comment">     *</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span></span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@Bean</span></div><div class="line">    <span class="function"><span class="keyword">public</span> MapperScannerConfigurer <span class="title">createSingleMapperScannerConfigurer</span><span class="params">()</span> </span>&#123;</div><div class="line">        System.out.println(<span class="string">"singleDataSource"</span>);</div><div class="line">        MapperScannerConfigurer mapperScannerConfigurer = <span class="keyword">new</span> MapperScannerConfigurer();</div><div class="line">        mapperScannerConfigurer.setBasePackage(<span class="string">"com.yany.dao.single"</span>);</div><div class="line">        mapperScannerConfigurer.setSqlSessionFactoryBeanName(<span class="string">"singleSqlSessionFactory"</span>);</div><div class="line">        <span class="keyword">return</span> mapperScannerConfigurer;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>以上即为单数据源使用配置，而具体的dao层的编写以及sql的xml编写详情见：<a href="https://github.com/yany8060/SpringDemo.git" target="_blank" rel="external">https://github.com/yany8060/SpringDemo.git</a><br>com.yany.dao.single中编写单属于的到接口<br>com.yany.mapper.single中编写对应的sql的xml</p>
+<h4 id="MapperScannerConfig"><a href="#MapperScannerConfig" class="headerlink" title="MapperScannerConfig"></a>MapperScannerConfig</h4><p>本来主要集中实现各个数据源的MapperScannerConfigurer<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MapperScannerConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 单数据源配置</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> MapperScannerConfigurer <span class="title">createSingleMapperScannerConfigurer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"singleDataSource"</span>);</span><br><span class="line">        MapperScannerConfigurer mapperScannerConfigurer = <span class="keyword">new</span> MapperScannerConfigurer();</span><br><span class="line">        mapperScannerConfigurer.setBasePackage(<span class="string">"com.yany.dao.single"</span>);</span><br><span class="line">        mapperScannerConfigurer.setSqlSessionFactoryBeanName(<span class="string">"singleSqlSessionFactory"</span>);</span><br><span class="line">        <span class="keyword">return</span> mapperScannerConfigurer;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以上即为单数据源使用配置，而具体的dao层的编写以及sql的xml编写详情见：<a href="https://github.com/yany8060/SpringDemo.git" target="_blank" rel="noopener">https://github.com/yany8060/SpringDemo.git</a><br>com.yany.dao.single中编写单属于的到接口<br>com.yany.mapper.single中编写对应的sql的xml</p>
 <hr>
-<p>由于贴了比较多的代码，在下一篇多数据中中将直接类比这篇中的代码<br>详情请见：<a href="https://github.com/yany8060/SpringDemo.git" target="_blank" rel="external">https://github.com/yany8060/SpringDemo.git</a><br>博客：<a href="http://yany8060.xyz" target="_blank" rel="external">http://yany8060.xyz</a></p>
+<p>由于贴了比较多的代码，在下一篇多数据中中将直接类比这篇中的代码<br>详情请见：<a href="https://github.com/yany8060/SpringDemo.git" target="_blank" rel="noopener">https://github.com/yany8060/SpringDemo.git</a><br>博客：<a href="http://yany8060.xyz" target="_blank" rel="noopener">http://yany8060.xyz</a></p>
 
       
     </div>
+    
+    
+    
 
-    <div>
-      
-        
+    
 
-      
-    </div>
+    
 
-    <div>
-      
-        
-
-      
-    </div>
-
+    
 
     <footer class="post-footer">
       
@@ -442,6 +413,10 @@
             <a href="/tags/spring/" rel="tag"># spring</a>
           
         </div>
+      
+
+      
+      
       
 
       
@@ -469,6 +444,10 @@
       
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -484,13 +463,9 @@
 
 
           
-  <div class="comments" id="comments">
-    
-      <div class="ds-thread" data-thread-key="2017/02/04/Spring-boot-MyBatis配置-1/"
-           data-title="Spring-boot MyBatis配置-1" data-url="http://yoursite.com/2017/02/04/Spring-boot-MyBatis配置-1/">
-      </div>
-    
-  </div>
+
+  
+
 
 
         </div>
@@ -506,86 +481,100 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
             Overview
           </li>
         </ul>
       
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
-               alt="Yan Yong" />
-          <p class="site-author-name" itemprop="name">Yan Yong</p>
-          <p class="site-description motion-element" itemprop="description"></p>
-        </div>
-        <nav class="site-state motion-element">
-        
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">14</span>
-                <span class="site-state-item-name">posts</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-categories">
-              <a href="/categories">
-                <span class="site-state-item-count">6</span>
-                <span class="site-state-item-name">categories</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">14</span>
-                <span class="site-state-item-name">tags</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <span class="links-of-author-item">
-                <a href="https://github.com/yany8060" target="_blank" title="github">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  github
+              <img class="site-author-image" itemprop="image"
+                src="/favicon.ico"
+                alt="Yan Yong" />
+            
+              <p class="site-author-name" itemprop="name">Yan Yong</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">posts</span>
                 </a>
-              </span>
+              </div>
             
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
           
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yany8060" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:806055720@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
         </div>
-
-        
-        
-
-        
-        
-
-        
-
-
       </section>
 
       
@@ -606,6 +595,8 @@
       <!--/noindex-->
       
 
+      
+
     </div>
   </aside>
 
@@ -616,43 +607,56 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy;  2017 - 
-  <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Yan Yong</span>
 
   
-    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261131814'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1261131814%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
-  
 </div>
 
 
-<div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
-</div>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
-<div class="theme-info">
-  Theme -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Pisces
-  </a>
-</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
 
 
 
         
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261131814&web_id=1261131814" language="JavaScript"></script>
+  </div>
+
+
 
         
       </div>
     </footer>
 
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
   </div>
 
   
@@ -675,83 +679,6 @@
 
 
 
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
-
-
-
-  
-
-  
-    
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"yany8060"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
-    
-    
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
-  
-
 
 
 
@@ -763,6 +690,98 @@
 
   
   
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
 
   
 
@@ -771,7 +790,13 @@
   
 
   
+  
 
+  
+
+  
+
+  
 
 </body>
 </html>

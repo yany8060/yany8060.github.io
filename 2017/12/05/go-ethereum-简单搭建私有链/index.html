@@ -1,20 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
   
 
 
-<html class="theme-next pisces use-motion" lang="en">
+<html class="theme-next mist use-motion" lang="en">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
 
 
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
 
 
 
@@ -34,38 +45,27 @@
 
 
 
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
 
 
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.4" color="#222">
+
+
+
 
 
   <meta name="keywords" content="以太坊,区块链," />
@@ -73,11 +73,6 @@
 
 
 
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
 
 
 
@@ -108,10 +103,12 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Pisces',
-    sidebar: {"position":"left","display":"post"},
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
-    motion: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: '0',
       author: 'Author'
@@ -134,12 +131,10 @@
 
 
 
-  <title> go-ethereum-简单搭建私有链 | YanY </title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="en">
-
+  <title>go-ethereum-简单搭建私有链 | YanY</title>
   
+
+
 
 
 
@@ -156,48 +151,42 @@
 
 
 
+</head>
 
-
-<!-- 添加到了footer -->
-<!--
-  <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1261131814&web_id=1261131814" language="JavaScript"></script>
-  </div>
--->
-
-
-
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
 
   
   
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
 
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">YanY</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YanY</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
   </div>
-    
-      <p class="site-subtitle"></p>
-    
-</div>
 
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
 
 <nav class="site-nav">
@@ -217,8 +206,28 @@
         </li>
       
         
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
+          <a href="/categories/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -228,31 +237,11 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             Archives
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            Tags
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            About
           </a>
         </li>
       
@@ -284,35 +273,29 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/05/go-ethereum-简单搭建私有链/">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/05/go-ethereum-简单搭建私有链/">
 
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Yan Yong">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="YanY">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="YanY" src="">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yan Yong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/favicon.ico">
     </span>
-  </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanY">
+    </span>
 
     
       <header class="post-header">
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                go-ethereum-简单搭建私有链
-              
-            
-          </h1>
+          <h1 class="post-title" itemprop="name headline">go-ethereum-简单搭建私有链</h1>
         
 
         <div class="post-meta">
@@ -360,21 +343,11 @@
 
           
             
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/12/05/go-ethereum-简单搭建私有链/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/12/05/go-ethereum-简单搭建私有链/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
           
 
           
-
           
+
           
 
           
@@ -385,7 +358,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -393,19 +368,19 @@
 
       
         <h3 id="Geth"><a href="#Geth" class="headerlink" title="Geth"></a>Geth</h3><blockquote>
-<p><a href="https://ethereum.github.io/go-ethereum/install/" target="_blank" rel="external">https://ethereum.github.io/go-ethereum/install/</a></p>
+<p><a href="https://ethereum.github.io/go-ethereum/install/" target="_blank" rel="noopener">https://ethereum.github.io/go-ethereum/install/</a></p>
 </blockquote>
-<h4 id="安装-geth："><a href="#安装-geth：" class="headerlink" title="安装 geth："></a>安装 geth：</h4><p>访问<a href="https://geth.ethereum.org/downloads/" target="_blank" rel="external">https://geth.ethereum.org/downloads/</a>，下载Geth for macOS。<br><img src="http://upload-images.jianshu.io/upload_images/1419542-1cd247330ce95842.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="F674D81F-4D30-4C90-9D2C-5888F42F688C.png"><br>给geth做一个软连接到/usr/local/bin目录下，然后在命令行输入：geth version  显示如下边上安装成功<br><img src="http://upload-images.jianshu.io/upload_images/1419542-d6d5d014aeb2a3bb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/400" alt="image.png"><br>使用homebrew安装：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">brew tap ethereum/ethereum</div><div class="line">brew install ethereum</div></pre></td></tr></table></figure></p>
+<h4 id="安装-geth："><a href="#安装-geth：" class="headerlink" title="安装 geth："></a>安装 geth：</h4><p>访问<a href="https://geth.ethereum.org/downloads/" target="_blank" rel="noopener">https://geth.ethereum.org/downloads/</a>，下载Geth for macOS。<br><img src="http://upload-images.jianshu.io/upload_images/1419542-1cd247330ce95842.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600" alt="F674D81F-4D30-4C90-9D2C-5888F42F688C.png"><br>给geth做一个软连接到/usr/local/bin目录下，然后在命令行输入：geth version  显示如下边上安装成功<br><img src="http://upload-images.jianshu.io/upload_images/1419542-d6d5d014aeb2a3bb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/400" alt="image.png"><br>使用homebrew安装：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew tap ethereum/ethereum</span><br><span class="line">brew install ethereum</span><br></pre></td></tr></table></figure></p>
 <h4 id="Geth工具介绍："><a href="#Geth工具介绍：" class="headerlink" title="Geth工具介绍："></a>Geth工具介绍：</h4><ul>
 <li>Geth工具是Go Ethereum, 是以太坊的官方客户端（Go语言实现）</li>
 <li>Geth的命令行中包含了大多数的以太坊的命令，包括账户新建，账户之间的以太币转移，挖矿，获取余额，部署以太坊合约等</li>
 </ul>
-<h3 id="配置私链节点"><a href="#配置私链节点" class="headerlink" title="配置私链节点"></a>配置私链节点</h3><p>新建文件夹，命名随意，在此文件夹下创建genesis.json文件和data文件夹<br>genesis.json内容如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;config&quot;: &#123;</div><div class="line">        &quot;chainId&quot;: 0,</div><div class="line">        &quot;homesteadBlock&quot;: 0,</div><div class="line">        &quot;eip155Block&quot;: 0,</div><div class="line">        &quot;eip158Block&quot;: 0</div><div class="line">    &#125;,</div><div class="line">  &quot;alloc&quot;      : &#123;&#125;,</div><div class="line">  &quot;coinbase&quot;   : &quot;0x0000000000000000000000000000000000000000&quot;,</div><div class="line">  &quot;difficulty&quot; : &quot;0x20000&quot;,</div><div class="line">  &quot;extraData&quot;  : &quot;&quot;,</div><div class="line">  &quot;gasLimit&quot;   : &quot;0x2fefd8&quot;,</div><div class="line">  &quot;nonce&quot;      : &quot;0x0000000000000042&quot;,</div><div class="line">  &quot;mixhash&quot;    : &quot;0x0000000000000000000000000000000000000000000000000000000000000000&quot;,</div><div class="line">  &quot;parentHash&quot; : &quot;0x0000000000000000000000000000000000000000000000000000000000000000&quot;,</div><div class="line">  &quot;timestamp&quot;  : &quot;0x00&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="配置私链节点"><a href="#配置私链节点" class="headerlink" title="配置私链节点"></a>配置私链节点</h3><p>新建文件夹，命名随意，在此文件夹下创建genesis.json文件和data文件夹<br>genesis.json内容如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;config&quot;: &#123;</span><br><span class="line">        &quot;chainId&quot;: 0,</span><br><span class="line">        &quot;homesteadBlock&quot;: 0,</span><br><span class="line">        &quot;eip155Block&quot;: 0,</span><br><span class="line">        &quot;eip158Block&quot;: 0</span><br><span class="line">    &#125;,</span><br><span class="line">  &quot;alloc&quot;      : &#123;&#125;,</span><br><span class="line">  &quot;coinbase&quot;   : &quot;0x0000000000000000000000000000000000000000&quot;,</span><br><span class="line">  &quot;difficulty&quot; : &quot;0x20000&quot;,</span><br><span class="line">  &quot;extraData&quot;  : &quot;&quot;,</span><br><span class="line">  &quot;gasLimit&quot;   : &quot;0x2fefd8&quot;,</span><br><span class="line">  &quot;nonce&quot;      : &quot;0x0000000000000042&quot;,</span><br><span class="line">  &quot;mixhash&quot;    : &quot;0x0000000000000000000000000000000000000000000000000000000000000000&quot;,</span><br><span class="line">  &quot;parentHash&quot; : &quot;0x0000000000000000000000000000000000000000000000000000000000000000&quot;,</span><br><span class="line">  &quot;timestamp&quot;  : &quot;0x00&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1419542-6403c3c435533892.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="创世块.png"></p>
 <h4 id="初始化："><a href="#初始化：" class="headerlink" title="初始化："></a>初始化：</h4><p>在命令行下进入刚才创建的文件夹，输入如下命令：<br><code>geth --datadir ./data/00 init genesis.json</code><br>各参数代表的含义如下：</p>
 <ul>
 <li>init 表示初始化区块，后面跟着创世块的配置文件genesis.json</li>
-<li>datadir 数据存放的位置<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">privatechain</div><div class="line">├── data</div><div class="line">│   ├── geth</div><div class="line">│   │   └── chaindata</div><div class="line">│   │       ├── 000002.log</div><div class="line">│   │       ├── CURRENT</div><div class="line">│   │       ├── LOCK</div><div class="line">│   │       ├── LOG</div><div class="line">│   │       └── MANIFEST-000003</div><div class="line">│   └── keystore</div><div class="line">└── genesis.json</div></pre></td></tr></table></figure>
+<li>datadir 数据存放的位置<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">privatechain</span><br><span class="line">├── data</span><br><span class="line">│   ├── geth</span><br><span class="line">│   │   └── chaindata</span><br><span class="line">│   │       ├── 000002.log</span><br><span class="line">│   │       ├── CURRENT</span><br><span class="line">│   │       ├── LOCK</span><br><span class="line">│   │       ├── LOG</span><br><span class="line">│   │       └── MANIFEST-000003</span><br><span class="line">│   └── keystore</span><br><span class="line">└── genesis.json</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h4 id="启动节点："><a href="#启动节点：" class="headerlink" title="启动节点："></a>启动节点：</h4><p><code>geth --datadir ./data/00 --networkid 15 console</code><br>各参数代表的含义如下：</p>
@@ -427,21 +402,15 @@
 
       
     </div>
+    
+    
+    
 
-    <div>
-      
-        
+    
 
-      
-    </div>
+    
 
-    <div>
-      
-        
-
-      
-    </div>
-
+    
 
     <footer class="post-footer">
       
@@ -452,6 +421,10 @@
             <a href="/tags/区块链/" rel="tag"># 区块链</a>
           
         </div>
+      
+
+      
+      
       
 
       
@@ -479,6 +452,10 @@
       
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -494,13 +471,9 @@
 
 
           
-  <div class="comments" id="comments">
-    
-      <div class="ds-thread" data-thread-key="2017/12/05/go-ethereum-简单搭建私有链/"
-           data-title="go-ethereum-简单搭建私有链" data-url="http://yoursite.com/2017/12/05/go-ethereum-简单搭建私有链/">
-      </div>
-    
-  </div>
+
+  
+
 
 
         </div>
@@ -516,86 +489,100 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
             Overview
           </li>
         </ul>
       
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
-               alt="Yan Yong" />
-          <p class="site-author-name" itemprop="name">Yan Yong</p>
-          <p class="site-description motion-element" itemprop="description"></p>
-        </div>
-        <nav class="site-state motion-element">
-        
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">14</span>
-                <span class="site-state-item-name">posts</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-categories">
-              <a href="/categories">
-                <span class="site-state-item-count">6</span>
-                <span class="site-state-item-name">categories</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">14</span>
-                <span class="site-state-item-name">tags</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <span class="links-of-author-item">
-                <a href="https://github.com/yany8060" target="_blank" title="github">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  github
+              <img class="site-author-image" itemprop="image"
+                src="/favicon.ico"
+                alt="Yan Yong" />
+            
+              <p class="site-author-name" itemprop="name">Yan Yong</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">posts</span>
                 </a>
-              </span>
+              </div>
             
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
           
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yany8060" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:806055720@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
         </div>
-
-        
-        
-
-        
-        
-
-        
-
-
       </section>
 
       
@@ -616,6 +603,8 @@
       <!--/noindex-->
       
 
+      
+
     </div>
   </aside>
 
@@ -626,43 +615,56 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy;  2017 - 
-  <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Yan Yong</span>
 
   
-    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261131814'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1261131814%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
-  
 </div>
 
 
-<div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
-</div>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
-<div class="theme-info">
-  Theme -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Pisces
-  </a>
-</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
 
 
 
         
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261131814&web_id=1261131814" language="JavaScript"></script>
+  </div>
+
+
 
         
       </div>
     </footer>
 
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
   </div>
 
   
@@ -685,83 +687,6 @@
 
 
 
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
-
-
-
-  
-
-  
-    
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"yany8060"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
-    
-    
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
-  
-
 
 
 
@@ -773,6 +698,98 @@
 
   
   
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
 
   
 
@@ -781,7 +798,13 @@
   
 
   
+  
 
+  
+
+  
+
+  
 
 </body>
 </html>

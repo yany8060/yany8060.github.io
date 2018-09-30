@@ -1,20 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
   
 
 
-<html class="theme-next pisces use-motion" lang="en">
+<html class="theme-next mist use-motion" lang="en">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
 
 
 
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
 
 
 
@@ -34,38 +45,27 @@
 
 
 
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
 
 
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.4" color="#222">
+
+
+
 
 
   <meta name="keywords" content="spring-boot,spring," />
@@ -73,11 +73,6 @@
 
 
 
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
 
 
 
@@ -103,10 +98,12 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Pisces',
-    sidebar: {"position":"left","display":"post"},
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
-    motion: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: '0',
       author: 'Author'
@@ -129,12 +126,10 @@
 
 
 
-  <title> Spring-boot-MyBatis配置-2 | YanY </title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="en">
-
+  <title>Spring-boot-MyBatis配置-2 | YanY</title>
   
+
+
 
 
 
@@ -151,48 +146,42 @@
 
 
 
+</head>
 
-
-<!-- 添加到了footer -->
-<!--
-  <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1261131814&web_id=1261131814" language="JavaScript"></script>
-  </div>
--->
-
-
-
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
 
   
   
     
   
 
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
 
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">YanY</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YanY</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
   </div>
-    
-      <p class="site-subtitle"></p>
-    
-</div>
 
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
 </div>
 
 <nav class="site-nav">
@@ -212,8 +201,28 @@
         </li>
       
         
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
+          <a href="/categories/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
             
@@ -223,31 +232,11 @@
       
         
         <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
+          <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
             Archives
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
-            
-            Tags
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
-            
-            About
           </a>
         </li>
       
@@ -279,35 +268,29 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/04/Spring-boot-MyBatis配置-2/">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/04/Spring-boot-MyBatis配置-2/">
 
-  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Yan Yong">
-    <meta itemprop="description" content="">
-    <meta itemprop="image" content="/images/avatar.gif">
-  </span>
-
-  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-    <meta itemprop="name" content="YanY">
-    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
-      <img style="display:none;" itemprop="url image" alt="YanY" src="">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yan Yong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/favicon.ico">
     </span>
-  </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanY">
+    </span>
 
     
       <header class="post-header">
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                Spring-boot-MyBatis配置-2
-              
-            
-          </h1>
+          <h1 class="post-title" itemprop="name headline">Spring-boot-MyBatis配置-2</h1>
         
 
         <div class="post-meta">
@@ -355,21 +338,11 @@
 
           
             
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/02/04/Spring-boot-MyBatis配置-2/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/04/Spring-boot-MyBatis配置-2/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
           
 
           
-
           
+
           
 
           
@@ -380,7 +353,9 @@
       </header>
     
 
-
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -400,48 +375,42 @@
 <li>com.yany.dao.multi.ads</li>
 <li>com.yany.dao.multi.rds</li>
 </ul>
-<p>在创建MapperScannerConfigurer时，对应不同的数据源扫描不同的basepackage路径<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mapperScannerConfigurer.setBasePackage(<span class="string">"xxxx"</span>);</div></pre></td></tr></table></figure></p>
+<p>在创建MapperScannerConfigurer时，对应不同的数据源扫描不同的basepackage路径<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mapperScannerConfigurer.setBasePackage(<span class="string">"xxxx"</span>);</span><br></pre></td></tr></table></figure></p>
 <p>对应的xml，即MAPPER_PATH</p>
 <ul>
 <li>classpath:/com/yany/mapper/multi/ads/**.xml</li>
 <li>classpath:/com/yany/mapper/multi/rds/**.xml</li>
 </ul>
-<p>在创建SqlSessionFactoryBean时，MAPPER_PATH对应分别对应于ads和rds的sql路径<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sessionFactory.setMapperLocations(pathMatchingResourcePatternResolver.getResources(MAPPER_PATH));</div></pre></td></tr></table></figure></p>
+<p>在创建SqlSessionFactoryBean时，MAPPER_PATH对应分别对应于ads和rds的sql路径<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sessionFactory.setMapperLocations(pathMatchingResourcePatternResolver.getResources(MAPPER_PATH));</span><br></pre></td></tr></table></figure></p>
 <p>在使用时，不同数据源的操作在分别在不同的路径创建即可。</p>
-<h3 id="注解形式"><a href="#注解形式" class="headerlink" title="注解形式"></a>注解形式</h3><h4 id="准备好两个注解类，分别对应于两个数据源："><a href="#准备好两个注解类，分别对应于两个数据源：" class="headerlink" title="准备好两个注解类，分别对应于两个数据源："></a>准备好两个注解类，分别对应于两个数据源：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> RdsRepository &#123;</div><div class="line">&#125;</div><div class="line"><span class="keyword">public</span> <span class="meta">@interface</span> AdsRepository &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="注解形式"><a href="#注解形式" class="headerlink" title="注解形式"></a>注解形式</h3><h4 id="准备好两个注解类，分别对应于两个数据源："><a href="#准备好两个注解类，分别对应于两个数据源：" class="headerlink" title="准备好两个注解类，分别对应于两个数据源："></a>准备好两个注解类，分别对应于两个数据源：</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> RdsRepository &#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> AdsRepository &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>同分包类似分别为Rds和Ads两个数据源创建两个SqlSessionFactoryBean和DataSourceTransactionManager，略微不同的是SqlSessionFactoryBean的setMapperLocations是<strong>允许相同路径</strong>。</p>
-<h4 id="在创建两个MapperScannerConfigurer"><a href="#在创建两个MapperScannerConfigurer" class="headerlink" title="在创建两个MapperScannerConfigurer"></a>在创建两个MapperScannerConfigurer</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * 以注解的方式 进行多数据源配置</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * <span class="doctag">@return</span></span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="meta">@Bean</span></div><div class="line"><span class="function"><span class="keyword">public</span> MapperScannerConfigurer <span class="title">createAnnotatationAdsMapperScannerConfigurer</span><span class="params">()</span> </span>&#123;</div><div class="line">    MapperScannerConfigurer mapperScannerConfigurer = <span class="keyword">new</span> MapperScannerConfigurer();</div><div class="line">    mapperScannerConfigurer.setBasePackage(<span class="string">"com.yany.dao.multi.annotation"</span>);</div><div class="line">    mapperScannerConfigurer.setSqlSessionFactoryBeanName(<span class="string">"annotationAdsSqlSessionFactory"</span>);</div><div class="line">    mapperScannerConfigurer.setAnnotationClass(AdsRepository.class);</div><div class="line">    <span class="keyword">return</span> mapperScannerConfigurer;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * 以注解的方式 进行多数据源配置</span></div><div class="line"><span class="comment"> *</span></div><div class="line"><span class="comment"> * <span class="doctag">@return</span></span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="meta">@Bean</span></div><div class="line"><span class="function"><span class="keyword">public</span> MapperScannerConfigurer <span class="title">createAnnotatationRdsMapperScannerConfigurer</span><span class="params">()</span> </span>&#123;</div><div class="line">    MapperScannerConfigurer mapperScannerConfigurer = <span class="keyword">new</span> MapperScannerConfigurer();</div><div class="line">    mapperScannerConfigurer.setBasePackage(<span class="string">"com.yany.dao.multi.annotation"</span>);</div><div class="line">    mapperScannerConfigurer.setSqlSessionFactoryBeanName(<span class="string">"annotationRdsSqlSessionFactory"</span>);</div><div class="line">    mapperScannerConfigurer.setAnnotationClass(RdsRepository.class);</div><div class="line">    <span class="keyword">return</span> mapperScannerConfigurer;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="在创建两个MapperScannerConfigurer"><a href="#在创建两个MapperScannerConfigurer" class="headerlink" title="在创建两个MapperScannerConfigurer"></a>在创建两个MapperScannerConfigurer</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 以注解的方式 进行多数据源配置</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> MapperScannerConfigurer <span class="title">createAnnotatationAdsMapperScannerConfigurer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    MapperScannerConfigurer mapperScannerConfigurer = <span class="keyword">new</span> MapperScannerConfigurer();</span><br><span class="line">    mapperScannerConfigurer.setBasePackage(<span class="string">"com.yany.dao.multi.annotation"</span>);</span><br><span class="line">    mapperScannerConfigurer.setSqlSessionFactoryBeanName(<span class="string">"annotationAdsSqlSessionFactory"</span>);</span><br><span class="line">    mapperScannerConfigurer.setAnnotationClass(AdsRepository.class);</span><br><span class="line">    <span class="keyword">return</span> mapperScannerConfigurer;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 以注解的方式 进行多数据源配置</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> MapperScannerConfigurer <span class="title">createAnnotatationRdsMapperScannerConfigurer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    MapperScannerConfigurer mapperScannerConfigurer = <span class="keyword">new</span> MapperScannerConfigurer();</span><br><span class="line">    mapperScannerConfigurer.setBasePackage(<span class="string">"com.yany.dao.multi.annotation"</span>);</span><br><span class="line">    mapperScannerConfigurer.setSqlSessionFactoryBeanName(<span class="string">"annotationRdsSqlSessionFactory"</span>);</span><br><span class="line">    mapperScannerConfigurer.setAnnotationClass(RdsRepository.class);</span><br><span class="line">    <span class="keyword">return</span> mapperScannerConfigurer;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>上述代码和以前的主要的区别在：setAnnotationClass设置对应不同的注解类</p>
-<h4 id="使用时，在不同数据源的dao接口上添加对应的注解"><a href="#使用时，在不同数据源的dao接口上添加对应的注解" class="headerlink" title="使用时，在不同数据源的dao接口上添加对应的注解"></a>使用时，在不同数据源的dao接口上添加对应的注解</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@RdsRepository</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">AnnotationRdsDao</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">selectCount</span><span class="params">()</span></span>;</div><div class="line">&#125;</div><div class="line"><span class="meta">@AdsRepository</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">AnnotationAdsDao</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">int</span> <span class="title">selectCount</span><span class="params">()</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="使用时，在不同数据源的dao接口上添加对应的注解"><a href="#使用时，在不同数据源的dao接口上添加对应的注解" class="headerlink" title="使用时，在不同数据源的dao接口上添加对应的注解"></a>使用时，在不同数据源的dao接口上添加对应的注解</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RdsRepository</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">AnnotationRdsDao</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">selectCount</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@AdsRepository</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">AnnotationAdsDao</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">selectCount</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>而sql对应的xml不变，对应好namespace即可</p>
-<h3 id="AOP形式"><a href="#AOP形式" class="headerlink" title="AOP形式"></a>AOP形式</h3><h4 id="创建一个动态数据源"><a href="#创建一个动态数据源" class="headerlink" title="创建一个动态数据源"></a>创建一个动态数据源</h4><p>创建数据源类型的枚举类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">enum</span> DatabaseType &#123;</div><div class="line">    Ads, Rds</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="AOP形式"><a href="#AOP形式" class="headerlink" title="AOP形式"></a>AOP形式</h3><h4 id="创建一个动态数据源"><a href="#创建一个动态数据源" class="headerlink" title="创建一个动态数据源"></a>创建一个动态数据源</h4><p>创建数据源类型的枚举类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> DatabaseType &#123;</span><br><span class="line">    Ads, Rds</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>创建一个线程安全的DatabaseType容器</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DatabaseContextHolder</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> ThreadLocal&lt;DatabaseType&gt; contextHolder = <span class="keyword">new</span> ThreadLocal&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> DatabaseType <span class="title">getDatabaseType</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> contextHolder.get();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setDatabaseType</span><span class="params">(DatabaseType type)</span> </span>&#123;</div><div class="line">        contextHolder.set(type);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DatabaseContextHolder</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> ThreadLocal&lt;DatabaseType&gt; contextHolder = <span class="keyword">new</span> ThreadLocal&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> DatabaseType <span class="title">getDatabaseType</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> contextHolder.get();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">setDatabaseType</span><span class="params">(DatabaseType type)</span> </span>&#123;</span><br><span class="line">        contextHolder.set(type);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>ThreadLocal类为每一个线程都维护了自己独有的变量拷贝，每个线程都拥有了自己独立的一个变量，避免并发问题。</p>
-<p>创建动态数据源DynamicDataSource继承AbstractRoutingDataSource<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DynamicDataSource</span> <span class="keyword">extends</span> <span class="title">AbstractRoutingDataSource</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> Object <span class="title">determineCurrentLookupKey</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> DatabaseContextHolder.getDatabaseType();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h4 id="创建AOP对应的MyBatis配置"><a href="#创建AOP对应的MyBatis配置" class="headerlink" title="创建AOP对应的MyBatis配置"></a>创建AOP对应的MyBatis配置</h4><p>  创建动态数据源的bean<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Bean</span></div><div class="line"><span class="function"><span class="keyword">public</span> DynamicDataSource <span class="title">setDataSource</span><span class="params">()</span> </span>&#123;</div><div class="line">    Map&lt;Object, Object&gt; targetDataSources = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">    targetDataSources.put(DatabaseType.Ads, adsDataSource);</div><div class="line">    targetDataSources.put(DatabaseType.Rds, rdsDataSource);</div><div class="line"></div><div class="line">    DynamicDataSource dataSource = <span class="keyword">new</span> DynamicDataSource();</div><div class="line">    dataSource.setTargetDataSources(targetDataSources);</div><div class="line">    dataSource.setDefaultTargetDataSource(rdsDataSource);<span class="comment">// 默认的datasource设置为rdsDataSource</span></div><div class="line">    <span class="keyword">return</span> dataSource;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>创建动态数据源DynamicDataSource继承AbstractRoutingDataSource<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DynamicDataSource</span> <span class="keyword">extends</span> <span class="title">AbstractRoutingDataSource</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> Object <span class="title">determineCurrentLookupKey</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> DatabaseContextHolder.getDatabaseType();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="创建AOP对应的MyBatis配置"><a href="#创建AOP对应的MyBatis配置" class="headerlink" title="创建AOP对应的MyBatis配置"></a>创建AOP对应的MyBatis配置</h4><p>  创建动态数据源的bean<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> DynamicDataSource <span class="title">setDataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Map&lt;Object, Object&gt; targetDataSources = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    targetDataSources.put(DatabaseType.Ads, adsDataSource);</span><br><span class="line">    targetDataSources.put(DatabaseType.Rds, rdsDataSource);</span><br><span class="line"></span><br><span class="line">    DynamicDataSource dataSource = <span class="keyword">new</span> DynamicDataSource();</span><br><span class="line">    dataSource.setTargetDataSources(targetDataSources);</span><br><span class="line">    dataSource.setDefaultTargetDataSource(rdsDataSource);<span class="comment">// 默认的datasource设置为rdsDataSource</span></span><br><span class="line">    <span class="keyword">return</span> dataSource;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>创建SqlSessionFactoryBean和DataSourceTransactionManager以及这个和以前类似不再赘述，具体看github上代码</p>
-<h4 id="创建切边"><a href="#创建切边" class="headerlink" title="创建切边"></a>创建切边</h4><p>扫描对应的Service层，在执行具体的服务代码前，根据调用的Service类进行数据源的切换。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Aspect</span></div><div class="line"><span class="meta">@Component</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DataSourceAspect</span> </span>&#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * 使用空方法定义切点表达式</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="meta">@Pointcut</span>(<span class="string">"execution(* com.yany.service.**.*(..))"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">declareJointPointExpression</span><span class="params">()</span> </span>&#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Before</span>(<span class="string">"declareJointPointExpression()"</span>)</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDataSourceKey</span><span class="params">(JoinPoint point)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (point.getTarget() <span class="keyword">instanceof</span> IAdsAopService ||</div><div class="line">                point.getTarget() <span class="keyword">instanceof</span> AdsAopServiceImpl) &#123;</div><div class="line">            <span class="comment">//根据连接点所属的类实例，动态切换数据源</span></div><div class="line">            System.out.println(<span class="string">"IAdsAopService Aspect"</span>);</div><div class="line">            DatabaseContextHolder.setDatabaseType(DatabaseType.Ads);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;<span class="comment">//连接点所属的类实例是（当然，这一步也可以不写，因为defaultTargertDataSource就是该类所用的rdsDataSource）</span></div><div class="line">            System.out.println(<span class="string">"IRdsAopService Aspect"</span>);</div><div class="line">            DatabaseContextHolder.setDatabaseType(DatabaseType.Rds);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="创建切边"><a href="#创建切边" class="headerlink" title="创建切边"></a>创建切边</h4><p>扫描对应的Service层，在执行具体的服务代码前，根据调用的Service类进行数据源的切换。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DataSourceAspect</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 使用空方法定义切点表达式</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Pointcut</span>(<span class="string">"execution(* com.yany.service.**.*(..))"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">declareJointPointExpression</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before</span>(<span class="string">"declareJointPointExpression()"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDataSourceKey</span><span class="params">(JoinPoint point)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (point.getTarget() <span class="keyword">instanceof</span> IAdsAopService ||</span><br><span class="line">                point.getTarget() <span class="keyword">instanceof</span> AdsAopServiceImpl) &#123;</span><br><span class="line">            <span class="comment">//根据连接点所属的类实例，动态切换数据源</span></span><br><span class="line">            System.out.println(<span class="string">"IAdsAopService Aspect"</span>);</span><br><span class="line">            DatabaseContextHolder.setDatabaseType(DatabaseType.Ads);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;<span class="comment">//连接点所属的类实例是（当然，这一步也可以不写，因为defaultTargertDataSource就是该类所用的rdsDataSource）</span></span><br><span class="line">            System.out.println(<span class="string">"IRdsAopService Aspect"</span>);</span><br><span class="line">            DatabaseContextHolder.setDatabaseType(DatabaseType.Rds);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>上述切换规则比较简单，具体可根据业务情况，包目录结构，或者是类名规则等进行解析切换。</p>
-<p>具体代码将github：<a href="https://github.com/yany8060/SpringDemo.git" target="_blank" rel="external">https://github.com/yany8060/SpringDemo.git</a><br>博客：<a href="http://yany8060.xyz" target="_blank" rel="external">http://yany8060.xyz</a></p>
+<p>具体代码将github：<a href="https://github.com/yany8060/SpringDemo.git" target="_blank" rel="noopener">https://github.com/yany8060/SpringDemo.git</a><br>博客：<a href="http://yany8060.xyz" target="_blank" rel="noopener">http://yany8060.xyz</a></p>
 
       
     </div>
+    
+    
+    
 
-    <div>
-      
-        
+    
 
-      
-    </div>
+    
 
-    <div>
-      
-        
-
-      
-    </div>
-
+    
 
     <footer class="post-footer">
       
@@ -452,6 +421,10 @@
             <a href="/tags/spring/" rel="tag"># spring</a>
           
         </div>
+      
+
+      
+      
       
 
       
@@ -479,6 +452,10 @@
       
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -494,13 +471,9 @@
 
 
           
-  <div class="comments" id="comments">
-    
-      <div class="ds-thread" data-thread-key="2017/02/04/Spring-boot-MyBatis配置-2/"
-           data-title="Spring-boot-MyBatis配置-2" data-url="http://yoursite.com/2017/02/04/Spring-boot-MyBatis配置-2/">
-      </div>
-    
-  </div>
+
+  
+
 
 
         </div>
@@ -516,86 +489,100 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             Table of Contents
           </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
             Overview
           </li>
         </ul>
       
 
-      <section class="site-overview sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
-               alt="Yan Yong" />
-          <p class="site-author-name" itemprop="name">Yan Yong</p>
-          <p class="site-description motion-element" itemprop="description"></p>
-        </div>
-        <nav class="site-state motion-element">
-        
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">14</span>
-                <span class="site-state-item-name">posts</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-categories">
-              <a href="/categories">
-                <span class="site-state-item-count">6</span>
-                <span class="site-state-item-name">categories</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">14</span>
-                <span class="site-state-item-name">tags</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <span class="links-of-author-item">
-                <a href="https://github.com/yany8060" target="_blank" title="github">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  github
+              <img class="site-author-image" itemprop="image"
+                src="/favicon.ico"
+                alt="Yan Yong" />
+            
+              <p class="site-author-name" itemprop="name">Yan Yong</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">posts</span>
                 </a>
-              </span>
+              </div>
             
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
           
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yany8060" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:806055720@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
         </div>
-
-        
-        
-
-        
-        
-
-        
-
-
       </section>
 
       
@@ -616,6 +603,8 @@
       <!--/noindex-->
       
 
+      
+
     </div>
   </aside>
 
@@ -626,43 +615,56 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy;  2017 - 
-  <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Yan Yong</span>
 
   
-    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1261131814'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1261131814%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
-  
 </div>
 
 
-<div class="powered-by">
-  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
-</div>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
-<div class="theme-info">
-  Theme -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Pisces
-  </a>
-</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
 
 
 
         
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261131814&web_id=1261131814" language="JavaScript"></script>
+  </div>
+
+
 
         
       </div>
     </footer>
 
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
   </div>
 
   
@@ -685,83 +687,6 @@
 
 
 
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
-
-
-
-  
-
-  
-    
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"yany8060"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
-    
-    
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
-  
-
 
 
 
@@ -773,6 +698,98 @@
 
   
   
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
 
   
 
@@ -781,7 +798,13 @@
   
 
   
+  
 
+  
+
+  
+
+  
 
 </body>
 </html>
