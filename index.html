@@ -269,6 +269,220 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/16/TensorFlow-损失函数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yan Yong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/favicon.ico">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanY">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/16/TensorFlow-损失函数/" itemprop="url">TensorFlow-损失函数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-16T20:11:11+08:00">
+                2018-10-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tensorflow/" itemprop="url" rel="index">
+                    <span itemprop="name">tensorflow</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$']],
+        displayMath: [ ['$$','$$']]
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+
+
+
+<h3 id="损失函数定义"><a href="#损失函数定义" class="headerlink" title="损失函数定义"></a>损失函数定义</h3><p>损失函数（loss function）,量化了分类器输出地结果（预测值）和我们期望的结果（标签）之间的差距。<br>在机器学习中，<strong>损失函数（loss function）</strong>也称cost function（代价函数），是用来<strong>计算预测值和真实值的差距</strong>。然后以loss function的最小值作为目标函数进行反向传播迭代计算模型中的参数，这个让loss function的值不断变小的过程称为优化。</p>
+<p>损失函数分为<strong>经验风险损失函数</strong>和<strong>结构风险损失函数</strong></p>
+<ul>
+<li>经验风险损失函数指预测结果和实际结果的差别</li>
+<li>结构风险损失函数是指经验风险损失函数加上正则项</li>
+</ul>
+<p>设总有N个样本的样本集为$(X,Y)=(x_i,y_i)$，那么总的损失函数为$$L = \sum_{i=1}^n l(y_i,f(x_i)) $$<br>其中 $y_i,i∈[1,N]$为样本$i$的真实值，$f(x_i),i∈[1,N]$为样本$i$的预测值， $f()$为分类或者回归函数。</p>
+<p>一般来说，对于分类或者回归模型进行评估时，需要使得模型在训练数据上似的损失函数值最小，即使得经验风险函数(Empirical risk)最小化，但是如果只考虑经验风险，容易出现过拟合，因此还需要考虑模型的泛化性，一般常用的方法就是在目标函数中加上正则项，有损失项（loss term）加上正则项（regularization term）构成结构风险（Structural risk），那么损失函数变为：$$L = \sum_{i=1}^n l(y_i,f(x_i))+\lambda R(w) $$</p>
+<p>R(w)就是评价模型复杂度的指标，一般只是权重w的函数，$\lambda$表示复杂损失在总损失中的比例。</p>
+<h4 id="常见的损失函数"><a href="#常见的损失函数" class="headerlink" title="常见的损失函数"></a>常见的损失函数</h4><ol>
+<li>0-1损失函数（0-1 loss function）$$L(y,f(x)) = \begin{cases}<br>1, y = f(x) \<br>0, y \neq  f(x) \<br>\end{cases}$$ </li>
+<li>平方损失函数（quadratic loss function） $$L(Y,f(x)) = (Y-f(x))^2$$</li>
+<li>L1正则损失函数（绝对损失函数 absolute loss function）$$L(Y,f(x)) = \left| Y-f(x) \right|$$</li>
+<li>L2正则损失函数（即欧拉损失函数）$$L(Y,f(x)) = \sum_{i=1}^n(Y-f(x))^2$$<br>当对L2取平均值，就变成均方误差（MSE, mean squared error） $$ MSE(y,{y}’) = \frac{1}{n}\sum_{i=1}^n (y^i - {y}’)^2 $$</li>
+<li>对数损失函数(logarithmic loss function)或对数似然损失函数(log-likelihood loss function)$$L(Y,P(Y|X)) = -logP(Y|X)$$</li>
+</ol>
+<h4 id="交叉熵损失函数"><a href="#交叉熵损失函数" class="headerlink" title="交叉熵损失函数"></a>交叉熵损失函数</h4><p>交叉熵（Cross Entropy）是Loss函数的一种（也称为损失函数或代价函数），用于描述模型预测值与真实值的差距大小（用来评估当前训练得到的概率分布与真实分布的差异情况），常见的Loss函数就是均方平方差（Mean Squared Error）</p>
+<p>$$  loss =\frac{1}{n}\sum_{i=0}^n{(y_{i} \cdot log(y_predicted_{i})<br>+(1-y_{i}) \cdot log(1-y_predicted_{i})<br>)}  $$</p>
+<p>熵：用来表示所有信息量的期望<br>$$H(X)=-\sum_{i=1}^n p(x_i)log(p(x_i))$$<br>信息量定义：$h(x) = -log(p(x))$，概率分布函数p(x)</p>
+<h3 id="损失函数Api"><a href="#损失函数Api" class="headerlink" title="损失函数Api"></a>损失函数Api</h3><h4 id="tf-nn-softmax-cross-entropy-with-logits"><a href="#tf-nn-softmax-cross-entropy-with-logits" class="headerlink" title="tf.nn.softmax_cross_entropy_with_logits"></a>tf.nn.softmax_cross_entropy_with_logits</h4><p>对于每个<strong>独立的分类任务</strong>，这个函数是去度量概率误差。比如，在 CIFAR-10 数据集上面，每张图片只有唯一一个分类标签：一张图可能是一只狗或者一辆卡车， 但绝对不可能两者都在一张图中。</p>
+<ul>
+<li>输入API的数据 logits 不能进行缩放，因为在这个API的执行中会进行 softmax 计算，如果 logits 进行了缩放，那么会影响计算正确率。</li>
+<li>logits 和 labels 必须有相同的数据维度 [batch_size, num_classes]，和相同的数据类型 float32 或者 float64 。</li>
+<li>它适用于每个类别相互独立且排斥的情况，一幅图只能属于一类，而不能同时包含一条狗和一只大象.</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">softmax_cross_entropy_with_logits(</span><br><span class="line">    _sentinel=None,</span><br><span class="line">    labels=None,</span><br><span class="line">    logits=None,</span><br><span class="line">    dim=-1,</span><br><span class="line">    name=None</span><br><span class="line">)</span><br><span class="line">## softmax_cross_entropy_with_logits_v2 (现在)</span><br></pre></td></tr></table></figure>
+<p>流程：</p>
+<ol>
+<li>首先是对网络最后一层的输出做一个softmax（公式详见激活函数）</li>
+<li>对softmax输出的向量$[Y1,Y2,Y3,…]$和样本的时机标签做一个交叉熵</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">import tensorflow as tf  </span><br><span class="line"></span><br><span class="line"># our NN&apos;s output  </span><br><span class="line">logits=tf.constant([[1.0,2.0,3.0],[1.0,2.0,3.0],[1.0,2.0,3.0]])  </span><br><span class="line"></span><br><span class="line"># step1:do softmax  </span><br><span class="line">y=tf.nn.softmax(logits)  </span><br><span class="line"></span><br><span class="line"># true label  </span><br><span class="line">y_=tf.constant([[0.0,0.0,1.0],[0.0,0.0,1.0],[0.0,0.0,1.0]])  </span><br><span class="line"></span><br><span class="line"># step2:do cross_entropy  </span><br><span class="line">cross_entropy = tf.reduce_sum(-tf.reduce_sum(y_*tf.log(y), axis=1))</span><br><span class="line"></span><br><span class="line"># do cross_entropy just one step  </span><br><span class="line">cross_entropy2 = tf.reduce_sum(tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=y_))</span><br><span class="line"></span><br><span class="line">with tf.Session() as sess:  </span><br><span class="line">	print(sess.run(cross_entropy))</span><br><span class="line">	print(sess.run(cross_entropy2))</span><br><span class="line"></span><br><span class="line"># 1.222818</span><br><span class="line"># 1.222818</span><br></pre></td></tr></table></figure>
+<h4 id="tf-nn-sparse-softmax-cross-entropy-with-logits"><a href="#tf-nn-sparse-softmax-cross-entropy-with-logits" class="headerlink" title="tf.nn.sparse_softmax_cross_entropy_with_logits"></a>tf.nn.sparse_softmax_cross_entropy_with_logits</h4><p>计算logits 和 labels 之间的稀疏softmax 交叉熵</p>
+<p>度量在离散分类任务中的错误率，这些类之间是相互排斥的（每个输入只能对应唯一确定的一个类）。举例来说，每个CIFAR-10 图片只能被标记为唯一的一个标签：一张图片可能是一只狗或一辆卡车，而不能两者都是。</p>
+<p>区别：<strong>sparse_softmax_cross_entropy_with_logits</strong> 直接用标签计算交叉熵，而 <strong>softmax_cross_entropy_with_logits</strong> 是标签的onehot向量参与计算。<strong>softmax_cross_entropy_with_logits</strong> 的 labels 是 <strong>sparse_softmax_cross_entropy_with_logits</strong> 的 labels 的一个独热版本。<br><strong>tf.nn.sparse_softmax_cross_entropy_with_logits</strong> 比 <strong>tf.nn.softmax_cross_entropy_with_logits</strong> 多了一步将labels稀疏化的操作</p>
+<blockquote>
+<p>onehot标签则是顾名思义，一个长度为n的数组，只有一个元素是1.0，其他元素是0.0</p>
+</blockquote>
+<blockquote>
+<p>稀疏化：例如表示一个3分类的一个样本的标签，稀疏表示的形式为[0,0,1]（这个表示这个样本为第3个分类），而非稀疏表示就表示为2（因为从0开始算，0,1,2,就能表示三类）</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import tensorflow as tf</span><br><span class="line"></span><br><span class="line">input_data = tf.Variable([[0.2, 0.1, 0.9], [0.3, 0.4, 0.6]], dtype=tf.float32)</span><br><span class="line"></span><br><span class="line">output = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=input_data, </span><br><span class="line"></span><br><span class="line">labels=[0, 2])</span><br><span class="line"></span><br><span class="line">with tf.Session() as sess:</span><br><span class="line">    init = tf.global_variables_initializer()</span><br><span class="line">    sess.run(init)</span><br><span class="line">    print(sess.run(output))</span><br><span class="line"></span><br><span class="line"># [ 1.36573195  0.93983102]</span><br></pre></td></tr></table></figure>
+<h4 id="tf-nn-sigmoid-cross-entropy-with-logits"><a href="#tf-nn-sigmoid-cross-entropy-with-logits" class="headerlink" title="tf.nn.sigmoid_cross_entropy_with_logits"></a>tf.nn.sigmoid_cross_entropy_with_logits</h4><p>函数意义：</p>
+<ul>
+<li>衡量的是分类任务中的概率误差，他也是试用于每一个类别都是相不排斥的</li>
+<li>这个函数的作用是计算经<strong>sigmoid</strong>函数激活之后的交叉熵。 </li>
+<li>与sigmoid搭配使用的交叉熵损失函数，输入不需要额外加一层sigmoid，<strong>tf.nn.sigmoid_cross_entropy_with_logits</strong>中会集成有sigmoid并进行了计算优化；它适用于分类的类别之间<strong>不是相互排斥</strong>的场景，即多个标签（如图片中包含狗和猫）。</li>
+</ul>
+<p>公式：$$targets * -log(sigmoid(logits)) + (1 - targets) * -log(1 - sigmoid(logits))$$</p>
+<p>现在我们使用 x = logits, z = targets</p>
+<p>$$<br>\begin {aligned}<br>sigmod交叉熵 &amp;=z * -log(sigmoid(x)) + (1 - z) * -log(1 - sigmoid(x)) \\<br>&amp;= z * -log(1 / (1 + exp(-x))) + (1 - z) * -log(exp(-x) / (1 + exp(-x))) \\<br>&amp;= z * log(1 + exp(-x)) + (1 - z) * (-log(exp(-x)) + log(1 + exp(-x)))\\<br>&amp;= z * log(1 + exp(-x)) + (1 - z) * (x + log(1 + exp(-x))\\<br>&amp;= (1 - z) * x + log(1 + exp(-x))\\<br>&amp;= x - x * z + log(1 + exp(-x))<br>\end {aligned}<br>$$</p>
+<p>当$x&lt;0$时，$ e^{-x} \rightarrow \infty$ 溢出，所以使用计算式：<br>$$ -x*z + log(1+e^{x}) $$</p>
+<p>$$<br>\begin {aligned}<br>推到过程： &amp;= x - x * z + log(1 + exp(-x))\\<br>    &amp;= log(exp(x)) - x * z + log(1 + exp(-x)) \\<br>    &amp;= - x * z + log(1 + exp(x))<br>\end {aligned}<br>$$</p>
+<p>为了确保计算稳定，避免溢出，综合x&gt;0和x&lt;0的情况,我们使用以下函数式 ：<br>$$ max(x,0) - x*z + log(1+e^{−|x|})  $$</p>
+<h4 id="tf-nn-weighted-cross-entropy-with-logits"><a href="#tf-nn-weighted-cross-entropy-with-logits" class="headerlink" title="tf.nn.weighted_cross_entropy_with_logits"></a>tf.nn.weighted_cross_entropy_with_logits</h4><p>功能以及计算方式基本与<strong>tf_nn_sigmoid_cross_entropy_with_logits</strong>差不多,但是加上了权重的功能,是计算具有权重的sigmoid交叉熵函数<br>$$pos_weight * targets * -log(sigmoid(logits)) + (1 - targets) * -log(1 - sigmoid(logits))$$</p>
+<p>现在我们使用 x = logits, z = targets, q = pos_weight的代数式</p>
+<p>$$<br>\begin {aligned}<br>  weighted交叉熵 &amp;= qz * -log(sigmoid(x)) + (1 - z) * -log(1 - sigmoid(x))\\<br>  &amp;= qz * -log(1 / (1 + exp(-x))) + (1 - z) * -log(exp(-x) / (1 + exp(-x)))\\<br>  &amp;= qz * log(1 + exp(-x)) + (1 - z) * (-log(exp(-x)) + log(1 + exp(-x)))\\<br>  &amp;= qz * log(1 + exp(-x)) + (1 - z) * (x + log(1 + exp(-x))\\<br>  &amp;= (1 - z) * x + (qz +  1 - z) * log(1 + exp(-x))\\<br>  &amp;= (1 - z) * x + (1 + (q - 1) * z) * log(1 + exp(-x))\\<br>\end {aligned}<br>$$</p>
+<p>我们把$l = (1 + (q - 1) * z)$, 来确保稳定性并且避免溢出,公式为：<br>$$(1 - z) * x + l * (log(1 + exp(-abs(x))) + max(-x, 0))$$</p>
+<h3 id="了解"><a href="#了解" class="headerlink" title="了解"></a>了解</h3><p><strong>正则化</strong>：防止过拟合，提高泛化能力；正则化的原理就是在损失函数中加入评价模型复杂度的指标。R(w)就是评价模型复杂度的指标，一般只是权重w的函数，$\lambda$表示复杂损失在总损失中的比例。</p>
+<p><strong>下溢出（underflow）和上溢出（overflow）</strong>:实数在计算机内用二进制表示，所以不是一个精确值，当数值过小的时候，被四舍五入为0，这就是下溢出。此时如果对这个数再做某些运算（例如除以它）就会出问题。反之当数值过大的时候，情况就变成上溢出。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/22/TensorFlow-激活函数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1846,158 +2060,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/07/Spark-RDD详解/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yan Yong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/favicon.ico">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YanY">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/02/07/Spark-RDD详解/" itemprop="url">Spark RDD详解</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-07T19:58:41+08:00">
-                2017-02-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/spark/" itemprop="url" rel="index">
-                    <span itemprop="name">spark</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="RDD基本概念："><a href="#RDD基本概念：" class="headerlink" title="RDD基本概念："></a>RDD基本概念：</h3><ul>
-<li>RDD（ resilient distributed dataset，弹性分布式数据集）：spark的基本计算单元，可以通过一系列算子进行操作（主要有Transformation和Action操作）。</li>
-<li>RDD是一个不可修改的，分布的对象集合。每个RDD由多个分区组成，每个分区可以同时在集群中的不同节点上计算。RDD可以包含Python，Java和Scala中的任意对象。                </li>
-<li>DAG （Directed Acycle graph，有向无环图）：反应RDD之间的依赖</li>
-<li>窄依赖（Narrow dependency）：子RDD依赖于父RDD中固定的data</li>
-<li>宽依赖（Wide Dependency）：子RDD对父RDD中的所有data partition都有依赖</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/02/07/Spark-RDD详解/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2052,7 +2114,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
