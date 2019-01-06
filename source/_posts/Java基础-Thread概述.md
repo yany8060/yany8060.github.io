@@ -1,8 +1,8 @@
 ---
-title: Java Thread概述
+title: Java基础-Thread概述
 date: 2017-03-08 19:33:39
-tags: [java,thread]
-categories: [java]
+tags: [java,thread,Java基础]
+categories: [Java基础]
 ---
 ### 线程生命周期
 
