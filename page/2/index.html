@@ -269,6 +269,353 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/12/Java-NIO-ByteBuffer概述/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yan Yong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/favicon.ico">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanY">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/02/12/Java-NIO-ByteBuffer概述/" itemprop="url">Java NIO ByteBuffer概述</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-12T17:29:27+08:00">
+                2017-02-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Buffer的基本用法"><a href="#Buffer的基本用法" class="headerlink" title="Buffer的基本用法"></a>Buffer的基本用法</h3><p>使用Buffer读写数据一般遵循以下四个步骤：<br>1、分配空间<br>2、写入数据到Buffer<br>3、调用flip()方法<br>4、从Buffer中读取数据<br>5、调用clear()方法或者compact()方法<br>当向buffer写入数据时，buffer会记录下写了多少数据。一旦要读取数据，需要通过<code>flip()</code>方法<code>将Buffer从写模式切换到读模式</code>。在读模式下，可以读取之前写入到buffer的所有数据。<br>一旦读完了所有的数据，就需要清空缓冲区，让它可以再次被写入。有两种方式能清空缓冲区：调用clear()或compact()方法。<code>clear()方法会清空整个缓冲区</code>。<code>compact()方法只会清除已经读过的数据</code>。任何未读的数据都被移到缓冲区的起始处，新写入的数据将放到缓冲区未读数据的后面。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1419542-d832d71903ddb1e1.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Buffer-process.jpeg"></p>
+<h3 id="四个主要属性："><a href="#四个主要属性：" class="headerlink" title="四个主要属性："></a>四个主要属性：</h3><ul>
+<li>capacity：作为一个内存块，Buffer有一个固定的大小值，也叫“capacity”.你只能往里写capacity个byte、long，char等类型。一旦Buffer满了，需要将其清空（通过读数据或者清除数据）才能继续写数据往里写数据。</li>
+<li>position：<ul>
+<li>当你写数据到Buffer中时，position表示当前的位置。初始的position值为0.当一个byte、long等数据写到Buffer后， position会向前移动到下一个可插入数据的Buffer单元。position最大可为capacity – 1。</li>
+<li>当读取数据时，也是从某个特定位置读。当将Buffer从写模式切换到读模式，position会被重置为0。 当从Buffer的position处读取数据时，position向前移动到下一个可读的位置。</li>
+</ul>
+</li>
+<li>limit：<ul>
+<li>在写模式下，Buffer的limit表示你最多能往Buffer里写多少数据。 写模式下，limit等于Buffer的capacity。</li>
+<li>当切换Buffer到读模式时， limit表示你最多能读到多少数据。因此，当切换Buffer到读模式时，limit会被设置成写模式下的position值。换句话说，你能读到之前写入的所有数据（limit被设置成已写数据的数量，这个值在写模式下就是position）</li>
+</ul>
+</li>
+<li>mark：为某一读过的位置做标记，便于某些时候回退到该位置。</li>
+</ul>
+<h3 id="Buffer基本函数"><a href="#Buffer基本函数" class="headerlink" title="Buffer基本函数"></a>Buffer基本函数</h3><h4 id="Buffer的分配"><a href="#Buffer的分配" class="headerlink" title="Buffer的分配"></a>Buffer的分配</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ByteBuffer buf = ByteBuffer.allocate(48);</span><br></pre></td></tr></table></figure>
+<h4 id="向Buffer中写数据"><a href="#向Buffer中写数据" class="headerlink" title="向Buffer中写数据"></a>向Buffer中写数据</h4><p>从Channel写到Buffer的例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int bytesRead = inChannel.read(buf); //read into buffer.</span><br></pre></td></tr></table></figure></p>
+<p>通过put方法写Buffer<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buf.put(127);</span><br></pre></td></tr></table></figure></p>
+<h4 id="从Buffer中读取数据"><a href="#从Buffer中读取数据" class="headerlink" title="从Buffer中读取数据"></a>从Buffer中读取数据</h4><p>从Buffer读取数据到Channel的例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//read from buffer into channel.</span><br><span class="line">int bytesWritten = inChannel.write(buf);</span><br></pre></td></tr></table></figure></p>
+<p>使用get()方法从Buffer中读取数据的例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">byte aByte = buf.get();</span><br></pre></td></tr></table></figure></p>
+<h4 id="flip-方法"><a href="#flip-方法" class="headerlink" title="flip()方法"></a>flip()方法</h4><p>flip方法将Buffer从写模式切换到读模式。调用flip()方法会将position设回0，并将limit设置成之前position的值。<br>换句话说，position现在用于标记读的位置，limit表示之前写进了多少个byte、char等 —— 现在能读取多少个byte、char等。</p>
+<h4 id="clear-与compact-方法"><a href="#clear-与compact-方法" class="headerlink" title="clear()与compact()方法"></a>clear()与compact()方法</h4><p>一旦读完Buffer中的数据，需要让Buffer准备好再次被写入。可以通过clear()或compact()方法来完成。<br>如果调用的是clear()方法，position将被设回0，limit被设置成 capacity的值。换句话说，Buffer 被清空了。Buffer中的数据并未清除，只是这些标记告诉我们可以从哪里开始往Buffer里写数据。<br>如果Buffer中有一些未读的数据，调用clear()方法，数据将“被遗忘”，意味着不再有任何标记会告诉你哪些数据被读过，哪些还没有。<br>如果Buffer中仍有未读的数据，且后续还需要这些数据，但是此时想要先先写些数据，那么使用compact()方法。<br>compact()方法将所有未读的数据拷贝到Buffer起始处。然后将position设到最后一个未读元素正后面。limit属性依然像clear()方法一样，设置成capacity。现在Buffer准备好写数据了，但是不会覆盖未读的数据。</p>
+<h3 id="图解ByteBuffer函数过程"><a href="#图解ByteBuffer函数过程" class="headerlink" title="图解ByteBuffer函数过程"></a>图解ByteBuffer函数过程</h3><h4 id="put"><a href="#put" class="headerlink" title="put"></a>put</h4><p>Writes the given byte into this buffer at the current position, and then increments the position.<br>写模式下，往buffer里写一个字节，并把postion移动一位。写模式下，一般limit与capacity相等。<br><img src="http://upload-images.jianshu.io/upload_images/1419542-ae958aab995c9963.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Buffer-put.png"></p>
+<h4 id="flip"><a href="#flip" class="headerlink" title="flip"></a>flip</h4><p>Flips this buffer.  The limit is set to the current position and then the position is set to zero.  If the mark is defined then it is discarded.<br>After a sequence of channel-read or <code>put</code> operations, invoke this method to prepare for a sequence of channel-write or relative  <code>get</code> operations.（即读写模型切换）<br>写完数据，需要开始读的时候，将postion复位到0，并将limit设为当前postion<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public final Buffer flip() &#123;</span><br><span class="line">        limit = position;</span><br><span class="line">        position = 0;</span><br><span class="line">        mark = -1;</span><br><span class="line">        return this;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1419542-804ddf879bbc2cdd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Buffer-flip.png"></p>
+<h4 id="get"><a href="#get" class="headerlink" title="get"></a>get</h4><p>Reads the byte at this buffer’s current position, and then increments the position.<br>从buffer里读一个字节，并把postion移动一位。上限是limit，即写入数据的最后位置<br><img src="http://upload-images.jianshu.io/upload_images/1419542-2bbde49b79b2f805.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Buffer-get.png"></p>
+<h4 id="clear"><a href="#clear" class="headerlink" title="clear"></a>clear</h4><p>Clears this buffer.  The position is set to zero, the limit is set to the capacity, and the mark is discarded.<br>Invoke this method before using a sequence of channel-read or <code>put</code> operations to fill this buffer.<br>将position置为0，并不清除buffer内容。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Buffer <span class="title">clear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    position = <span class="number">0</span>;</span><br><span class="line">    limit = capacity;</span><br><span class="line">    mark = -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1419542-9a36d39cd8787e83.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Buffer-clear.png"></p>
+<p>参考：<br><a href="http://ifeve.com/buffers/" target="_blank" rel="noopener">http://ifeve.com/buffers/</a><br>博客：<br><a href="http://yany8060.xyz/" target="_blank" rel="noopener">http://yany8060.xyz/</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/12/Java-NIO简述/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yan Yong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/favicon.ico">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanY">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/02/12/Java-NIO简述/" itemprop="url">Java NIO简述</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-12T16:45:16+08:00">
+                2017-02-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Java NIO(New IO)是一个可以替代标准Java IO API的IO API（从Java 1.4开始)，Java NIO提供了与标准IO不同的IO工作方式。</p>
+<h3 id="I-O模型"><a href="#I-O模型" class="headerlink" title="I/O模型"></a>I/O模型</h3><ul>
+<li>同步阻塞IO：在此种方式下，用户进程在发起一个IO操作以后，必须等待IO操作的完成，只有当真正完成了IO操作以后，用户进程才能运行。JAVA传统的IO模型属于此种方式！</li>
+<li>同步非阻塞IO：在此种方式下，用户进程发起一个IO操作以后边可返回做其它事情，但是用户进程需要时不时的询问IO操作是否就绪，这就要求用户进程不停的去询问，从而引入不必要的CPU资源浪费。其中目前JAVA的NIO就属于同步非阻塞IO。</li>
+<li>异步阻塞IO：此种方式下是指应用发起一个IO操作以后，不等待内核IO操作的完成，等内核完成IO操作以后会通知应用程序，这其实就是同步和异步最关键的区别，同步必须等待或者主动的去询问IO是否完成，那么为什么说是阻塞的呢？因为此时是通过select系统调用来完成的，而select函数本身的实现方式是阻塞的，而采用select函数有个好处就是它可以同时监听多个文件句柄，从而提高系统的并发性！</li>
+<li>异步非阻塞IO：在此种模式下，用户进程只需要发起一个IO操作然后立即返回，等IO操作真正的完成以后，应用程序会得到IO操作完成的通知，此时用户进程只需要对数据进行处理就好了，不需要进行实际的IO读写操作，因为真正的IO读取或者写入操作已经由内核完成了。目前Java中还没有支持此种IO模型。 </li>
+</ul>
+<h3 id="BIO、NIO、AIO"><a href="#BIO、NIO、AIO" class="headerlink" title="BIO、NIO、AIO"></a>BIO、NIO、AIO</h3><ul>
+<li>Java BIO ： <strong>同步并阻塞</strong>，服务器实现模式为<strong>一个连接一个线程</strong>，即客户端有连接请求时服务器端就需要启动一个线程进行处理，如果这个连接不做任何事情会造成不必要的线程开销，当然可以通过线程池机制改善。</li>
+<li>Java NIO：<strong>同步非阻塞</strong>，服务器实现模式为<strong>一个请求一个线程</strong>，即客户端发送的连接请求都会注册到多路复用器上，多路复用器<strong>轮询</strong>到连接有I/O请求时才启动一个线程进行处理。</li>
+<li>Java AIO：<strong>异步非阻塞</strong>，服务器实现模式为<strong>一个有效请求一个线程</strong>，客户端的I/O请求都是由OS先完成了再通知服务器应用去启动线程进行处理。</li>
+</ul>
+<h3 id="Java-NIO由以下几个核心部分组成："><a href="#Java-NIO由以下几个核心部分组成：" class="headerlink" title="Java NIO由以下几个核心部分组成："></a>Java NIO由以下几个核心部分组成：</h3><ul>
+<li>Channel（通道）</li>
+<li>Buffer（缓冲区）</li>
+<li>Selector（选择器）</li>
+</ul>
+<h4 id="channel"><a href="#channel" class="headerlink" title="channel"></a>channel</h4><p>Java NIO的通道类似流，但又有些不同：</p>
+<ul>
+<li>既可以从通道中读取数据，又可以写数据到通道。但流的读写通常是单向的。</li>
+<li>通道可以异步地读写。</li>
+<li>通道中的数据总是要先读到一个Buffer，或者总是要从一个Buffer中写入<br><img src="http://upload-images.jianshu.io/upload_images/1419542-75f7966a4f4478ff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="overview-channels-buffers.png"></li>
+</ul>
+<p>Channel的实现</p>
+<ul>
+<li><code>FileChannel</code> 从文件中读写数据</li>
+<li><code>DatagramChannel</code>能通过UDP读写网络中的数据</li>
+<li><code>SocketChannel</code> 能通过TCP读写网络中的数据</li>
+<li><code>ServerSocketChannel</code> 可以监听新进来的TCP连接，像Web服务器那样，对每一个新进来的连接都创建一个SocketChannel。</li>
+</ul>
+<h4 id="Buffer"><a href="#Buffer" class="headerlink" title="Buffer"></a>Buffer</h4><p>Java NIO中的Buffer用于和NIO通道进行交互。如你所知，数据是从通道读入缓冲区，从缓冲区写入到通道中的。<br>缓冲区本质上是一块可以写入数据，然后可以从中读取数据的内存。这块内存被包装成NIO Buffer对象，并提供了一组方法，用来方便的访问该块内存。</p>
+<h4 id="Selector"><a href="#Selector" class="headerlink" title="Selector"></a>Selector</h4><p>Selector是Java NIO中能够检测一到多个NIO通道，并能够知晓通道是否为诸如读写事件做好准备的组件。这样，一个单独的线程可以管理多个channel，从而管理多个网络连接。<br><img src="http://upload-images.jianshu.io/upload_images/1419542-683c996697d33078.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="selectors.png"><br>要使用Selector，得向Selector注册Channel，然后调用它的select()方法。这个方法会一直阻塞到某个注册的通道有事件就绪。一旦这个方法返回，线程就可以处理这些事件，事件的例子有如新连接进来，数据接收等。</p>
+<p>Selector的创建<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Selector selector = Selector.open();</span><br></pre></td></tr></table></figure></p>
+<p>向Selector注册通道<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 与Selector一起使用时，Channel必须处于非阻塞模式下</span><br><span class="line">channel.configureBlocking(false);</span><br><span class="line">SelectionKey key = channel.register(selector,Selectionkey.OP_READ);</span><br></pre></td></tr></table></figure></p>
+<p>通过Selector选择通道：一旦向Selector注册了一或多个通道，就可以调用几个重载的select()方法。这些方法返回你所感兴趣的事件（如连接、接受、读或写）已经准备就绪的那些通道<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int select() //阻塞到至少有一个通道在你注册的事件上就绪了</span><br><span class="line">int select(long timeout) //和select()一样，除了最长会阻塞timeout毫秒(参数)</span><br><span class="line">int selectNow()  //不会阻塞，不管什么通道就绪都立刻返回</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/07/Spark-RDD详解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1327,7 +1674,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1338,7 +1685,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -1349,7 +1696,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -1402,7 +1749,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

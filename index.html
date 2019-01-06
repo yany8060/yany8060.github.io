@@ -269,6 +269,178 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/06/Tensorflow-卷积神经网络/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yan Yong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/favicon.ico">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanY">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/12/06/Tensorflow-卷积神经网络/" itemprop="url">Tensorflow-卷积神经网络</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-12-06T16:55:42+08:00">
+                2019-12-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tensorflow/" itemprop="url" rel="index">
+                    <span itemprop="name">tensorflow</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h3><p>具体过程就是：神经信号x乘上权重向量w，经过输入函数（Net input function）求和后，由激活函数（Activation function）输出。监督学习过程中，输出结果将会对比数据集样本结果（label），使用损失函数（cost function）计算损失，并且经过优化器迭代后更新权重。</p>
+<p><img src="http://wx3.sinaimg.cn/mw690/007h1WTYly1fyvx74sscdj30lz0asn4a.jpg" alt="avatar"></p>
+<h4 id="输入层"><a href="#输入层" class="headerlink" title="输入层"></a>输入层</h4><p>该层只起到输入信号的扇出作用.所以在计算网络的层数时不被记入。该层负责接收来自网络外部的信息。</p>
+<h4 id="输出层"><a href="#输出层" class="headerlink" title="输出层"></a>输出层</h4><p>它是网络的最后一层，具有该网络的最大层号，负责输出网络的计算结果。</p>
+<h4 id="隐藏层"><a href="#隐藏层" class="headerlink" title="隐藏层"></a>隐藏层</h4><p>除输入层和输出层以外的其他各层叫做隐藏层。隐藏层不直接接受外界的信号,也不直接向外界发送信号。</p>
+<h4 id="计算过程"><a href="#计算过程" class="headerlink" title="计算过程"></a>计算过程</h4><p><img src="http://wx3.sinaimg.cn/mw690/007h1WTYly1fyvxj3nd8nj30ib0aggp7.jpg" alt="avatar"></p>
+<h3 id="卷积神经网络"><a href="#卷积神经网络" class="headerlink" title="卷积神经网络"></a>卷积神经网络</h3><p>卷积神经网络包含了一个由卷积层和子采样层构成的特征抽取器。</p>
+<p>卷积神经网络分为了三部分，第一部分为输入层，第二部分由若干个卷积层和池化层 组成，第三部分为一个全连接的多层感知分类器构成。<br><img src="http://wx2.sinaimg.cn/mw690/007h1WTYly1fywy9j09g3j30va08mgnj.jpg" alt="avatar"></p>
+<h4 id="卷积层"><a href="#卷积层" class="headerlink" title="卷积层"></a>卷积层</h4><p>卷积层通常包含若干个特征平面（featureMap），每一个特征平面由一些矩形排列的神经元组成，同一特征平面的神经元共享权值，这个共享权值就是卷积核。卷积核一般以随机小数矩阵的形式初始化，在网络的训练过程中卷积核将学习得到合理的权值。<br><img src="http://wx1.sinaimg.cn/mw690/007h1WTYly1fywy9mg3h9g30dj04owh8.gif" alt="avatar"></p>
+<h4 id="池化层"><a href="#池化层" class="headerlink" title="池化层"></a>池化层</h4><p>子采样也叫做池化（pooling），目的是为了减少特征图。通常有<strong>均值采样（mean poooling）和 最大值采样（max pooling）</strong>两种形式。</p>
+<p>池化操作将保存深度大小不变。</p>
+<p>如果池化层的输入单元大小不是二的整数倍，一般采取边缘补零（zero-padding）的方式补成2的倍数，然后再池化。</p>
+<p>池化操作对每个深度切片独立，规模一般为 2＊2，相对于卷积层进行卷积运算<br><img src="http://wx4.sinaimg.cn/mw690/007h1WTYly1fywy419ylnj30lv0a8n0i.jpg" alt="avatar"></p>
+<h4 id="全连接层"><a href="#全连接层" class="headerlink" title="全连接层"></a>全连接层</h4><p>全连接层的每一个节点都与上一层的所有节点相连，用来把前边提取到的特征综合起来。</p>
+<h3 id="CNN卷积神经网络"><a href="#CNN卷积神经网络" class="headerlink" title="CNN卷积神经网络"></a>CNN卷积神经网络</h3><h4 id="卷积核"><a href="#卷积核" class="headerlink" title="卷积核"></a>卷积核</h4><p>带着一组固定权重的神经元，通常是n*m二维的矩阵，n和m也是神经元的感受视野（local receptive fields）。n*m矩阵中存的是对感受视野中数据处理的系数。一个卷积核的滤波可以用来提取特定的特征（例如提取物体轮廓，颜色深浅等）。通过卷积层从原始数据中提取出的新的特征过程又成为feature map（特征映射）。将感受视野对输入的扫描间隔称为步长（stride）；</p>
+<h4 id="tf-nn-conv2d"><a href="#tf-nn-conv2d" class="headerlink" title="tf.nn.conv2d"></a>tf.nn.conv2d</h4><p>tf.nn.conv2d(input, filter, strides, padding, use_cudnn_on_gpu=None, name=None) </p>
+<ul>
+<li><p><strong>参数input</strong>：指需要做卷积的输入图像，它要求是一个Tensor，具有[batch, in_height, in_width, in_channels]这样的shape，具体含义是[训练时一个batch的图片数量, 图片高度, 图片宽度, 图像通道数]，注意这是一个4维的Tensor，要求类型为float32和float64其中之一</p>
+</li>
+<li><p><strong>参数filter</strong>：相当于CNN中的卷积核，它要求是一个Tensor，具有[filter_height, filter_width, in_channels, out_channels]这样的shape，具体含义是[卷积核的高度，卷积核的宽度，图像通道数，卷积核个数]，要求类型与参数input相同，有一个地方需要注意，第三维in_channels，就是参数input的第四维</p>
+</li>
+<li><strong>参数strides</strong>：卷积时在图像每一维的步长，这是一个一维的向量，长度4</li>
+<li><strong>参数padding</strong>：string类型的量，只能是”SAME”,”VALID”其中之一，这个值决定了不同的卷积方式。<ul>
+<li>当其为”VALID”时，输出的size总比原图的size小，有时不会覆盖原图所有元素(既，可能舍弃边上的某些元素)。</li>
+<li>当其为”SAME”时，表示卷积核可以停留在图像边缘，输出并不一定和原图size一致，但会保证覆盖原图所有像素，不会舍弃边上的莫些元素;</li>
+</ul>
+</li>
+<li><strong>参数use_cudnn_on_gpu</strong>：bool类型，是否使用cudnn加速，默认为true</li>
+<li><strong>结果返回一个Tensor</strong>，这个输出，就是我们常说的feature map，shape仍然是[batch, height, width, channels]这种形式。</li>
+</ul>
+<h4 id="网络案例："><a href="#网络案例：" class="headerlink" title="网络案例："></a>网络案例：</h4><p>LeNet、AlexNet、ZF Net、GoogLeNet、VGGNet、ResNet</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/16/TensorFlow-损失函数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -902,6 +1074,212 @@ MathJax.Hub.Config({
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/03/Java基础-JVM内存模型/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yan Yong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/favicon.ico">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanY">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/03/Java基础-JVM内存模型/" itemprop="url">Java基础-JVM内存模型</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-03T19:59:55+08:00">
+                2018-03-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java基础/" itemprop="url" rel="index">
+                    <span itemprop="name">Java基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>JRE（JavaRuntimeEnvironment，Java运行环境）也就是Java平台。所有的Java 程序都要在JRE下才能运行。普通用户只需要运行已开发好的java程序，安装JRE即可。</li>
+<li>JDK（Java Development Kit）是程序开发者用来编译、调试java程序用的开发工具包。JDK的工具也是Java程序，也需要JRE才能运行。为了保持JDK的独立性和完整性，在JDK的安装过程中，JRE也是 安装的一部分。所以，在JDK的安装目录下有一个名为jre的目录，用于存放JRE文件。</li>
+<li>JVM（JavaVirtualMachine，Java虚拟机）是JRE的一部分。它是一个虚构出来的计算机，是通过在实际的计算机上仿真模拟各种计算机功能来实现的。JVM有自己完善的硬件架构，如处理器、堆栈、寄存器等，还具有相应的指令系统。Java语言最重要的特点就是跨平台运行。使用JVM就是为了支持与操作系统无关，实现跨平台。</li>
+</ul>
+<p><img src="http://wx2.sinaimg.cn/large/007h1WTYly1fysn56thu0j30sg0h9tdz.jpg" alt="avatar"></p>
+<h3 id="内存模型"><a href="#内存模型" class="headerlink" title="内存模型"></a>内存模型</h3><h4 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h4><p>&#160; &#160; &#160; &#160;<strong>程序计数器是一块较小的内存空间，可以看作是当前线程所执行的（正在执行）字节码的行号指示器</strong>。字节码解释器工作时通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等功能都需要依赖这个计数器来完。</p>
+<p>&#160; &#160; &#160; &#160;由于Java 虚拟机的多线程是通过线程轮流切换并分配处理器执行时间的方式来实现的，在任何一个确定的时刻，一个处理器（对于多核处理器来说是一个内核）只会执行一条线程中的指令。因此，为了线程切换后能恢复到正确的执行位置，每条线程都需要有一个<strong>独立</strong>的程序计数器，<strong>各条线程之间的计数器互不影响，独立存储，我们称这类内存区域为“线程私有”的内存。它的生命周期与线程相同</strong></p>
+<p>&#160; &#160; &#160; &#160;如果线程正在执行的是一个Java方法，这个计数器记录的是正在执行的虚拟机字节码指令的地址；如果正在执行的是Natvie 方法，这个计数器值则为空（Undefined）。此内存区域是唯一一个在Java 虚拟机规范中没有规定任何OutOfMemoryError 情况的区域。</p>
+<h4 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h4><h5 id="Java虚拟机栈"><a href="#Java虚拟机栈" class="headerlink" title="Java虚拟机栈"></a>Java虚拟机栈</h5><p>与程序计数器一样，Java虚拟机栈也是<strong>线程私有的</strong>，<strong>它的生命周期和线程相同</strong>，<strong>描述的是Java方法执行的内存模型</strong>：每一个方法执行的同时都会创建一个栈帧（Stack Frame），用来存储局部变量表、操作数栈，动态链接，方法出口等信息。每个方法从调用到执行完成的过程，都对应一个栈帧在虚拟机栈中从入栈到出栈的过程。</p>
+<p>Java内存可以粗糙的区分为堆内存（Heap）和栈内存(Stack),其中栈就是现在说的虚拟机栈，或者说是虚拟机栈中局部变量表部分。</p>
+<p><strong>局部变量表主要存放了编译器可知的各种基本数据类型、对象引用</strong>。局部变量表所需的内存空间在编译期间完成分配，当进入一个方法时，这个方法需要在帧中分配多大的局部变量空间是完全确定的，在方法运行期间不会改变局部变量表的大小。</p>
+<p>StackOverflowError：如果线程请求的栈深度大于虚拟机所允许的深度，将抛出StackOverflowError异常</p>
+<h5 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h5><p>本地方法栈为虚拟使用到Native方法服务。</p>
+<h4 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h4><p>Java堆（Java Heap）是Java虚拟机所管理的内存中最大的一块。Java堆是被所有线程所共享的一块内存区域，在虚拟机启动是创建。<strong>此内存区域的唯一目的就是存放对象实例，几乎所有的对象实例都在这里分配内存。</strong></p>
+<p>Java 堆是垃圾收集器管理的主要区域，因此也被称作<strong>GC堆（Garbage Collected Heap）</strong>.从垃圾回收的角度，由于现在收集器基本都采用分代垃圾收集算法，所以Java堆还可以细分为：新生代和老年代：再细致一点有：Eden空间、From Survivor、To Survivor空间等。<strong>进一步划分的目的是更好地回收内存，或者更快地分配内存。</strong></p>
+<p>堆模型图<br><img src="http://wx4.sinaimg.cn/large/007h1WTYly1fysn51qwu5j30s30azmyo.jpg" alt="avatar"></p>
+<h4 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h4><p>方法区与 Java 堆一样，是<strong>各个线程共享的内存区域</strong>，它用于<strong>存储已被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等数据</strong>。虽然Java虚拟机规范把方法区描述为堆的一个逻辑部分，但是它却有一个别名叫做 Non-Heap（非堆），目的应该是与 Java 堆区分开来。</p>
+<p><strong>相对而言，垃圾收集行为在这个区域是比较少出现的，但并非数据进入方法区后就“永久存在”了。</strong></p>
+<p><strong>注</strong>：<strong>在 JDK 1.8中移除整个永久代，取而代之的是一个叫元空间（Metaspace）的区域（永久代使用的是JVM的堆内存空间，而元空间使用的是物理内存，直接受到本机的物理内存限制）。</strong></p>
+<h4 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h4><p>运行时常量池时方法区的一部分。Class文件中除了有类的版本、字段、方法、接口等描述信息外，还有常量池信息（用于存放编译期生成的各种字面量和符号引用）</p>
+<h4 id="直接内存"><a href="#直接内存" class="headerlink" title="直接内存"></a>直接内存</h4><p>直接内存并不是虚拟机运行时数据区的一部分，也不是虚拟机规范中定义的内存区域，但是这部分内存也被频繁地使用。而且也可能导致OutOfMemoryError异常出现。</p>
+<p>本机直接内存的分配不会收到 Java 堆的限制，但是，既然是内存就会受到本机总内存大小以及处理器寻址空间的限制。</p>
+<h3 id="JVM常用参数的含义"><a href="#JVM常用参数的含义" class="headerlink" title="JVM常用参数的含义"></a>JVM常用参数的含义</h3><table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-Xms</td>
+<td>初始堆大小</td>
+</tr>
+<tr>
+<td>-Xmx</td>
+<td>最大堆</td>
+</tr>
+<tr>
+<td>-Xmn</td>
+<td>年轻代大小（1.4 or later）</td>
+</tr>
+<tr>
+<td>-XX:NewSize</td>
+<td>设置年轻代大小(for 1.3/1.4)</td>
+</tr>
+<tr>
+<td>-XX:MaxNewSize</td>
+<td>年轻代最大值(for 1.3/1.4)</td>
+</tr>
+<tr>
+<td>-XX:PermSize</td>
+<td>设置持久代(perm gen)初始值</td>
+</tr>
+<tr>
+<td>-XX:MaxPermSize</td>
+<td>设置持久代最大值</td>
+</tr>
+<tr>
+<td>-Xss</td>
+<td>每个线程的堆栈大小</td>
+</tr>
+</tbody>
+</table>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/05/go-ethereum-简单搭建私有链/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1075,7 +1453,7 @@ MathJax.Hub.Config({
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/08/Java-Thread概述/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/08/Java基础-Thread概述/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yan Yong">
@@ -1094,7 +1472,7 @@ MathJax.Hub.Config({
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/03/08/Java-Thread概述/" itemprop="url">Java Thread概述</a></h1>
+                <a class="post-title-link" href="/2017/03/08/Java基础-Thread概述/" itemprop="url">Java基础-Thread概述</a></h1>
         
 
         <div class="post-meta">
@@ -1129,8 +1507,8 @@ MathJax.Hub.Config({
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/Java基础/" itemprop="url" rel="index">
+                    <span itemprop="name">Java基础</span>
                   </a>
                 </span>
 
@@ -1713,353 +2091,6 @@ MathJax.Hub.Config({
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/12/Java-NIO-ByteBuffer概述/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yan Yong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/favicon.ico">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YanY">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/02/12/Java-NIO-ByteBuffer概述/" itemprop="url">Java NIO ByteBuffer概述</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-12T17:29:27+08:00">
-                2017-02-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="Buffer的基本用法"><a href="#Buffer的基本用法" class="headerlink" title="Buffer的基本用法"></a>Buffer的基本用法</h3><p>使用Buffer读写数据一般遵循以下四个步骤：<br>1、分配空间<br>2、写入数据到Buffer<br>3、调用flip()方法<br>4、从Buffer中读取数据<br>5、调用clear()方法或者compact()方法<br>当向buffer写入数据时，buffer会记录下写了多少数据。一旦要读取数据，需要通过<code>flip()</code>方法<code>将Buffer从写模式切换到读模式</code>。在读模式下，可以读取之前写入到buffer的所有数据。<br>一旦读完了所有的数据，就需要清空缓冲区，让它可以再次被写入。有两种方式能清空缓冲区：调用clear()或compact()方法。<code>clear()方法会清空整个缓冲区</code>。<code>compact()方法只会清除已经读过的数据</code>。任何未读的数据都被移到缓冲区的起始处，新写入的数据将放到缓冲区未读数据的后面。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1419542-d832d71903ddb1e1.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Buffer-process.jpeg"></p>
-<h3 id="四个主要属性："><a href="#四个主要属性：" class="headerlink" title="四个主要属性："></a>四个主要属性：</h3><ul>
-<li>capacity：作为一个内存块，Buffer有一个固定的大小值，也叫“capacity”.你只能往里写capacity个byte、long，char等类型。一旦Buffer满了，需要将其清空（通过读数据或者清除数据）才能继续写数据往里写数据。</li>
-<li>position：<ul>
-<li>当你写数据到Buffer中时，position表示当前的位置。初始的position值为0.当一个byte、long等数据写到Buffer后， position会向前移动到下一个可插入数据的Buffer单元。position最大可为capacity – 1。</li>
-<li>当读取数据时，也是从某个特定位置读。当将Buffer从写模式切换到读模式，position会被重置为0。 当从Buffer的position处读取数据时，position向前移动到下一个可读的位置。</li>
-</ul>
-</li>
-<li>limit：<ul>
-<li>在写模式下，Buffer的limit表示你最多能往Buffer里写多少数据。 写模式下，limit等于Buffer的capacity。</li>
-<li>当切换Buffer到读模式时， limit表示你最多能读到多少数据。因此，当切换Buffer到读模式时，limit会被设置成写模式下的position值。换句话说，你能读到之前写入的所有数据（limit被设置成已写数据的数量，这个值在写模式下就是position）</li>
-</ul>
-</li>
-<li>mark：为某一读过的位置做标记，便于某些时候回退到该位置。</li>
-</ul>
-<h3 id="Buffer基本函数"><a href="#Buffer基本函数" class="headerlink" title="Buffer基本函数"></a>Buffer基本函数</h3><h4 id="Buffer的分配"><a href="#Buffer的分配" class="headerlink" title="Buffer的分配"></a>Buffer的分配</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ByteBuffer buf = ByteBuffer.allocate(48);</span><br></pre></td></tr></table></figure>
-<h4 id="向Buffer中写数据"><a href="#向Buffer中写数据" class="headerlink" title="向Buffer中写数据"></a>向Buffer中写数据</h4><p>从Channel写到Buffer的例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int bytesRead = inChannel.read(buf); //read into buffer.</span><br></pre></td></tr></table></figure></p>
-<p>通过put方法写Buffer<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buf.put(127);</span><br></pre></td></tr></table></figure></p>
-<h4 id="从Buffer中读取数据"><a href="#从Buffer中读取数据" class="headerlink" title="从Buffer中读取数据"></a>从Buffer中读取数据</h4><p>从Buffer读取数据到Channel的例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//read from buffer into channel.</span><br><span class="line">int bytesWritten = inChannel.write(buf);</span><br></pre></td></tr></table></figure></p>
-<p>使用get()方法从Buffer中读取数据的例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">byte aByte = buf.get();</span><br></pre></td></tr></table></figure></p>
-<h4 id="flip-方法"><a href="#flip-方法" class="headerlink" title="flip()方法"></a>flip()方法</h4><p>flip方法将Buffer从写模式切换到读模式。调用flip()方法会将position设回0，并将limit设置成之前position的值。<br>换句话说，position现在用于标记读的位置，limit表示之前写进了多少个byte、char等 —— 现在能读取多少个byte、char等。</p>
-<h4 id="clear-与compact-方法"><a href="#clear-与compact-方法" class="headerlink" title="clear()与compact()方法"></a>clear()与compact()方法</h4><p>一旦读完Buffer中的数据，需要让Buffer准备好再次被写入。可以通过clear()或compact()方法来完成。<br>如果调用的是clear()方法，position将被设回0，limit被设置成 capacity的值。换句话说，Buffer 被清空了。Buffer中的数据并未清除，只是这些标记告诉我们可以从哪里开始往Buffer里写数据。<br>如果Buffer中有一些未读的数据，调用clear()方法，数据将“被遗忘”，意味着不再有任何标记会告诉你哪些数据被读过，哪些还没有。<br>如果Buffer中仍有未读的数据，且后续还需要这些数据，但是此时想要先先写些数据，那么使用compact()方法。<br>compact()方法将所有未读的数据拷贝到Buffer起始处。然后将position设到最后一个未读元素正后面。limit属性依然像clear()方法一样，设置成capacity。现在Buffer准备好写数据了，但是不会覆盖未读的数据。</p>
-<h3 id="图解ByteBuffer函数过程"><a href="#图解ByteBuffer函数过程" class="headerlink" title="图解ByteBuffer函数过程"></a>图解ByteBuffer函数过程</h3><h4 id="put"><a href="#put" class="headerlink" title="put"></a>put</h4><p>Writes the given byte into this buffer at the current position, and then increments the position.<br>写模式下，往buffer里写一个字节，并把postion移动一位。写模式下，一般limit与capacity相等。<br><img src="http://upload-images.jianshu.io/upload_images/1419542-ae958aab995c9963.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Buffer-put.png"></p>
-<h4 id="flip"><a href="#flip" class="headerlink" title="flip"></a>flip</h4><p>Flips this buffer.  The limit is set to the current position and then the position is set to zero.  If the mark is defined then it is discarded.<br>After a sequence of channel-read or <code>put</code> operations, invoke this method to prepare for a sequence of channel-write or relative  <code>get</code> operations.（即读写模型切换）<br>写完数据，需要开始读的时候，将postion复位到0，并将limit设为当前postion<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public final Buffer flip() &#123;</span><br><span class="line">        limit = position;</span><br><span class="line">        position = 0;</span><br><span class="line">        mark = -1;</span><br><span class="line">        return this;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1419542-804ddf879bbc2cdd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Buffer-flip.png"></p>
-<h4 id="get"><a href="#get" class="headerlink" title="get"></a>get</h4><p>Reads the byte at this buffer’s current position, and then increments the position.<br>从buffer里读一个字节，并把postion移动一位。上限是limit，即写入数据的最后位置<br><img src="http://upload-images.jianshu.io/upload_images/1419542-2bbde49b79b2f805.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Buffer-get.png"></p>
-<h4 id="clear"><a href="#clear" class="headerlink" title="clear"></a>clear</h4><p>Clears this buffer.  The position is set to zero, the limit is set to the capacity, and the mark is discarded.<br>Invoke this method before using a sequence of channel-read or <code>put</code> operations to fill this buffer.<br>将position置为0，并不清除buffer内容。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Buffer <span class="title">clear</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    position = <span class="number">0</span>;</span><br><span class="line">    limit = capacity;</span><br><span class="line">    mark = -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1419542-9a36d39cd8787e83.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Buffer-clear.png"></p>
-<p>参考：<br><a href="http://ifeve.com/buffers/" target="_blank" rel="noopener">http://ifeve.com/buffers/</a><br>博客：<br><a href="http://yany8060.xyz/" target="_blank" rel="noopener">http://yany8060.xyz/</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/12/Java-NIO简述/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yan Yong">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/favicon.ico">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YanY">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/02/12/Java-NIO简述/" itemprop="url">Java NIO简述</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-12T16:45:16+08:00">
-                2017-02-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Java NIO(New IO)是一个可以替代标准Java IO API的IO API（从Java 1.4开始)，Java NIO提供了与标准IO不同的IO工作方式。</p>
-<h3 id="I-O模型"><a href="#I-O模型" class="headerlink" title="I/O模型"></a>I/O模型</h3><ul>
-<li>同步阻塞IO：在此种方式下，用户进程在发起一个IO操作以后，必须等待IO操作的完成，只有当真正完成了IO操作以后，用户进程才能运行。JAVA传统的IO模型属于此种方式！</li>
-<li>同步非阻塞IO：在此种方式下，用户进程发起一个IO操作以后边可返回做其它事情，但是用户进程需要时不时的询问IO操作是否就绪，这就要求用户进程不停的去询问，从而引入不必要的CPU资源浪费。其中目前JAVA的NIO就属于同步非阻塞IO。</li>
-<li>异步阻塞IO：此种方式下是指应用发起一个IO操作以后，不等待内核IO操作的完成，等内核完成IO操作以后会通知应用程序，这其实就是同步和异步最关键的区别，同步必须等待或者主动的去询问IO是否完成，那么为什么说是阻塞的呢？因为此时是通过select系统调用来完成的，而select函数本身的实现方式是阻塞的，而采用select函数有个好处就是它可以同时监听多个文件句柄，从而提高系统的并发性！</li>
-<li>异步非阻塞IO：在此种模式下，用户进程只需要发起一个IO操作然后立即返回，等IO操作真正的完成以后，应用程序会得到IO操作完成的通知，此时用户进程只需要对数据进行处理就好了，不需要进行实际的IO读写操作，因为真正的IO读取或者写入操作已经由内核完成了。目前Java中还没有支持此种IO模型。 </li>
-</ul>
-<h3 id="BIO、NIO、AIO"><a href="#BIO、NIO、AIO" class="headerlink" title="BIO、NIO、AIO"></a>BIO、NIO、AIO</h3><ul>
-<li>Java BIO ： <strong>同步并阻塞</strong>，服务器实现模式为<strong>一个连接一个线程</strong>，即客户端有连接请求时服务器端就需要启动一个线程进行处理，如果这个连接不做任何事情会造成不必要的线程开销，当然可以通过线程池机制改善。</li>
-<li>Java NIO：<strong>同步非阻塞</strong>，服务器实现模式为<strong>一个请求一个线程</strong>，即客户端发送的连接请求都会注册到多路复用器上，多路复用器<strong>轮询</strong>到连接有I/O请求时才启动一个线程进行处理。</li>
-<li>Java AIO：<strong>异步非阻塞</strong>，服务器实现模式为<strong>一个有效请求一个线程</strong>，客户端的I/O请求都是由OS先完成了再通知服务器应用去启动线程进行处理。</li>
-</ul>
-<h3 id="Java-NIO由以下几个核心部分组成："><a href="#Java-NIO由以下几个核心部分组成：" class="headerlink" title="Java NIO由以下几个核心部分组成："></a>Java NIO由以下几个核心部分组成：</h3><ul>
-<li>Channel（通道）</li>
-<li>Buffer（缓冲区）</li>
-<li>Selector（选择器）</li>
-</ul>
-<h4 id="channel"><a href="#channel" class="headerlink" title="channel"></a>channel</h4><p>Java NIO的通道类似流，但又有些不同：</p>
-<ul>
-<li>既可以从通道中读取数据，又可以写数据到通道。但流的读写通常是单向的。</li>
-<li>通道可以异步地读写。</li>
-<li>通道中的数据总是要先读到一个Buffer，或者总是要从一个Buffer中写入<br><img src="http://upload-images.jianshu.io/upload_images/1419542-75f7966a4f4478ff.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="overview-channels-buffers.png"></li>
-</ul>
-<p>Channel的实现</p>
-<ul>
-<li><code>FileChannel</code> 从文件中读写数据</li>
-<li><code>DatagramChannel</code>能通过UDP读写网络中的数据</li>
-<li><code>SocketChannel</code> 能通过TCP读写网络中的数据</li>
-<li><code>ServerSocketChannel</code> 可以监听新进来的TCP连接，像Web服务器那样，对每一个新进来的连接都创建一个SocketChannel。</li>
-</ul>
-<h4 id="Buffer"><a href="#Buffer" class="headerlink" title="Buffer"></a>Buffer</h4><p>Java NIO中的Buffer用于和NIO通道进行交互。如你所知，数据是从通道读入缓冲区，从缓冲区写入到通道中的。<br>缓冲区本质上是一块可以写入数据，然后可以从中读取数据的内存。这块内存被包装成NIO Buffer对象，并提供了一组方法，用来方便的访问该块内存。</p>
-<h4 id="Selector"><a href="#Selector" class="headerlink" title="Selector"></a>Selector</h4><p>Selector是Java NIO中能够检测一到多个NIO通道，并能够知晓通道是否为诸如读写事件做好准备的组件。这样，一个单独的线程可以管理多个channel，从而管理多个网络连接。<br><img src="http://upload-images.jianshu.io/upload_images/1419542-683c996697d33078.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="selectors.png"><br>要使用Selector，得向Selector注册Channel，然后调用它的select()方法。这个方法会一直阻塞到某个注册的通道有事件就绪。一旦这个方法返回，线程就可以处理这些事件，事件的例子有如新连接进来，数据接收等。</p>
-<p>Selector的创建<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Selector selector = Selector.open();</span><br></pre></td></tr></table></figure></p>
-<p>向Selector注册通道<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// 与Selector一起使用时，Channel必须处于非阻塞模式下</span><br><span class="line">channel.configureBlocking(false);</span><br><span class="line">SelectionKey key = channel.register(selector,Selectionkey.OP_READ);</span><br></pre></td></tr></table></figure></p>
-<p>通过Selector选择通道：一旦向Selector注册了一或多个通道，就可以调用几个重载的select()方法。这些方法返回你所感兴趣的事件（如连接、接受、读或写）已经准备就绪的那些通道<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int select() //阻塞到至少有一个通道在你注册的事件上就绪了</span><br><span class="line">int select(long timeout) //和select()一样，除了最长会阻塞timeout毫秒(参数)</span><br><span class="line">int selectNow()  //不会阻塞，不管什么通道就绪都立刻返回</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2114,7 +2145,7 @@ MathJax.Hub.Config({
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2125,7 +2156,7 @@ MathJax.Hub.Config({
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -2136,7 +2167,7 @@ MathJax.Hub.Config({
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -2189,7 +2220,7 @@ MathJax.Hub.Config({
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

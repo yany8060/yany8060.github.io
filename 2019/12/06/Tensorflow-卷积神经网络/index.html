@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/favicon.ico?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="tensorflow," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="神经网络具体过程就是：神经信号x乘上权重向量w，经过输入函数（Net input function）求和后，由激活函数（Activation function）输出。监督学习过程中，输出结果将会对比数据集样本结果（label），使用损失函数（cost function）计算损失，并且经过优化器迭代后更新权重。  输入层该层只起到输入信号的扇出作用.所以在计算网络的层数时不被记入。该层负责接收来自网">
+<meta name="keywords" content="tensorflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tensorflow-卷积神经网络">
+<meta property="og:url" content="http://yoursite.com/2019/12/06/Tensorflow-卷积神经网络/index.html">
+<meta property="og:site_name" content="YanY">
+<meta property="og:description" content="神经网络具体过程就是：神经信号x乘上权重向量w，经过输入函数（Net input function）求和后，由激活函数（Activation function）输出。监督学习过程中，输出结果将会对比数据集样本结果（label），使用损失函数（cost function）计算损失，并且经过优化器迭代后更新权重。  输入层该层只起到输入信号的扇出作用.所以在计算网络的层数时不被记入。该层负责接收来自网">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/007h1WTYly1fyvx74sscdj30lz0asn4a.jpg">
+<meta property="og:image" content="http://wx3.sinaimg.cn/mw690/007h1WTYly1fyvxj3nd8nj30ib0aggp7.jpg">
+<meta property="og:image" content="http://wx2.sinaimg.cn/mw690/007h1WTYly1fywy9j09g3j30va08mgnj.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/007h1WTYly1fywy9mg3h9g30dj04owh8.gif">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/007h1WTYly1fywy419ylnj30lv0a8n0i.jpg">
+<meta property="og:updated_time" content="2019-01-06T09:01:05.236Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tensorflow-卷积神经网络">
+<meta name="twitter:description" content="神经网络具体过程就是：神经信号x乘上权重向量w，经过输入函数（Net input function）求和后，由激活函数（Activation function）输出。监督学习过程中，输出结果将会对比数据集样本结果（label），使用损失函数（cost function）计算损失，并且经过优化器迭代后更新权重。  输入层该层只起到输入信号的扇出作用.所以在计算网络的层数时不被记入。该层负责接收来自网">
+<meta name="twitter:image" content="http://wx3.sinaimg.cn/mw690/007h1WTYly1fyvx74sscdj30lz0asn4a.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/12/06/Tensorflow-卷积神经网络/"/>
+
+
+
+
+
+  <title>Tensorflow-卷积神经网络 | YanY</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?0019617ab74dfbcdc260734bb2d66a5d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YanY</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/06/Tensorflow-卷积神经网络/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yan Yong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/favicon.ico">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YanY">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Tensorflow-卷积神经网络</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-12-06T16:55:42+08:00">
+                2019-12-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tensorflow/" itemprop="url" rel="index">
+                    <span itemprop="name">tensorflow</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h3><p>具体过程就是：神经信号x乘上权重向量w，经过输入函数（Net input function）求和后，由激活函数（Activation function）输出。监督学习过程中，输出结果将会对比数据集样本结果（label），使用损失函数（cost function）计算损失，并且经过优化器迭代后更新权重。</p>
+<p><img src="http://wx3.sinaimg.cn/mw690/007h1WTYly1fyvx74sscdj30lz0asn4a.jpg" alt="avatar"></p>
+<h4 id="输入层"><a href="#输入层" class="headerlink" title="输入层"></a>输入层</h4><p>该层只起到输入信号的扇出作用.所以在计算网络的层数时不被记入。该层负责接收来自网络外部的信息。</p>
+<h4 id="输出层"><a href="#输出层" class="headerlink" title="输出层"></a>输出层</h4><p>它是网络的最后一层，具有该网络的最大层号，负责输出网络的计算结果。</p>
+<h4 id="隐藏层"><a href="#隐藏层" class="headerlink" title="隐藏层"></a>隐藏层</h4><p>除输入层和输出层以外的其他各层叫做隐藏层。隐藏层不直接接受外界的信号,也不直接向外界发送信号。</p>
+<h4 id="计算过程"><a href="#计算过程" class="headerlink" title="计算过程"></a>计算过程</h4><p><img src="http://wx3.sinaimg.cn/mw690/007h1WTYly1fyvxj3nd8nj30ib0aggp7.jpg" alt="avatar"></p>
+<h3 id="卷积神经网络"><a href="#卷积神经网络" class="headerlink" title="卷积神经网络"></a>卷积神经网络</h3><p>卷积神经网络包含了一个由卷积层和子采样层构成的特征抽取器。</p>
+<p>卷积神经网络分为了三部分，第一部分为输入层，第二部分由若干个卷积层和池化层 组成，第三部分为一个全连接的多层感知分类器构成。<br><img src="http://wx2.sinaimg.cn/mw690/007h1WTYly1fywy9j09g3j30va08mgnj.jpg" alt="avatar"></p>
+<h4 id="卷积层"><a href="#卷积层" class="headerlink" title="卷积层"></a>卷积层</h4><p>卷积层通常包含若干个特征平面（featureMap），每一个特征平面由一些矩形排列的神经元组成，同一特征平面的神经元共享权值，这个共享权值就是卷积核。卷积核一般以随机小数矩阵的形式初始化，在网络的训练过程中卷积核将学习得到合理的权值。<br><img src="http://wx1.sinaimg.cn/mw690/007h1WTYly1fywy9mg3h9g30dj04owh8.gif" alt="avatar"></p>
+<h4 id="池化层"><a href="#池化层" class="headerlink" title="池化层"></a>池化层</h4><p>子采样也叫做池化（pooling），目的是为了减少特征图。通常有<strong>均值采样（mean poooling）和 最大值采样（max pooling）</strong>两种形式。</p>
+<p>池化操作将保存深度大小不变。</p>
+<p>如果池化层的输入单元大小不是二的整数倍，一般采取边缘补零（zero-padding）的方式补成2的倍数，然后再池化。</p>
+<p>池化操作对每个深度切片独立，规模一般为 2＊2，相对于卷积层进行卷积运算<br><img src="http://wx4.sinaimg.cn/mw690/007h1WTYly1fywy419ylnj30lv0a8n0i.jpg" alt="avatar"></p>
+<h4 id="全连接层"><a href="#全连接层" class="headerlink" title="全连接层"></a>全连接层</h4><p>全连接层的每一个节点都与上一层的所有节点相连，用来把前边提取到的特征综合起来。</p>
+<h3 id="CNN卷积神经网络"><a href="#CNN卷积神经网络" class="headerlink" title="CNN卷积神经网络"></a>CNN卷积神经网络</h3><h4 id="卷积核"><a href="#卷积核" class="headerlink" title="卷积核"></a>卷积核</h4><p>带着一组固定权重的神经元，通常是n*m二维的矩阵，n和m也是神经元的感受视野（local receptive fields）。n*m矩阵中存的是对感受视野中数据处理的系数。一个卷积核的滤波可以用来提取特定的特征（例如提取物体轮廓，颜色深浅等）。通过卷积层从原始数据中提取出的新的特征过程又成为feature map（特征映射）。将感受视野对输入的扫描间隔称为步长（stride）；</p>
+<h4 id="tf-nn-conv2d"><a href="#tf-nn-conv2d" class="headerlink" title="tf.nn.conv2d"></a>tf.nn.conv2d</h4><p>tf.nn.conv2d(input, filter, strides, padding, use_cudnn_on_gpu=None, name=None) </p>
+<ul>
+<li><p><strong>参数input</strong>：指需要做卷积的输入图像，它要求是一个Tensor，具有[batch, in_height, in_width, in_channels]这样的shape，具体含义是[训练时一个batch的图片数量, 图片高度, 图片宽度, 图像通道数]，注意这是一个4维的Tensor，要求类型为float32和float64其中之一</p>
+</li>
+<li><p><strong>参数filter</strong>：相当于CNN中的卷积核，它要求是一个Tensor，具有[filter_height, filter_width, in_channels, out_channels]这样的shape，具体含义是[卷积核的高度，卷积核的宽度，图像通道数，卷积核个数]，要求类型与参数input相同，有一个地方需要注意，第三维in_channels，就是参数input的第四维</p>
+</li>
+<li><strong>参数strides</strong>：卷积时在图像每一维的步长，这是一个一维的向量，长度4</li>
+<li><strong>参数padding</strong>：string类型的量，只能是”SAME”,”VALID”其中之一，这个值决定了不同的卷积方式。<ul>
+<li>当其为”VALID”时，输出的size总比原图的size小，有时不会覆盖原图所有元素(既，可能舍弃边上的某些元素)。</li>
+<li>当其为”SAME”时，表示卷积核可以停留在图像边缘，输出并不一定和原图size一致，但会保证覆盖原图所有像素，不会舍弃边上的莫些元素;</li>
+</ul>
+</li>
+<li><strong>参数use_cudnn_on_gpu</strong>：bool类型，是否使用cudnn加速，默认为true</li>
+<li><strong>结果返回一个Tensor</strong>，这个输出，就是我们常说的feature map，shape仍然是[batch, height, width, channels]这种形式。</li>
+</ul>
+<h4 id="网络案例："><a href="#网络案例：" class="headerlink" title="网络案例："></a>网络案例：</h4><p>LeNet、AlexNet、ZF Net、GoogLeNet、VGGNet、ResNet</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/tensorflow/" rel="tag"># tensorflow</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/16/TensorFlow-损失函数/" rel="next" title="TensorFlow-损失函数">
+                <i class="fa fa-chevron-left"></i> TensorFlow-损失函数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/favicon.ico"
+                alt="Yan Yong" />
+            
+              <p class="site-author-name" itemprop="name">Yan Yong</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yany8060" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:806055720@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#神经网络"><span class="nav-number">1.</span> <span class="nav-text">神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#输入层"><span class="nav-number">1.1.</span> <span class="nav-text">输入层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输出层"><span class="nav-number">1.2.</span> <span class="nav-text">输出层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#隐藏层"><span class="nav-number">1.3.</span> <span class="nav-text">隐藏层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#计算过程"><span class="nav-number">1.4.</span> <span class="nav-text">计算过程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卷积神经网络"><span class="nav-number">2.</span> <span class="nav-text">卷积神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#卷积层"><span class="nav-number">2.1.</span> <span class="nav-text">卷积层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#池化层"><span class="nav-number">2.2.</span> <span class="nav-text">池化层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#全连接层"><span class="nav-number">2.3.</span> <span class="nav-text">全连接层</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CNN卷积神经网络"><span class="nav-number">3.</span> <span class="nav-text">CNN卷积神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#卷积核"><span class="nav-number">3.1.</span> <span class="nav-text">卷积核</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tf-nn-conv2d"><span class="nav-number">3.2.</span> <span class="nav-text">tf.nn.conv2d</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#网络案例："><span class="nav-number">3.3.</span> <span class="nav-text">网络案例：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yan Yong</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261131814&web_id=1261131814" language="JavaScript"></script>
+  </div>
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
