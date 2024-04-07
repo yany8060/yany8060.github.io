@@ -1,0 +1,235 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>TensorFlow-损失函数 | YanY</title><meta name="author" content="Yan Yong"><meta name="copyright" content="Yan Yong"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="MathJax.Hub.Config({     tex2jax: {         inlineMath: [ [&#39;$&#39;,&#39;$&#39;]],         displayMath: [ [&#39;$$&#39;,&#39;$$&#39;]]     } });       损失函数定义损失函数（loss function）,量化了分类器输出地结果（预测值）和我们期望的结果（标签）之间的差距。在机器学习中，损失函数（loss">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TensorFlow-损失函数">
+<meta property="og:url" content="http://example.com/2018/10/16/TensorFlow-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/index.html">
+<meta property="og:site_name" content="YanY">
+<meta property="og:description" content="MathJax.Hub.Config({     tex2jax: {         inlineMath: [ [&#39;$&#39;,&#39;$&#39;]],         displayMath: [ [&#39;$$&#39;,&#39;$$&#39;]]     } });       损失函数定义损失函数（loss function）,量化了分类器输出地结果（预测值）和我们期望的结果（标签）之间的差距。在机器学习中，损失函数（loss">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2018-10-16T12:11:11.000Z">
+<meta property="article:modified_time" content="2024-04-07T07:52:49.496Z">
+<meta property="article:author" content="Yan Yong">
+<meta property="article:tag" content="tensorflow">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2018/10/16/TensorFlow-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'TensorFlow-损失函数',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-07 15:52:49'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="YanY"><span class="site-name">YanY</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">TensorFlow-损失函数</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-10-16T12:11:11.000Z" title="发表于 2018-10-16 20:11:11">2018-10-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-07T07:52:49.496Z" title="更新于 2024-04-07 15:52:49">2024-04-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/tensorflow/">tensorflow</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="TensorFlow-损失函数"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$']],
+        displayMath: [ ['$$','$$']]
+    }
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+
+
+
+<h3 id="损失函数定义"><a href="#损失函数定义" class="headerlink" title="损失函数定义"></a>损失函数定义</h3><p>损失函数（loss function）,量化了分类器输出地结果（预测值）和我们期望的结果（标签）之间的差距。<br>在机器学习中，<strong>损失函数（loss function）</strong>也称cost function（代价函数），是用来<strong>计算预测值和真实值的差距</strong>。然后以loss function的最小值作为目标函数进行反向传播迭代计算模型中的参数，这个让loss function的值不断变小的过程称为优化。</p>
+<p>损失函数分为<strong>经验风险损失函数</strong>和<strong>结构风险损失函数</strong></p>
+<ul>
+<li>经验风险损失函数指预测结果和实际结果的差别</li>
+<li>结构风险损失函数是指经验风险损失函数加上正则项</li>
+</ul>
+<p>设总有N个样本的样本集为$(X,Y)&#x3D;(x_i,y_i)$，那么总的损失函数为$$L &#x3D; \sum_{i&#x3D;1}^n l(y_i,f(x_i)) $$<br>其中 $y_i,i∈[1,N]$为样本$i$的真实值，$f(x_i),i∈[1,N]$为样本$i$的预测值， $f()$为分类或者回归函数。</p>
+<p>一般来说，对于分类或者回归模型进行评估时，需要使得模型在训练数据上似的损失函数值最小，即使得经验风险函数(Empirical risk)最小化，但是如果只考虑经验风险，容易出现过拟合，因此还需要考虑模型的泛化性，一般常用的方法就是在目标函数中加上正则项，有损失项（loss term）加上正则项（regularization term）构成结构风险（Structural risk），那么损失函数变为：$$L &#x3D; \sum_{i&#x3D;1}^n l(y_i,f(x_i))+\lambda R(w) $$</p>
+<p>R(w)就是评价模型复杂度的指标，一般只是权重w的函数，$\lambda$表示复杂损失在总损失中的比例。</p>
+<h4 id="常见的损失函数"><a href="#常见的损失函数" class="headerlink" title="常见的损失函数"></a>常见的损失函数</h4><ol>
+<li>0-1损失函数（0-1 loss function）$$L(y,f(x)) &#x3D; \begin{cases}<br>1, y &#x3D; f(x) \<br>0, y \neq  f(x) \<br>\end{cases}$$ </li>
+<li>平方损失函数（quadratic loss function） $$L(Y,f(x)) &#x3D; (Y-f(x))^2$$</li>
+<li>L1正则损失函数（绝对损失函数 absolute loss function）$$L(Y,f(x)) &#x3D; \left| Y-f(x) \right|$$</li>
+<li>L2正则损失函数（即欧拉损失函数）$$L(Y,f(x)) &#x3D; \sum_{i&#x3D;1}^n(Y-f(x))^2$$<br>当对L2取平均值，就变成均方误差（MSE, mean squared error） $$ MSE(y,{y}’) &#x3D; \frac{1}{n}\sum_{i&#x3D;1}^n (y^i - {y}’)^2 $$</li>
+<li>对数损失函数(logarithmic loss function)或对数似然损失函数(log-likelihood loss function)$$L(Y,P(Y|X)) &#x3D; -logP(Y|X)$$</li>
+</ol>
+<h4 id="交叉熵损失函数"><a href="#交叉熵损失函数" class="headerlink" title="交叉熵损失函数"></a>交叉熵损失函数</h4><p>交叉熵（Cross Entropy）是Loss函数的一种（也称为损失函数或代价函数），用于描述模型预测值与真实值的差距大小（用来评估当前训练得到的概率分布与真实分布的差异情况），常见的Loss函数就是均方平方差（Mean Squared Error）</p>
+<p>$$  loss &#x3D;\frac{1}{n}\sum_{i&#x3D;0}^n{(y_{i} \cdot log(y_predicted_{i})<br>+(1-y_{i}) \cdot log(1-y_predicted_{i})<br>)}  $$</p>
+<p>熵：用来表示所有信息量的期望<br>$$H(X)&#x3D;-\sum_{i&#x3D;1}^n p(x_i)log(p(x_i))$$<br>信息量定义：$h(x) &#x3D; -log(p(x))$，概率分布函数p(x)</p>
+<h3 id="损失函数Api"><a href="#损失函数Api" class="headerlink" title="损失函数Api"></a>损失函数Api</h3><h4 id="tf-nn-softmax-cross-entropy-with-logits"><a href="#tf-nn-softmax-cross-entropy-with-logits" class="headerlink" title="tf.nn.softmax_cross_entropy_with_logits"></a>tf.nn.softmax_cross_entropy_with_logits</h4><p>对于每个<strong>独立的分类任务</strong>，这个函数是去度量概率误差。比如，在 CIFAR-10 数据集上面，每张图片只有唯一一个分类标签：一张图可能是一只狗或者一辆卡车， 但绝对不可能两者都在一张图中。</p>
+<ul>
+<li>输入API的数据 logits 不能进行缩放，因为在这个API的执行中会进行 softmax 计算，如果 logits 进行了缩放，那么会影响计算正确率。</li>
+<li>logits 和 labels 必须有相同的数据维度 [batch_size, num_classes]，和相同的数据类型 float32 或者 float64 。</li>
+<li>它适用于每个类别相互独立且排斥的情况，一幅图只能属于一类，而不能同时包含一条狗和一只大象.</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">softmax_cross_entropy_with_logits(</span><br><span class="line">    _sentinel=None,</span><br><span class="line">    labels=None,</span><br><span class="line">    logits=None,</span><br><span class="line">    dim=-1,</span><br><span class="line">    name=None</span><br><span class="line">)</span><br><span class="line">## softmax_cross_entropy_with_logits_v2 (现在)</span><br></pre></td></tr></table></figure>
+<p>流程：</p>
+<ol>
+<li>首先是对网络最后一层的输出做一个softmax（公式详见激活函数）</li>
+<li>对softmax输出的向量$[Y1,Y2,Y3,…]$和样本的时机标签做一个交叉熵</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">import tensorflow as tf  </span><br><span class="line"></span><br><span class="line"># our NN&#x27;s output  </span><br><span class="line">logits=tf.constant([[1.0,2.0,3.0],[1.0,2.0,3.0],[1.0,2.0,3.0]])  </span><br><span class="line"></span><br><span class="line"># step1:do softmax  </span><br><span class="line">y=tf.nn.softmax(logits)  </span><br><span class="line"></span><br><span class="line"># true label  </span><br><span class="line">y_=tf.constant([[0.0,0.0,1.0],[0.0,0.0,1.0],[0.0,0.0,1.0]])  </span><br><span class="line"></span><br><span class="line"># step2:do cross_entropy  </span><br><span class="line">cross_entropy = tf.reduce_sum(-tf.reduce_sum(y_*tf.log(y), axis=1))</span><br><span class="line"></span><br><span class="line"># do cross_entropy just one step  </span><br><span class="line">cross_entropy2 = tf.reduce_sum(tf.nn.softmax_cross_entropy_with_logits(logits=logits, labels=y_))</span><br><span class="line"></span><br><span class="line">with tf.Session() as sess:  </span><br><span class="line">	print(sess.run(cross_entropy))</span><br><span class="line">	print(sess.run(cross_entropy2))</span><br><span class="line"></span><br><span class="line"># 1.222818</span><br><span class="line"># 1.222818</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h4 id="tf-nn-sparse-softmax-cross-entropy-with-logits"><a href="#tf-nn-sparse-softmax-cross-entropy-with-logits" class="headerlink" title="tf.nn.sparse_softmax_cross_entropy_with_logits"></a>tf.nn.sparse_softmax_cross_entropy_with_logits</h4><p>计算logits 和 labels 之间的稀疏softmax 交叉熵</p>
+<p>度量在离散分类任务中的错误率，这些类之间是相互排斥的（每个输入只能对应唯一确定的一个类）。举例来说，每个CIFAR-10 图片只能被标记为唯一的一个标签：一张图片可能是一只狗或一辆卡车，而不能两者都是。</p>
+<p>区别：<strong>sparse_softmax_cross_entropy_with_logits</strong> 直接用标签计算交叉熵，而 <strong>softmax_cross_entropy_with_logits</strong> 是标签的onehot向量参与计算。<strong>softmax_cross_entropy_with_logits</strong> 的 labels 是 <strong>sparse_softmax_cross_entropy_with_logits</strong> 的 labels 的一个独热版本。<br><strong>tf.nn.sparse_softmax_cross_entropy_with_logits</strong> 比 <strong>tf.nn.softmax_cross_entropy_with_logits</strong> 多了一步将labels稀疏化的操作</p>
+<blockquote>
+<p>onehot标签则是顾名思义，一个长度为n的数组，只有一个元素是1.0，其他元素是0.0</p>
+</blockquote>
+<blockquote>
+<p>稀疏化：例如表示一个3分类的一个样本的标签，稀疏表示的形式为[0,0,1]（这个表示这个样本为第3个分类），而非稀疏表示就表示为2（因为从0开始算，0,1,2,就能表示三类）</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import tensorflow as tf</span><br><span class="line"></span><br><span class="line">input_data = tf.Variable([[0.2, 0.1, 0.9], [0.3, 0.4, 0.6]], dtype=tf.float32)</span><br><span class="line"></span><br><span class="line">output = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=input_data, </span><br><span class="line"></span><br><span class="line">labels=[0, 2])</span><br><span class="line"></span><br><span class="line">with tf.Session() as sess:</span><br><span class="line">    init = tf.global_variables_initializer()</span><br><span class="line">    sess.run(init)</span><br><span class="line">    print(sess.run(output))</span><br><span class="line"></span><br><span class="line"># [ 1.36573195  0.93983102]</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="tf-nn-sigmoid-cross-entropy-with-logits"><a href="#tf-nn-sigmoid-cross-entropy-with-logits" class="headerlink" title="tf.nn.sigmoid_cross_entropy_with_logits"></a>tf.nn.sigmoid_cross_entropy_with_logits</h4><p>函数意义：</p>
+<ul>
+<li>衡量的是分类任务中的概率误差，他也是试用于每一个类别都是相不排斥的</li>
+<li>这个函数的作用是计算经<strong>sigmoid</strong>函数激活之后的交叉熵。 </li>
+<li>与sigmoid搭配使用的交叉熵损失函数，输入不需要额外加一层sigmoid，<strong>tf.nn.sigmoid_cross_entropy_with_logits</strong>中会集成有sigmoid并进行了计算优化；它适用于分类的类别之间<strong>不是相互排斥</strong>的场景，即多个标签（如图片中包含狗和猫）。</li>
+</ul>
+<p>公式：$$targets * -log(sigmoid(logits)) + (1 - targets) * -log(1 - sigmoid(logits))$$</p>
+<p>现在我们使用 x &#x3D; logits, z &#x3D; targets</p>
+<p>$$<br>\begin {aligned}<br>sigmod交叉熵 &amp;&#x3D;z * -log(sigmoid(x)) + (1 - z) * -log(1 - sigmoid(x)) \<br>&amp;&#x3D; z * -log(1 &#x2F; (1 + exp(-x))) + (1 - z) * -log(exp(-x) &#x2F; (1 + exp(-x))) \<br>&amp;&#x3D; z * log(1 + exp(-x)) + (1 - z) * (-log(exp(-x)) + log(1 + exp(-x)))\<br>&amp;&#x3D; z * log(1 + exp(-x)) + (1 - z) * (x + log(1 + exp(-x))\<br>&amp;&#x3D; (1 - z) * x + log(1 + exp(-x))\<br>&amp;&#x3D; x - x * z + log(1 + exp(-x))<br>\end {aligned}<br>$$</p>
+<p>当$x&lt;0$时，$ e^{-x} \rightarrow \infty$ 溢出，所以使用计算式：<br>$$ -x*z + log(1+e^{x}) $$</p>
+<p>$$<br>\begin {aligned}<br>推到过程： &amp;&#x3D; x - x * z + log(1 + exp(-x))\<br>    &amp;&#x3D; log(exp(x)) - x * z + log(1 + exp(-x)) \<br>    &amp;&#x3D; - x * z + log(1 + exp(x))<br>\end {aligned}<br>$$</p>
+<p>为了确保计算稳定，避免溢出，综合x&gt;0和x&lt;0的情况,我们使用以下函数式 ：<br>$$ max(x,0) - x*z + log(1+e^{−|x|})  $$</p>
+<h4 id="tf-nn-weighted-cross-entropy-with-logits"><a href="#tf-nn-weighted-cross-entropy-with-logits" class="headerlink" title="tf.nn.weighted_cross_entropy_with_logits"></a>tf.nn.weighted_cross_entropy_with_logits</h4><p>功能以及计算方式基本与<strong>tf_nn_sigmoid_cross_entropy_with_logits</strong>差不多,但是加上了权重的功能,是计算具有权重的sigmoid交叉熵函数<br>$$pos_weight * targets * -log(sigmoid(logits)) + (1 - targets) * -log(1 - sigmoid(logits))$$</p>
+<p>现在我们使用 x &#x3D; logits, z &#x3D; targets, q &#x3D; pos_weight的代数式</p>
+<p>$$<br>\begin {aligned}<br>  weighted交叉熵 &amp;&#x3D; qz * -log(sigmoid(x)) + (1 - z) * -log(1 - sigmoid(x))\<br>  &amp;&#x3D; qz * -log(1 &#x2F; (1 + exp(-x))) + (1 - z) * -log(exp(-x) &#x2F; (1 + exp(-x)))\<br>  &amp;&#x3D; qz * log(1 + exp(-x)) + (1 - z) * (-log(exp(-x)) + log(1 + exp(-x)))\<br>  &amp;&#x3D; qz * log(1 + exp(-x)) + (1 - z) * (x + log(1 + exp(-x))\<br>  &amp;&#x3D; (1 - z) * x + (qz +  1 - z) * log(1 + exp(-x))\<br>  &amp;&#x3D; (1 - z) * x + (1 + (q - 1) * z) * log(1 + exp(-x))\<br>\end {aligned}<br>$$</p>
+<p>我们把$l &#x3D; (1 + (q - 1) * z)$, 来确保稳定性并且避免溢出,公式为：<br>$$(1 - z) * x + l * (log(1 + exp(-abs(x))) + max(-x, 0))$$</p>
+<h3 id="了解"><a href="#了解" class="headerlink" title="了解"></a>了解</h3><p><strong>正则化</strong>：防止过拟合，提高泛化能力；正则化的原理就是在损失函数中加入评价模型复杂度的指标。R(w)就是评价模型复杂度的指标，一般只是权重w的函数，$\lambda$表示复杂损失在总损失中的比例。</p>
+<p><strong>下溢出（underflow）和上溢出（overflow）</strong>:实数在计算机内用二进制表示，所以不是一个精确值，当数值过小的时候，被四舍五入为0，这就是下溢出。此时如果对这个数再做某些运算（例如除以它）就会出问题。反之当数值过大的时候，情况就变成上溢出。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Yan Yong</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2018/10/16/TensorFlow-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/">http://example.com/2018/10/16/TensorFlow-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">YanY</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/tensorflow/">tensorflow</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/12/06/Tensorflow-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="Tensorflow-卷积神经网络"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Tensorflow-卷积神经网络</div></div></a></div><div class="next-post pull-right"><a href="/2018/09/22/TensorFlow-%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" title="TensorFlow-激活函数"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">TensorFlow-激活函数</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2018/09/22/TensorFlow-%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" title="TensorFlow-激活函数"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-09-22</div><div class="title">TensorFlow-激活函数</div></div></a></div><div><a href="/2018/09/03/Tensorflow%20%E5%85%A5%E9%97%A8-1/" title="TensorFlow 基本概念与函数-1"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-09-03</div><div class="title">TensorFlow 基本概念与函数-1</div></div></a></div><div><a href="/2019/12/06/Tensorflow-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="Tensorflow-卷积神经网络"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-12-06</div><div class="title">Tensorflow-卷积神经网络</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Yan Yong</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/yany8060" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:806055720@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89"><span class="toc-number">1.</span> <span class="toc-text">损失函数定义</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.</span> <span class="toc-text">常见的损失函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%A4%E5%8F%89%E7%86%B5%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.</span> <span class="toc-text">交叉熵损失函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0Api"><span class="toc-number">2.</span> <span class="toc-text">损失函数Api</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#tf-nn-softmax-cross-entropy-with-logits"><span class="toc-number">2.1.</span> <span class="toc-text">tf.nn.softmax_cross_entropy_with_logits</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tf-nn-sparse-softmax-cross-entropy-with-logits"><span class="toc-number">2.2.</span> <span class="toc-text">tf.nn.sparse_softmax_cross_entropy_with_logits</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tf-nn-sigmoid-cross-entropy-with-logits"><span class="toc-number">2.3.</span> <span class="toc-text">tf.nn.sigmoid_cross_entropy_with_logits</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tf-nn-weighted-cross-entropy-with-logits"><span class="toc-number">2.4.</span> <span class="toc-text">tf.nn.weighted_cross_entropy_with_logits</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%86%E8%A7%A3"><span class="toc-number">3.</span> <span class="toc-text">了解</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2019/12/06/Tensorflow-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="Tensorflow-卷积神经网络">Tensorflow-卷积神经网络</a><time datetime="2019-12-06T08:55:42.000Z" title="发表于 2019-12-06 16:55:42">2019-12-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2018/10/16/TensorFlow-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/" title="TensorFlow-损失函数">TensorFlow-损失函数</a><time datetime="2018-10-16T12:11:11.000Z" title="发表于 2018-10-16 20:11:11">2018-10-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2018/09/22/TensorFlow-%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" title="TensorFlow-激活函数">TensorFlow-激活函数</a><time datetime="2018-09-22T09:16:17.000Z" title="发表于 2018-09-22 17:16:17">2018-09-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2018/09/03/Tensorflow%20%E5%85%A5%E9%97%A8-1/" title="TensorFlow 基本概念与函数-1">TensorFlow 基本概念与函数-1</a><time datetime="2018-09-03T12:18:38.000Z" title="发表于 2018-09-03 20:18:38">2018-09-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2018/04/12/Java%E5%9F%BA%E7%A1%80-JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD/" title="Java基础-JVM类加载">Java基础-JVM类加载</a><time datetime="2018-04-12T12:52:17.000Z" title="发表于 2018-04-12 20:52:17">2018-04-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Yan Yong</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

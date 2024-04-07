@@ -1,0 +1,198 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Java基础-Thread概述 | YanY</title><meta name="author" content="Yan Yong"><meta name="copyright" content="Yan Yong"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="线程生命周期线程状态：  新建状态：使用new关键字和Thread类或其子类建立一个线程对象后 就绪状态：当线程对象调用了start()方法之后，该线程进入就绪状态 运行状态：如果就绪状态的线程获取CPU资源，就可以执行run() 阻塞状态： 等待阻塞：运行状态中的线程执行wait()方法 同步阻塞：线程在获取 synchronized 同步锁失败 其他阻塞：通过调用线程的sleep()或join">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java基础-Thread概述">
+<meta property="og:url" content="http://example.com/2017/03/08/Java%E5%9F%BA%E7%A1%80-Thread%E6%A6%82%E8%BF%B0/index.html">
+<meta property="og:site_name" content="YanY">
+<meta property="og:description" content="线程生命周期线程状态：  新建状态：使用new关键字和Thread类或其子类建立一个线程对象后 就绪状态：当线程对象调用了start()方法之后，该线程进入就绪状态 运行状态：如果就绪状态的线程获取CPU资源，就可以执行run() 阻塞状态： 等待阻塞：运行状态中的线程执行wait()方法 同步阻塞：线程在获取 synchronized 同步锁失败 其他阻塞：通过调用线程的sleep()或join">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2017-03-08T11:33:39.000Z">
+<meta property="article:modified_time" content="2024-04-07T07:52:49.496Z">
+<meta property="article:author" content="Yan Yong">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="thread">
+<meta property="article:tag" content="Java基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2017/03/08/Java%E5%9F%BA%E7%A1%80-Thread%E6%A6%82%E8%BF%B0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Java基础-Thread概述',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-07 15:52:49'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="YanY"><span class="site-name">YanY</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Java基础-Thread概述</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2017-03-08T11:33:39.000Z" title="发表于 2017-03-08 19:33:39">2017-03-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-07T07:52:49.496Z" title="更新于 2024-04-07 15:52:49">2024-04-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Java%E5%9F%BA%E7%A1%80/">Java基础</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Java基础-Thread概述"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="线程生命周期"><a href="#线程生命周期" class="headerlink" title="线程生命周期"></a>线程生命周期</h3><p><img src="http://upload-images.jianshu.io/upload_images/1419542-7b0fe1fa20076f52.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/620" alt="Threadlife_20170208.jpg"><br>线程状态：</p>
+<ul>
+<li>新建状态：使用new关键字和Thread类或其子类建立一个线程对象后</li>
+<li>就绪状态：当线程对象调用了start()方法之后，该线程进入就绪状态</li>
+<li>运行状态：如果就绪状态的线程获取CPU资源，就可以执行run()</li>
+<li>阻塞状态：<ul>
+<li>等待阻塞：运行状态中的线程执行wait()方法</li>
+<li>同步阻塞：线程在获取 synchronized 同步锁失败</li>
+<li>其他阻塞：通过调用线程的sleep()或join()发出I&#x2F;O请求时</li>
+</ul>
+</li>
+<li>死亡状态：一个运行状态的线程完成人文或者其他终止条件发送</li>
+</ul>
+<h3 id="创建线程"><a href="#创建线程" class="headerlink" title="创建线程"></a>创建线程</h3><p>1、继承Thread类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ThreadDemo</span> <span class="keyword">extends</span> <span class="title class_">Thread</span></span><br></pre></td></tr></table></figure>
+<p>2、实现Runable接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RunTest</span> <span class="keyword">implements</span> <span class="title class_">Runnable</span></span><br><span class="line">   </span><br><span class="line"><span class="type">Thread</span> <span class="variable">thread1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">RunTest</span>());</span><br></pre></td></tr></table></figure>
+<p>3、通过Callable、Future、FutureTask创建线程</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 继承实现Callable接口，声明返回类型</span><br><span class="line">class CallTest implements Callable&lt;Long&gt; </span><br><span class="line">    </span><br><span class="line">FutureTask&lt;Long&gt; futureTask = new FutureTask&lt;Long&gt;(new CallTest(searchVo));</span><br></pre></td></tr></table></figure>
+
+<h3 id="线程内置方法"><a href="#线程内置方法" class="headerlink" title="线程内置方法"></a>线程内置方法</h3><p>1、sleep：使当前线程（即调用该方法的线程）暂停执行一段时间，让其它线程有机会继续执行，但它不会释放对象锁。<br>2、yield：<strong>暂停__当前正在执行的线程对象，并执行其他线程。yield的目的是让相同优先级的线程之间能适当的__轮转执行</strong><br>3、join：把指定的线程加入到当前线程，可以将两个交替执行的线程合并为顺序执行的线程。比如线程B中调用了线程A的JOIN()方法，直到线程A执行完毕后，才会继续执行线程B。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//主线程等待子线程thread执行结束才会输出结果</span><br><span class="line">public static void main(String[] args) throws InterruptedException &#123;</span><br><span class="line">    Thread thread = new Thread(new JoinTest());</span><br><span class="line">    thread.start();</span><br><span class="line">    thread.join(); //加入join()</span><br><span class="line">    System.out.println(&quot;主线程结束&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>4、setDaemon：<br>Java中线程分为两种类型：用户线程和守护线程。通过Thread.setDaemon(false)设置为用户线程；通过Thread.setDaemon(true)设置为守护线程。如果不设置次属性，默认为用户线程。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DaemonTest</span> <span class="keyword">extends</span> <span class="title class_">Thread</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;            <span class="comment">//永真循环线程</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; ; i++) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thread.sleep(<span class="number">1000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException ex) &#123;</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">daemonTest</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DaemonTest</span>();</span><br><span class="line">        daemonTest.setDaemon(<span class="literal">true</span>);    <span class="comment">//调试时可以设置为false，那么这个程序是个死循环，没有退出条件。设置为true，即可主线程结束，test线程也结束。</span></span><br><span class="line">        daemonTest.start();</span><br><span class="line">        System.out.println(<span class="string">&quot;isDaemon = &quot;</span> + daemonTest.isDaemon());</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            System.in.read();   <span class="comment">// 接受输入，使程序在此停顿，一旦接收到用户输入，main线程结束，守护线程自动结束</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException ex) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果线程设置为Thread.setDaemon(true)，则主线程结束该程序不会结束，必须等待子线程执行结束整个程序才能结束；如果线程设置为Thread.setDaemon(false)，则主线程结束整个程序就结束。</p>
+<p>5、wait、notify、notifyAll<br>当一个线程进入wait之后，就必须等待其他线程notify&#x2F;notifyAll，使用notifyAll可以唤醒所有处于wait状态的线程，使其重新进入锁的争夺队列中，而notify只能唤醒一个。<br>notify被唤醒的线程是随机的，所以通常是没办法指定是谁被唤醒。</p>
+<h3 id="线程关键字"><a href="#线程关键字" class="headerlink" title="线程关键字"></a>线程关键字</h3><ul>
+<li>volatile<br>可见性：对一个volatile变量的读，总是能看到（任意线程）对这个volatile变量最后的写入<br>原子性：对任意单个volatile变量的读&#x2F;写具有原子性，但是类似于volatile++这种复合操作不具有原子性</li>
+<li>synchronized<br>当它用来修饰一个方法或者一个代码块的时候，能够保证在同一时刻最多只有一个线程执行该段代码。然而，当一个线程访问object的一个synchronized(this)同步代码块时，另一个线程仍然可以访问该object中的非synchronized(this)同步代码块。<br>synchronized 关键字，它包括两种用法：synchronized 方法和 synchronized 块。  <ul>
+<li>synchronized 方法：通过在方法声明中加入 synchronized关键字来声明 synchronized 方法<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title function_">accessVal</span><span class="params">(<span class="type">int</span> newVal)</span>;  </span><br></pre></td></tr></table></figure></li>
+<li>synchronized 块：通过 synchronized关键字来声明synchronized 块<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">synchronized</span>(syncObject) &#123;  </span><br><span class="line"><span class="comment">//允许访问控制的代码  </span></span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h3><p>ThreadLocal是一个关于创建线程局部变量的类。通常情况下，我们创建的变量是可以被任何一个线程访问修改的。而使用ThreadLocal创建的变量只能被当前线程访问，其他线程无法访问和修改。</p>
+<blockquote>
+<p>在Java中，栈内存归属于单个线程，每个线程都会有一个栈内存，其存储的变量只能在其所属线程中可见，即栈内存可以理解成线程的私有内存。而堆内存中的对象对所有线程可见。堆内存中的对象可以被所有线程访问。</p>
+</blockquote>
+<p>ThreadLocal并不是存放在栈上。ThreadLocal实例实际上也是被其创建的类持有（更顶端应该是被线程持有）。而ThreadLocal的值其实也是被线程实例持有。它们都是位于堆上，只是通过一些技巧将可见性修改成线程可见。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用ThreadLocal保存Connection变量 </span></span><br><span class="line">ThreadLocal&lt;Connection&gt; connThreadLocal = <span class="keyword">new</span> <span class="title class_">ThreadLocal</span>&lt;Connection&gt;(); </span><br><span class="line"><span class="comment">//保存到线程本地变量中</span></span><br><span class="line">connThreadLocal.set(conn);  </span><br><span class="line"><span class="comment">// 直接返回线程本地变量  </span></span><br><span class="line">connThreadLocal.get();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Yan Yong</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2017/03/08/Java%E5%9F%BA%E7%A1%80-Thread%E6%A6%82%E8%BF%B0/">http://example.com/2017/03/08/Java%E5%9F%BA%E7%A1%80-Thread%E6%A6%82%E8%BF%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">YanY</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/java/">java</a><a class="post-meta__tags" href="/tags/thread/">thread</a><a class="post-meta__tags" href="/tags/Java%E5%9F%BA%E7%A1%80/">Java基础</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2017/12/05/go-ethereum-%E7%AE%80%E5%8D%95%E6%90%AD%E5%BB%BA%E7%A7%81%E6%9C%89%E9%93%BE/" title="go-ethereum-简单搭建私有链"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">go-ethereum-简单搭建私有链</div></div></a></div><div class="next-post pull-right"><a href="/2017/03/02/RPC%E5%8E%9F%E7%90%86-%E6%A6%82%E8%BF%B0/" title="RPC原理 概述"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">RPC原理 概述</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2018/03/03/Java%E5%9F%BA%E7%A1%80-JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" title="Java基础-JVM内存模型"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-03-03</div><div class="title">Java基础-JVM内存模型</div></div></a></div><div><a href="/2018/04/12/Java%E5%9F%BA%E7%A1%80-JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD/" title="Java基础-JVM类加载"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-04-12</div><div class="title">Java基础-JVM类加载</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Yan Yong</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/yany8060" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:806055720@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-number">1.</span> <span class="toc-text">线程生命周期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">创建线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E5%86%85%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">线程内置方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-number">4.</span> <span class="toc-text">线程关键字</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ThreadLocal"><span class="toc-number">5.</span> <span class="toc-text">ThreadLocal</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2019/12/06/Tensorflow-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="Tensorflow-卷积神经网络">Tensorflow-卷积神经网络</a><time datetime="2019-12-06T08:55:42.000Z" title="发表于 2019-12-06 16:55:42">2019-12-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2018/10/16/TensorFlow-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/" title="TensorFlow-损失函数">TensorFlow-损失函数</a><time datetime="2018-10-16T12:11:11.000Z" title="发表于 2018-10-16 20:11:11">2018-10-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2018/09/22/TensorFlow-%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" title="TensorFlow-激活函数">TensorFlow-激活函数</a><time datetime="2018-09-22T09:16:17.000Z" title="发表于 2018-09-22 17:16:17">2018-09-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2018/09/03/Tensorflow%20%E5%85%A5%E9%97%A8-1/" title="TensorFlow 基本概念与函数-1">TensorFlow 基本概念与函数-1</a><time datetime="2018-09-03T12:18:38.000Z" title="发表于 2018-09-03 20:18:38">2018-09-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2018/04/12/Java%E5%9F%BA%E7%A1%80-JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD/" title="Java基础-JVM类加载">Java基础-JVM类加载</a><time datetime="2018-04-12T12:52:17.000Z" title="发表于 2018-04-12 20:52:17">2018-04-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Yan Yong</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

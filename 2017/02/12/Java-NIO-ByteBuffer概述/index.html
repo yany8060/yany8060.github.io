@@ -1,0 +1,194 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Java NIO ByteBuffer概述 | YanY</title><meta name="author" content="Yan Yong"><meta name="copyright" content="Yan Yong"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Buffer的基本用法使用Buffer读写数据一般遵循以下四个步骤：1、分配空间2、写入数据到Buffer3、调用flip()方法4、从Buffer中读取数据5、调用clear()方法或者compact()方法当向buffer写入数据时，buffer会记录下写了多少数据。一旦要读取数据，需要通过flip()方法将Buffer从写模式切换到读模式。在读模式下，可以读取之前写入到buffer的所有数据">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java NIO ByteBuffer概述">
+<meta property="og:url" content="http://example.com/2017/02/12/Java-NIO-ByteBuffer%E6%A6%82%E8%BF%B0/index.html">
+<meta property="og:site_name" content="YanY">
+<meta property="og:description" content="Buffer的基本用法使用Buffer读写数据一般遵循以下四个步骤：1、分配空间2、写入数据到Buffer3、调用flip()方法4、从Buffer中读取数据5、调用clear()方法或者compact()方法当向buffer写入数据时，buffer会记录下写了多少数据。一旦要读取数据，需要通过flip()方法将Buffer从写模式切换到读模式。在读模式下，可以读取之前写入到buffer的所有数据">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2017-02-12T09:29:27.000Z">
+<meta property="article:modified_time" content="2024-04-07T07:42:55.398Z">
+<meta property="article:author" content="Yan Yong">
+<meta property="article:tag" content="java-nio">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2017/02/12/Java-NIO-ByteBuffer%E6%A6%82%E8%BF%B0/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Java NIO ByteBuffer概述',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-07 15:42:55'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="YanY"><span class="site-name">YanY</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Java NIO ByteBuffer概述</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2017-02-12T09:29:27.000Z" title="发表于 2017-02-12 17:29:27">2017-02-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-07T07:42:55.398Z" title="更新于 2024-04-07 15:42:55">2024-04-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/java/">java</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Java NIO ByteBuffer概述"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="Buffer的基本用法"><a href="#Buffer的基本用法" class="headerlink" title="Buffer的基本用法"></a>Buffer的基本用法</h3><p>使用Buffer读写数据一般遵循以下四个步骤：<br>1、分配空间<br>2、写入数据到Buffer<br>3、调用flip()方法<br>4、从Buffer中读取数据<br>5、调用clear()方法或者compact()方法<br>当向buffer写入数据时，buffer会记录下写了多少数据。一旦要读取数据，需要通过<code>flip()</code>方法<code>将Buffer从写模式切换到读模式</code>。在读模式下，可以读取之前写入到buffer的所有数据。<br>一旦读完了所有的数据，就需要清空缓冲区，让它可以再次被写入。有两种方式能清空缓冲区：调用clear()或compact()方法。<code>clear()方法会清空整个缓冲区</code>。<code>compact()方法只会清除已经读过的数据</code>。任何未读的数据都被移到缓冲区的起始处，新写入的数据将放到缓冲区未读数据的后面。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1419542-d832d71903ddb1e1.jpeg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Buffer-process.jpeg"></p>
+<h3 id="四个主要属性："><a href="#四个主要属性：" class="headerlink" title="四个主要属性："></a>四个主要属性：</h3><ul>
+<li>capacity：作为一个内存块，Buffer有一个固定的大小值，也叫“capacity”.你只能往里写capacity个byte、long，char等类型。一旦Buffer满了，需要将其清空（通过读数据或者清除数据）才能继续写数据往里写数据。</li>
+<li>position：<ul>
+<li>当你写数据到Buffer中时，position表示当前的位置。初始的position值为0.当一个byte、long等数据写到Buffer后， position会向前移动到下一个可插入数据的Buffer单元。position最大可为capacity – 1。</li>
+<li>当读取数据时，也是从某个特定位置读。当将Buffer从写模式切换到读模式，position会被重置为0。 当从Buffer的position处读取数据时，position向前移动到下一个可读的位置。</li>
+</ul>
+</li>
+<li>limit：<ul>
+<li>在写模式下，Buffer的limit表示你最多能往Buffer里写多少数据。 写模式下，limit等于Buffer的capacity。</li>
+<li>当切换Buffer到读模式时， limit表示你最多能读到多少数据。因此，当切换Buffer到读模式时，limit会被设置成写模式下的position值。换句话说，你能读到之前写入的所有数据（limit被设置成已写数据的数量，这个值在写模式下就是position）</li>
+</ul>
+</li>
+<li>mark：为某一读过的位置做标记，便于某些时候回退到该位置。</li>
+</ul>
+<h3 id="Buffer基本函数"><a href="#Buffer基本函数" class="headerlink" title="Buffer基本函数"></a>Buffer基本函数</h3><h4 id="Buffer的分配"><a href="#Buffer的分配" class="headerlink" title="Buffer的分配"></a>Buffer的分配</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ByteBuffer buf = ByteBuffer.allocate(48);</span><br></pre></td></tr></table></figure>
+
+<h4 id="向Buffer中写数据"><a href="#向Buffer中写数据" class="headerlink" title="向Buffer中写数据"></a>向Buffer中写数据</h4><p>从Channel写到Buffer的例子</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int bytesRead = inChannel.read(buf); //read into buffer.</span><br></pre></td></tr></table></figure>
+<p>通过put方法写Buffer</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buf.put(127);</span><br></pre></td></tr></table></figure>
+
+<h4 id="从Buffer中读取数据"><a href="#从Buffer中读取数据" class="headerlink" title="从Buffer中读取数据"></a>从Buffer中读取数据</h4><p>从Buffer读取数据到Channel的例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//read from buffer into channel.</span><br><span class="line">int bytesWritten = inChannel.write(buf);</span><br></pre></td></tr></table></figure>
+<p>使用get()方法从Buffer中读取数据的例子</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">byte aByte = buf.get();</span><br></pre></td></tr></table></figure>
+<h4 id="flip-方法"><a href="#flip-方法" class="headerlink" title="flip()方法"></a>flip()方法</h4><p>flip方法将Buffer从写模式切换到读模式。调用flip()方法会将position设回0，并将limit设置成之前position的值。<br>换句话说，position现在用于标记读的位置，limit表示之前写进了多少个byte、char等 —— 现在能读取多少个byte、char等。</p>
+<h4 id="clear-与compact-方法"><a href="#clear-与compact-方法" class="headerlink" title="clear()与compact()方法"></a>clear()与compact()方法</h4><p>一旦读完Buffer中的数据，需要让Buffer准备好再次被写入。可以通过clear()或compact()方法来完成。<br>如果调用的是clear()方法，position将被设回0，limit被设置成 capacity的值。换句话说，Buffer 被清空了。Buffer中的数据并未清除，只是这些标记告诉我们可以从哪里开始往Buffer里写数据。<br>如果Buffer中有一些未读的数据，调用clear()方法，数据将“被遗忘”，意味着不再有任何标记会告诉你哪些数据被读过，哪些还没有。<br>如果Buffer中仍有未读的数据，且后续还需要这些数据，但是此时想要先先写些数据，那么使用compact()方法。<br>compact()方法将所有未读的数据拷贝到Buffer起始处。然后将position设到最后一个未读元素正后面。limit属性依然像clear()方法一样，设置成capacity。现在Buffer准备好写数据了，但是不会覆盖未读的数据。</p>
+<h3 id="图解ByteBuffer函数过程"><a href="#图解ByteBuffer函数过程" class="headerlink" title="图解ByteBuffer函数过程"></a>图解ByteBuffer函数过程</h3><h4 id="put"><a href="#put" class="headerlink" title="put"></a>put</h4><p>Writes the given byte into this buffer at the current position, and then increments the position.<br>写模式下，往buffer里写一个字节，并把postion移动一位。写模式下，一般limit与capacity相等。<br><img src="http://upload-images.jianshu.io/upload_images/1419542-ae958aab995c9963.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Buffer-put.png"></p>
+<h4 id="flip"><a href="#flip" class="headerlink" title="flip"></a>flip</h4><p>Flips this buffer.  The limit is set to the current position and then the position is set to zero.  If the mark is defined then it is discarded.<br>After a sequence of channel-read or <code>put</code> operations, invoke this method to prepare for a sequence of channel-write or relative  <code>get</code> operations.（即读写模型切换）<br>写完数据，需要开始读的时候，将postion复位到0，并将limit设为当前postion</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public final Buffer flip() &#123;</span><br><span class="line">        limit = position;</span><br><span class="line">        position = 0;</span><br><span class="line">        mark = -1;</span><br><span class="line">        return this;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/1419542-804ddf879bbc2cdd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Buffer-flip.png"></p>
+<h4 id="get"><a href="#get" class="headerlink" title="get"></a>get</h4><p>Reads the byte at this buffer’s current position, and then increments the position.<br>从buffer里读一个字节，并把postion移动一位。上限是limit，即写入数据的最后位置<br><img src="http://upload-images.jianshu.io/upload_images/1419542-2bbde49b79b2f805.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Buffer-get.png"></p>
+<h4 id="clear"><a href="#clear" class="headerlink" title="clear"></a>clear</h4><p>Clears this buffer.  The position is set to zero, the limit is set to the capacity, and the mark is discarded.<br>Invoke this method before using a sequence of channel-read or <code>put</code> operations to fill this buffer.<br>将position置为0，并不清除buffer内容。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> Buffer <span class="title function_">clear</span><span class="params">()</span> &#123;</span><br><span class="line">    position = <span class="number">0</span>;</span><br><span class="line">    limit = capacity;</span><br><span class="line">    mark = -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/1419542-9a36d39cd8787e83.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Buffer-clear.png"></p>
+<p>参考：<br><a target="_blank" rel="noopener" href="http://ifeve.com/buffers/">http://ifeve.com/buffers/</a><br>博客：<br><a target="_blank" rel="noopener" href="http://yany8060.xyz/">http://yany8060.xyz/</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Yan Yong</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2017/02/12/Java-NIO-ByteBuffer%E6%A6%82%E8%BF%B0/">http://example.com/2017/02/12/Java-NIO-ByteBuffer%E6%A6%82%E8%BF%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">YanY</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/java-nio/">java-nio</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2017/02/13/Kafka-%E6%A6%82%E8%BF%B0/" title="Kafka 概述"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Kafka 概述</div></div></a></div><div class="next-post pull-right"><a href="/2017/02/12/Java-NIO%E7%AE%80%E8%BF%B0/" title="Java NIO简述"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Java NIO简述</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2017/02/12/Java-NIO%E7%AE%80%E8%BF%B0/" title="Java NIO简述"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2017-02-12</div><div class="title">Java NIO简述</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Yan Yong</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/yany8060" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:806055720@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">Buffer的基本用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E4%B8%BB%E8%A6%81%E5%B1%9E%E6%80%A7%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">四个主要属性：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffer%E5%9F%BA%E6%9C%AC%E5%87%BD%E6%95%B0"><span class="toc-number">3.</span> <span class="toc-text">Buffer基本函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Buffer%E7%9A%84%E5%88%86%E9%85%8D"><span class="toc-number">3.1.</span> <span class="toc-text">Buffer的分配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%91Buffer%E4%B8%AD%E5%86%99%E6%95%B0%E6%8D%AE"><span class="toc-number">3.2.</span> <span class="toc-text">向Buffer中写数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%8EBuffer%E4%B8%AD%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="toc-number">3.3.</span> <span class="toc-text">从Buffer中读取数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#flip-%E6%96%B9%E6%B3%95"><span class="toc-number">3.4.</span> <span class="toc-text">flip()方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#clear-%E4%B8%8Ecompact-%E6%96%B9%E6%B3%95"><span class="toc-number">3.5.</span> <span class="toc-text">clear()与compact()方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E8%A7%A3ByteBuffer%E5%87%BD%E6%95%B0%E8%BF%87%E7%A8%8B"><span class="toc-number">4.</span> <span class="toc-text">图解ByteBuffer函数过程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#put"><span class="toc-number">4.1.</span> <span class="toc-text">put</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#flip"><span class="toc-number">4.2.</span> <span class="toc-text">flip</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#get"><span class="toc-number">4.3.</span> <span class="toc-text">get</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#clear"><span class="toc-number">4.4.</span> <span class="toc-text">clear</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2019/12/06/Tensorflow-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="Tensorflow-卷积神经网络">Tensorflow-卷积神经网络</a><time datetime="2019-12-06T08:55:42.000Z" title="发表于 2019-12-06 16:55:42">2019-12-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2018/10/16/TensorFlow-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/" title="TensorFlow-损失函数">TensorFlow-损失函数</a><time datetime="2018-10-16T12:11:11.000Z" title="发表于 2018-10-16 20:11:11">2018-10-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2018/09/22/TensorFlow-%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" title="TensorFlow-激活函数">TensorFlow-激活函数</a><time datetime="2018-09-22T09:16:17.000Z" title="发表于 2018-09-22 17:16:17">2018-09-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2018/09/03/Tensorflow%20%E5%85%A5%E9%97%A8-1/" title="TensorFlow 基本概念与函数-1">TensorFlow 基本概念与函数-1</a><time datetime="2018-09-03T12:18:38.000Z" title="发表于 2018-09-03 20:18:38">2018-09-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2018/04/12/Java%E5%9F%BA%E7%A1%80-JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD/" title="Java基础-JVM类加载">Java基础-JVM类加载</a><time datetime="2018-04-12T12:52:17.000Z" title="发表于 2018-04-12 20:52:17">2018-04-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Yan Yong</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

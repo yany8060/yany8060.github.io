@@ -1,0 +1,237 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>TensorFlow 基本概念与函数-1 | YanY</title><meta name="author" content="Yan Yong"><meta name="copyright" content="Yan Yong"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="编程模型 TensorFlow的数据流图是由节点（Node） 和边（edge）组成的有向无环图（directed acycline graph，DAG）。TensorFlow 由 Tensor 和 Flow 两部 分组成，Tensor(张量)代表了数据流图中的边，而 Flow(流动)这个动作就代表了数据流图中节点所做的操作。  计算过程：首先从输入层开始，经过塑形层后，一层一层进行前向传播运算。R">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TensorFlow 基本概念与函数-1">
+<meta property="og:url" content="http://example.com/2018/09/03/Tensorflow%20%E5%85%A5%E9%97%A8-1/index.html">
+<meta property="og:site_name" content="YanY">
+<meta property="og:description" content="编程模型 TensorFlow的数据流图是由节点（Node） 和边（edge）组成的有向无环图（directed acycline graph，DAG）。TensorFlow 由 Tensor 和 Flow 两部 分组成，Tensor(张量)代表了数据流图中的边，而 Flow(流动)这个动作就代表了数据流图中节点所做的操作。  计算过程：首先从输入层开始，经过塑形层后，一层一层进行前向传播运算。R">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2018-09-03T12:18:38.000Z">
+<meta property="article:modified_time" content="2024-04-07T07:52:49.500Z">
+<meta property="article:author" content="Yan Yong">
+<meta property="article:tag" content="tensorflow">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2018/09/03/Tensorflow%20%E5%85%A5%E9%97%A8-1/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'TensorFlow 基本概念与函数-1',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-07 15:52:49'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.1.1"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="YanY"><span class="site-name">YanY</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">TensorFlow 基本概念与函数-1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-09-03T12:18:38.000Z" title="发表于 2018-09-03 20:18:38">2018-09-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-07T07:52:49.500Z" title="更新于 2024-04-07 15:52:49">2024-04-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/tensorflow/">tensorflow</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="TensorFlow 基本概念与函数-1"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="编程模型"><a href="#编程模型" class="headerlink" title="编程模型"></a>编程模型</h3><blockquote>
+<p>TensorFlow的数据流图是由<code>节点（Node） </code>和<code>边（edge）</code>组成的<code>有向无环图（directed acycline graph，DAG）</code>。TensorFlow 由 Tensor 和 Flow 两部 分组成，Tensor(张量)代表了数据流图中的边，而 Flow(流动)这个动作就代表了数据流图中节点所做的操作。</p>
+</blockquote>
+<p>计算过程：首先从输入层开始，经过塑形层后，一层一层进行前向传播运算。Relu层（隐藏层）里两个参数，即Wh1和bh1，在输出前使用Rule（Rectified Linear Units）激活函数做非线性处理。然后进入Logit层（输出层），学习两个参数Wsm 和 bsm。用Softmax来计算输出结果中各个类别的概率分布。用交叉熵来度量两个概率分布（源样本的概率分布和输出结果 的概率分布）直接的相似性。然后开始计算梯度，这是需要参数Wh1、bh1、Wsm 和 bsm，以及 交叉熵后的结果。随后进入 SGD 训练，也就是反向传播的过程，从上往下计算每一层的参数， 依次进行更新。也就是说，计算和更新的顺序为 bsm、Wsm、bh1 和 Wh1。</p>
+<p><img src="https://wx3.sinaimg.cn/large/007h1WTYly1fup5sc9m7ag30700cgwol.gif" alt="avatar"></p>
+<h3 id="张量"><a href="#张量" class="headerlink" title="张量"></a>张量</h3><p>TensorFlow用张量这种数据结构来表示所有的数据。一个张量有一个静态类型和动态类型的维数。张量可以在图中的节点之间流通。<br>张量的维数来被描述为<code>阶</code></p>
+<blockquote>
+<p>秩：Tensor维度的数量</p>
+</blockquote>
+<h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><ul>
+<li>数据类型（例如 float32、int32 或 string）</li>
+<li>形状：即张量的维数和每个维度的大小</li>
+</ul>
+<h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><ul>
+<li>tf.rank：返回张量的秩</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># shape of tensor &#x27;t&#x27; is [2, 2, 3]</span></span><br><span class="line">t = tf.constant([[[<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>], [<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>]], [[<span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>]]])</span><br><span class="line">tf.rank(t)  <span class="comment"># 3</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>tf.shape：返回某个张量的形状</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">t = tf.constant([[[<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>], [<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>]], [[<span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>]]])</span><br><span class="line">tf.shape(t)  <span class="comment"># [2, 2, 3]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>tf.reshape：重构张量</li>
+<li>tf.cast：将 tf.Tensor 从一种数据类型转型为另一种</li>
+</ul>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><h4 id="变量集合"><a href="#变量集合" class="headerlink" title="变量集合"></a>变量集合</h4><p>默认情况下，每个 tf.Variable 都放置在以下两个集合中</p>
+<ul>
+<li><code>tf.GraphKeys.GLOBAL_VARIABLES</code> - 可以在多台设备间共享的变量，</li>
+<li><code>tf.GraphKeys.TRAINABLE_VARIABLES</code> - TensorFlow 将计算其梯度的变量</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 如果不希望变量可训练，可以将其添加到 tf.GraphKeys.LOCAL_VARIABLES 集合中</span><br><span class="line">my_local = tf.get_variable(&quot;my_local&quot;, shape=(),collections=[tf.GraphKeys.LOCAL_VARIABLES])</span><br><span class="line"># 或</span><br><span class="line">my_non_trainable = tf.get_variable(&quot;my_non_trainable&quot;,</span><br><span class="line">                                   shape=(),</span><br><span class="line">                                   trainable=False)</span><br></pre></td></tr></table></figure>
+<p>可以定义自己的集合</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 将名为 my_local 的现有变量添加到名为 my_collection_name 的集合中</span><br><span class="line">tf.add_to_collection(&quot;my_collection_name&quot;, my_local)</span><br><span class="line"># 获取某个集合中的所有变量（或其他对象）的列表</span><br><span class="line">tf.get_collection(&quot;my_collection_name&quot;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="初始化变量"><a href="#初始化变量" class="headerlink" title="初始化变量"></a>初始化变量</h4><blockquote>
+<p>初始化器: tf.initializers（constant、zeros）</p>
+</blockquote>
+<p>要在训练开始前一次性初始化所有可训练变量，请调用<code>tf.global_variables_initializer()</code>。默认情况下，<code>tf.global_variables_initializer</code>不会指定变量的初始化顺序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">v = tf.get_variable(&quot;v&quot;, shape=(), initializer=tf.zeros_initializer())</span><br><span class="line">w = tf.get_variable(&quot;w&quot;, initializer=v.initialized_value() + 1)</span><br></pre></td></tr></table></figure>
+
+<h4 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h4><p>要为变量赋值，请使用 assign、assign_add 方法以及 tf.Variable 类中的友元。</p>
+<p>共享变量两种方式：</p>
+<ul>
+<li>显式传递 <code>tf.Variable</code> 对象</li>
+<li>在 <code>tf.variable_scope</code> 对象内隐式封装 tf.Variable 对象。</li>
+</ul>
+<p>变量作用域允许您在调用隐式创建和使用变量的函数时控制变量重用。作用域还允许您以分层和可理解的方式命名变量。</p>
+<h3 id="图和会话"><a href="#图和会话" class="headerlink" title="图和会话"></a>图和会话</h3><h4 id="tf-Graph"><a href="#tf-Graph" class="headerlink" title="tf.Graph"></a>tf.Graph</h4><ul>
+<li>图结构：图的节点和边缘，表示各个操作组合在一起的方式，但不规定它们的使用方式。</li>
+<li>图集合：TensorFlow 提供了一种在<code>tf.Graph</code>中存储元数据集合的通用机制。<code>tf.add_to_collection</code> 函数允许您将对象列表与一个键关联（其中 tf.GraphKeys 定义了部分标准键），<code>tf.get_collection</code> 允许您查询与某个键关联的所有对象。</li>
+</ul>
+<p>大多数 TensorFlow 程序都以数据流图构建阶段开始。在此阶段，您会调用 TensorFlow API 函数，这些函数可构建新的 <code>tf.Operation（节点）</code>和 <code>tf.Tensor（边缘</code> 对象并将它们添加到 tf.Graph 实例中。</p>
+<p>类张量类型:</p>
+<ul>
+<li>tf.Tensor</li>
+<li>tf.Variable</li>
+<li>numpy.ndarray</li>
+<li>list（以及类似于张量的对象的列表）</li>
+<li>标量 Python 类型：bool、float、int、str</li>
+</ul>
+<blockquote>
+<p>注意：在 TensorFlow API 中调用大多数函数时，只是将操作和张量添加到默认图中，并不会执行实际的计算。您应编写这些函数，直到拥有表示整个计算（例如执行梯度下降法的一步）的 tf.Tensor 或 tf.Operation，然后将该对象传递给 tf.Session 以执行计算。</p>
+</blockquote>
+<h4 id="tf-Sessoin"><a href="#tf-Sessoin" class="headerlink" title="tf.Sessoin"></a>tf.Sessoin</h4><p><code>tf.Session</code> 拥有物理资源（例如 GPU 和网络连接），因此通常（在 with 代码块中）用作上下文管理器，并在您退出代码块时自动关闭会话</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create a default in-process session.</span></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">  <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create a remote session.</span></span><br><span class="line"><span class="keyword">with</span> tf.Session(<span class="string">&quot;grpc://example.org:2222&quot;</span>):</span><br><span class="line">  <span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>tf.Session.init <ul>
+<li>target： 如果将此参数留空（默认设置），会话将仅使用本地机器中的设备。也可以指定 grpc:&#x2F;&#x2F; 网址，以便指定 TensorFlow 服务器的地址，这使得会话可以访问该服务器控制的机器上的所有设备。</li>
+<li>graph：默认情况下，新的 tf.Session 将绑定到当前的默认图，并且仅能够在当前的默认图中运行操作。如果您在程序中使用了多个图，则可以在构建会话时指定明确的 <code>tf.Graph</code>。</li>
+<li>config：此参数允许您指定一个控制会话行为的<code>tf.ConfigProto</code></li>
+</ul>
+</li>
+<li><code>tf.Session.run</code>：运行 <code>tf.Operation</code> 或评估 <code>tf.Tensor</code> 的主要机制<ul>
+<li><code>tf.Session.run</code> 要求您指定一组 fetch，这些 fetch 可确定返回值，并且可能是 <code>tf.Operation</code>、<code>tf.Tensor</code> 或<code>类张量类型</code></li>
+<li><code>tf.Session.run</code> 也可以选择接受 Feed 字典，该字典是从 <code>tf.Tensor</code> 对象（通常是 tf.placeholder 张量）到在执行时会被替换为这些张量的值（通常是 Python 标量、列表或 NumPy 数组）的映射</li>
+<li><code>tf.Session.run</code> 也接受可选的 options 参数（允许您指定与调用有关的选项）和可选的 run_metadata 参数（允许您收集与执行有关的元数据）</li>
+</ul>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://example.com">Yan Yong</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2018/09/03/Tensorflow%20%E5%85%A5%E9%97%A8-1/">http://example.com/2018/09/03/Tensorflow%20%E5%85%A5%E9%97%A8-1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">YanY</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/tensorflow/">tensorflow</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2018/09/22/TensorFlow-%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" title="TensorFlow-激活函数"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">TensorFlow-激活函数</div></div></a></div><div class="next-post pull-right"><a href="/2018/04/12/Java%E5%9F%BA%E7%A1%80-JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD/" title="Java基础-JVM类加载"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Java基础-JVM类加载</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2018/10/16/TensorFlow-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/" title="TensorFlow-损失函数"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-10-16</div><div class="title">TensorFlow-损失函数</div></div></a></div><div><a href="/2018/09/22/TensorFlow-%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" title="TensorFlow-激活函数"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-09-22</div><div class="title">TensorFlow-激活函数</div></div></a></div><div><a href="/2019/12/06/Tensorflow-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="Tensorflow-卷积神经网络"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-12-06</div><div class="title">Tensorflow-卷积神经网络</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Yan Yong</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">17</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/yany8060" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:806055720@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">编程模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%A0%E9%87%8F"><span class="toc-number">2.</span> <span class="toc-text">张量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7"><span class="toc-number">2.1.</span> <span class="toc-text">属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text">方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F"><span class="toc-number">3.</span> <span class="toc-text">变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E9%9B%86%E5%90%88"><span class="toc-number">3.1.</span> <span class="toc-text">变量集合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%8F%98%E9%87%8F"><span class="toc-number">3.2.</span> <span class="toc-text">初始化变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="toc-number">3.3.</span> <span class="toc-text">基本操作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E5%92%8C%E4%BC%9A%E8%AF%9D"><span class="toc-number">4.</span> <span class="toc-text">图和会话</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#tf-Graph"><span class="toc-number">4.1.</span> <span class="toc-text">tf.Graph</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#tf-Sessoin"><span class="toc-number">4.2.</span> <span class="toc-text">tf.Sessoin</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2019/12/06/Tensorflow-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" title="Tensorflow-卷积神经网络">Tensorflow-卷积神经网络</a><time datetime="2019-12-06T08:55:42.000Z" title="发表于 2019-12-06 16:55:42">2019-12-06</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2018/10/16/TensorFlow-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0/" title="TensorFlow-损失函数">TensorFlow-损失函数</a><time datetime="2018-10-16T12:11:11.000Z" title="发表于 2018-10-16 20:11:11">2018-10-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2018/09/22/TensorFlow-%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0/" title="TensorFlow-激活函数">TensorFlow-激活函数</a><time datetime="2018-09-22T09:16:17.000Z" title="发表于 2018-09-22 17:16:17">2018-09-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2018/09/03/Tensorflow%20%E5%85%A5%E9%97%A8-1/" title="TensorFlow 基本概念与函数-1">TensorFlow 基本概念与函数-1</a><time datetime="2018-09-03T12:18:38.000Z" title="发表于 2018-09-03 20:18:38">2018-09-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2018/04/12/Java%E5%9F%BA%E7%A1%80-JVM%E7%B1%BB%E5%8A%A0%E8%BD%BD/" title="Java基础-JVM类加载">Java基础-JVM类加载</a><time datetime="2018-04-12T12:52:17.000Z" title="发表于 2018-04-12 20:52:17">2018-04-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Yan Yong</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
